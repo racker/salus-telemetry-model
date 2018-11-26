@@ -14,6 +14,8 @@ message EnvoySummary {
     repeated AgentType supportedAgents = 2;
 
     map<string, string> labels = 3;
+
+    string identifier = 4;
 }
 
 enum AgentType {
