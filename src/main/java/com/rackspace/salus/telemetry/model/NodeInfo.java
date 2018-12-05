@@ -22,7 +22,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.net.SocketAddress;
+import java.net.InetSocketAddress;
 import java.util.Map;
 
 @Data
@@ -36,12 +36,12 @@ public class NodeInfo {
     @NotNull
     Map<String, String> labels;
 
-    @NotNull
+    @NotBlank
     String envoyId;
 
     @NotBlank
     String tenantId;
 
-    @NotBlank
-    SocketAddress address;
+    @NotNull
+    InetSocketAddress address;
 }
