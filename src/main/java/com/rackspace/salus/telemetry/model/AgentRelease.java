@@ -18,35 +18,26 @@
 
 package com.rackspace.salus.telemetry.model;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class AgentInfo {
+public class AgentRelease {
     String id;
 
-    @NotBlank
     String version;
 
-    @NotNull
     AgentType type;
 
-    @NotNull
     OperatingSystem os;
 
-    @NotNull
     Architecture arch;
 
-    @NotBlank
     String url;
 
-    @NotNull
     Checksum checksum;
 
     /**
      * Path to the agent's executable within the package
      */
-    @NotBlank
     String exe;
 }
