@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
-public class NodeConnectionStatus {
+public class ResourceConnectionStatus {
     @NotNull
     Date lastConnectedTime;
 

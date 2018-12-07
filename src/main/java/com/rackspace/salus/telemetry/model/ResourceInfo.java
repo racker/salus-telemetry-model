@@ -26,7 +26,7 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 
 @Data
-public class NodeInfo {
+public class ResourceInfo {
     @NotBlank
     String identifier;
 
