@@ -19,6 +19,7 @@
 package com.rackspace.salus.telemetry.model;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -33,8 +34,8 @@ public class ResourceInfo {
     @NotBlank
     String identifierValue;
 
-    @NotNull
-    Map<String, String> labels;
+    @NotEmpty
+    Map<String,String> labels;
 
     @NotBlank
     String envoyId;
