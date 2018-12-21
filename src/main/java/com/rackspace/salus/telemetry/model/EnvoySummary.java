@@ -34,5 +34,5 @@ public class EnvoySummary {
     @NotEmpty
     Map<String,String> labels;
 
-    String identifier;
+    String identifierName;
 }
