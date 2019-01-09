@@ -40,7 +40,7 @@ public class Resource {
     ResourceIdentifier resourceIdentifier;
 
     @ElementCollection
-    @CollectionTable(name="labels", joinColumns = @JoinColumn(name="id"))
+    @CollectionTable(name="resource_labels", joinColumns = @JoinColumn(name="id"))
     @NotNull
     Map<String,String> labels;
 
