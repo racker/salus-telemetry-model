@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.model;
+package com.rackspace.salus.telemetry.events;
 
-import lombok.Data;
-
+import com.rackspace.salus.common.messaging.KafkaMessageKey;
+import java.util.Map;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.net.InetSocketAddress;
-import java.util.Map;
+import lombok.Data;
 
+@KafkaMessageKey(properties = {"tenantId", "identifierName", "identifierValue"})
 @Data
 public class AttachEvent {
     @NotBlank
@@ -44,6 +44,11 @@ public class AttachEvent {
     @NotBlank
     String tenantId;
 
+    /**
+     * The remote hostname or IP address of the Envoy's TCP connection to the Ambassador.
+     * Note that this may be a misleading address if any NAT or proxy is used along the path of
+     * the connection.
+     */
     @NotNull
-    InetSocketAddress address;
+    String envoyAddress;
 }
