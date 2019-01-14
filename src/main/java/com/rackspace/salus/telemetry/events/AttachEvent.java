@@ -39,9 +39,6 @@ public class AttachEvent {
     String envoyId;
 
     @NotBlank
-    String ambassadorId;
-
-    @NotBlank
     String tenantId;
 
     /**
