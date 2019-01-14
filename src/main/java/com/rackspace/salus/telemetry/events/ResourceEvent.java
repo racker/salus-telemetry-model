@@ -19,36 +19,26 @@ package com.rackspace.salus.telemetry.events;
 //import com.rackspace.salus.common.messaging.KafkaMessageKey;
 import java.util.Map;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.rackspace.salus.telemetry.model.Resource;
 import lombok.Data;
 
 //@KafkaMessageKey(properties = {"tenantId", "identifierName", "identifierValue"})
 @Data
-public class AttachEvent {
+public class ResourceEvent {
     @NotBlank
-    String identifierName;
+    Resource resource;
+
+    @NotNull
+    Map<String,String> oldLabels;
 
     @NotBlank
-    String identifierValue;
+    String operation;
 
-    @NotEmpty
-    Map<String,String> labels;
-
-    @NotBlank
-    String envoyId;
-
-    @NotBlank
-    String ambassadorId;
+    @NotNull
+    boolean presenceMonitorChange;
 
     @NotBlank
     String tenantId;
-
-    /**
-     * The remote hostname or IP address of the Envoy's TCP connection to the Ambassador.
-     * Note that this may be a misleading address if any NAT or proxy is used along the path of
-     * the connection.
-     */
-    @NotNull
-    String envoyAddress;
 }

@@ -47,4 +47,7 @@ public class Resource {
     @NotBlank
     @Column(name="tenant_id")
     String tenantId;
+
+    @NotNull
+    boolean presenceMonitoringEnabled;
 }
