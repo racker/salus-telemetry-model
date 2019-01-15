@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.events;
+package com.rackspace.salus.telemetry.messaging;
 
 import com.rackspace.salus.common.messaging.KafkaMessageKey;
 import java.util.Map;
