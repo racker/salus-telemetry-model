@@ -16,14 +16,14 @@
 
 package com.rackspace.salus.telemetry.messaging;
 
-//import com.rackspace.salus.common.messaging.KafkaMessageKey;
+import com.rackspace.salus.common.messaging.KafkaMessageKey;
 import java.util.Map;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
-//@KafkaMessageKey(properties = {"tenantId", "identifierName", "identifierValue"})
+@KafkaMessageKey(properties = {"tenantId", "identifierName", "identifierValue"})
 @Data
 public class AttachEvent {
     @NotBlank
