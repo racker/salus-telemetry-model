@@ -38,6 +38,13 @@
       <groupId>com.rackspace.salus</groupId>
       <artifactId>salus-common</artifactId>
       <version>0.1.0-SNAPSHOT</version>
+      <exclusions>
+        <exclusion>
+          <!-- this app is not intended for external exposure, so excluding default security behaviors -->
+          <artifactId>spring-boot-starter-security</artifactId>
+          <groupId>org.springframework.boot</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -68,6 +75,17 @@
       <groupId>javax.persistence</groupId>
       <artifactId>javax.persistence-api</artifactId>
       <version>2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-jpamodelgen</artifactId>
+      <version>5.3.7.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>com.rackspace.salus</groupId>
+      <artifactId>salus-telemetry-protocol</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
 
   </dependencies>
