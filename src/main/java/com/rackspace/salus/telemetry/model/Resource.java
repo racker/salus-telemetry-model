@@ -28,7 +28,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "resources",
-        uniqueConstraints={@UniqueConstraint(columnNames={"tenant_id","resource_identifier"})})
+        uniqueConstraints={@UniqueConstraint(columnNames={"tenant_id","resource_id"})})
 @Data
 public class Resource implements Serializable {
     @Id
