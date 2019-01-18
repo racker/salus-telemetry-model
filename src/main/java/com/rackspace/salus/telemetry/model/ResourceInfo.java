@@ -29,10 +29,7 @@ import java.util.Map;
 @Data
 public class ResourceInfo {
     @NotBlank
-    String identifierName;
-
-    @NotBlank
-    String identifierValue;
+    String resourceId;
 
     @NotEmpty
     Map<String,String> labels;

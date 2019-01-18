@@ -17,8 +17,8 @@
 package com.rackspace.salus.telemetry.repositories;
 
 import com.rackspace.salus.telemetry.model.Resource;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 
-public interface ResourceRepository extends CrudRepository<Resource, Long> {
+public interface ResourceRepository extends PagingAndSortingRepository<Resource, Long> {
 }

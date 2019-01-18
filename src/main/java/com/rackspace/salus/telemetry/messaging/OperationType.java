@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Rackspace US, Inc.
+ * Copyright 2019 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,10 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.model;
+package com.rackspace.salus.telemetry.messaging;
 
-import lombok.Data;
-
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-
-@Embeddable
-@Data
-public class ResourceIdentifier implements Serializable {
-
-    @NotNull
-    @Column(name="identifier_name")
-    private String identifierName;
-
-    @NotNull
-    @Column(name="identifier_value")
-    private String identifierValue;
+public enum OperationType {
+    CREATE,
+    UPDATE,
+    DELETE
 }

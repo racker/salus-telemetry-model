@@ -24,7 +24,6 @@ import com.rackspace.salus.common.messaging.KafkaMessageKey;
 import com.rackspace.salus.telemetry.model.Resource;
 import lombok.Data;
 
-@KafkaMessageKey(properties = {"tenantId", "operation"})
 @Data
 public class ResourceEvent {
     @NotBlank
@@ -34,11 +33,8 @@ public class ResourceEvent {
     Map<String,String> oldLabels;
 
     @NotBlank
-    String operation;
+    OperationType operation;
 
     @NotNull
     boolean presenceMonitorChange;
-
-    @NotBlank
-    String tenantId;
 }
