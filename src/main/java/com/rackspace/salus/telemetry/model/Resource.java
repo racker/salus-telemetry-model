@@ -21,30 +21,32 @@ package com.rackspace.salus.telemetry.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Map;
-import java.util.UUID;
 
 @Entity
 @Table(name = "resources",
-        uniqueConstraints={@UniqueConstraint(columnNames={"tenant_id","identifier_name","identifier_value"})})
+        uniqueConstraints={@UniqueConstraint(columnNames={"tenant_id","resource_id"})})
 @Data
-public class Resource {
+public class Resource implements Serializable {
     @Id
     @GeneratedValue
     Long id;
 
-    @Valid
-    ResourceIdentifier resourceIdentifier;
-
-    @ElementCollection
-    @CollectionTable(name="resource_labels", joinColumns = @JoinColumn(name="id"))
     @NotNull
+    @Column(name="resource_id")
+    String resourceId;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name="resource_labels", joinColumns = @JoinColumn(name="id"))
     Map<String,String> labels;
 
     @NotBlank
     @Column(name="tenant_id")
     String tenantId;
+
+    @NotNull
+    Boolean presenceMonitoringEnabled;
 }

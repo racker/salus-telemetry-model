@@ -18,19 +18,20 @@ package com.rackspace.salus.telemetry.messaging;
 
 import com.rackspace.salus.common.messaging.KafkaMessageKey;
 import java.util.Map;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+// Using the old validation exceptions for podam support
+// Will move to the newer ones once they're supported.
+//import javax.validation.constraints.NotBlank;
+//import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import lombok.Data;
 
-@KafkaMessageKey(properties = {"tenantId", "identifierName", "identifierValue"})
+@KafkaMessageKey(properties = {"tenantId", "resourceId"})
 @Data
 public class AttachEvent {
     @NotBlank
-    String identifierName;
-
-    @NotBlank
-    String identifierValue;
+    String resourceId;
 
     @NotEmpty
     Map<String,String> labels;
