@@ -31,7 +31,6 @@ public class ResourceInfo {
     @NotBlank
     String resourceId;
 
-    @NotEmpty
     Map<String,String> labels;
 
     @NotBlank

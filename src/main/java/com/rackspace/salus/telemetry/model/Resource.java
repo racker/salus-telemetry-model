@@ -39,9 +39,8 @@ public class Resource implements Serializable {
     @Column(name="resource_id")
     String resourceId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="resource_labels", joinColumns = @JoinColumn(name="id"))
-    @NotNull
     Map<String,String> labels;
 
     @NotBlank
@@ -49,5 +48,5 @@ public class Resource implements Serializable {
     String tenantId;
 
     @NotNull
-    boolean presenceMonitoringEnabled;
+    Boolean presenceMonitoringEnabled;
 }
