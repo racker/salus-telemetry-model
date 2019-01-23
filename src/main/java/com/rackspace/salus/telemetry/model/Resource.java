@@ -21,7 +21,10 @@ package com.rackspace.salus.telemetry.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+// Using the old validation exceptions for podam support
+// Will move to the newer ones once they're supported.
+//import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Map;
