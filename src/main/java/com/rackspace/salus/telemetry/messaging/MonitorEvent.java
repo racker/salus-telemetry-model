@@ -6,11 +6,17 @@ import lombok.Data;
 @Data
 public class MonitorEvent {
 
-    public boolean presenceMonitoringEnabled;
+    String ambassadorId;
+    String envoyId;
 
+    //checkData
+    Map<String, String> labels;
+
+    //tenantOfEnvoy
     String tenantId;
 
-    String resourceId;
+    String operationType;
 
-    public Map<OperationType, Map<String, String>> operationOrganizedLabels;
+    //Optional: for remote checks
+    String customerTenantTag;
 }
