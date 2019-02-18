@@ -15,7 +15,7 @@ public class MonitorEvent {
     //tenantOfEnvoy
     String tenantId;
 
-    String operationType;
+    OperationType operationType;
 
     //Optional: for remote checks
     String customerTenantTag;
