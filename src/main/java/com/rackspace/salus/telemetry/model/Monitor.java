@@ -52,6 +52,7 @@ public class Monitor implements Serializable {
     @NotBlank
     String content;
 
+    @NotNull
     @Column(name="agent_type")
     AgentType agentType;
 
