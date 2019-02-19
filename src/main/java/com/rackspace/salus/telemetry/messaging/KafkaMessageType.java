@@ -24,5 +24,6 @@ public enum KafkaMessageType {
     EVENT,
     CHECKS,
     ATTACH,
-    RESOURCE
+    RESOURCE,
+    MONITOR
 }
