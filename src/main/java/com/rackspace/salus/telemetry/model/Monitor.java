@@ -26,8 +26,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Map;
 
-import static com.rackspace.salus.telemetry.model.AgentType.REMOTE;
-
 @Entity
 @Table(name = "monitors",
         uniqueConstraints={@UniqueConstraint(columnNames={"tenant_id", "monitor_id"})})

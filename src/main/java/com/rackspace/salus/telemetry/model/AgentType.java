@@ -20,6 +20,5 @@ package com.rackspace.salus.telemetry.model;
 
 public enum AgentType {
     TELEGRAF,
-    FILEBEAT,
-    REMOTE
+    FILEBEAT
 }
