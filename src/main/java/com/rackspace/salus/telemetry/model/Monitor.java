@@ -52,5 +52,12 @@ public class Monitor implements Serializable {
     @NotBlank
     String content;
 
-    AgentType agentType = REMOTE;
+    @Column(name="agent_type")
+    AgentType agentType;
+
+    @Column(name="target_tenant")
+    String targetTenant;
+
+    @Column(name="selector_scope")
+    ConfigSelectorScope selectorScope;
 }

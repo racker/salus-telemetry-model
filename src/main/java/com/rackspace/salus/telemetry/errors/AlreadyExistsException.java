@@ -16,6 +16,6 @@
 
 package com.rackspace.salus.telemetry.errors;
 
-public class MonitorAlreadyExists extends RuntimeException {
-    public MonitorAlreadyExists(String message) { super(message);};
+public class AlreadyExistsException extends RuntimeException {
+    public AlreadyExistsException(String message) { super(message);};
 }
