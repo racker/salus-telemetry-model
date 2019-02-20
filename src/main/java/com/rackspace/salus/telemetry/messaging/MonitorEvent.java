@@ -25,9 +25,18 @@ public class MonitorEvent {
 
     public MonitorEvent setFromMonitor(Monitor monitor) {
         tenantId = monitor.getTenantId();
-        targetTenant = monitor.getTargetTenant();
-        config.setContent(monitor.getContent());
-        config.setLabels(monitor.getLabels());
+        if(monitor.getTargetTenant() != null) {
+            targetTenant = monitor.getTargetTenant();
+        }
+        if(config == null) {
+            config = new AgentConfig();
+        }
+        if(monitor.getContent() != null) {
+            config.setContent(monitor.getContent());
+        }
+        if(monitor.getLabels() != null) {
+            config.setLabels(monitor.getLabels());
+        }
         return this;
     }
 }
