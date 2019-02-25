@@ -28,13 +28,15 @@ import java.util.Map;
 import java.util.UUID;
 
 @Entity
-@Table(name = "monitors",
-        uniqueConstraints={@UniqueConstraint(columnNames={"tenant_id", "monitor_id"})})
+@Table(name = "monitors")
 @Data
 public class Monitor implements Serializable {
     @Id
     @GeneratedValue
     UUID id;
+
+    @Column(name="monitor_name")
+    String monitorName;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="monitor_labels", joinColumns = @JoinColumn(name="id"))
