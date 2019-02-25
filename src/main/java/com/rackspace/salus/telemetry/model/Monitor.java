@@ -33,6 +33,7 @@ import java.util.UUID;
 public class Monitor implements Serializable {
     @Id
     @GeneratedValue
+    @Column(unique=true, columnDefinition = "BINARY(16)")
     UUID id;
 
     @Column(name="monitor_name")
