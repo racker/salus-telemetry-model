@@ -25,6 +25,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.UUID;
 
 @Entity
 @Table(name = "monitors",
@@ -33,11 +34,7 @@ import java.util.Map;
 public class Monitor implements Serializable {
     @Id
     @GeneratedValue
-    Long id;
-
-    @NotNull
-    @Column(name="monitor_id")
-    String monitorId;
+    UUID id;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="monitor_labels", joinColumns = @JoinColumn(name="id"))
