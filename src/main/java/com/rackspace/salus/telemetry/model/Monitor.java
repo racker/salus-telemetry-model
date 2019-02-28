@@ -25,19 +25,19 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.UUID;
 
 @Entity
-@Table(name = "monitors",
-        uniqueConstraints={@UniqueConstraint(columnNames={"tenant_id", "monitor_id"})})
+@Table(name = "monitors")
 @Data
 public class Monitor implements Serializable {
     @Id
     @GeneratedValue
-    Long id;
+    @org.hibernate.annotations.Type(type="uuid-char")
+    UUID id;
 
-    @NotNull
-    @Column(name="monitor_id")
-    String monitorId;
+    @Column(name="monitor_name")
+    String monitorName;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="monitor_labels", joinColumns = @JoinColumn(name="id"))
