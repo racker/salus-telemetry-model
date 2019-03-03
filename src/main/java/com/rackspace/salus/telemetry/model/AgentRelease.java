@@ -16,7 +16,7 @@
 
 package com.rackspace.salus.telemetry.model;
 
-import java.util.List;
+import java.util.Map;
 import lombok.Data;
 
 @Data
@@ -30,7 +30,7 @@ public class AgentRelease {
     /**
      * The labels <code>os</code> and <code>arch</code> are required.
      */
-    List<Label> labels;
+    Map<String,String> labels;
 
     String url;
 

@@ -16,10 +16,30 @@
 
 package com.rackspace.salus.telemetry.model;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.Data;
 
 @Data
 public class Label {
     String name;
     String value;
+
+    public static Map<String, String> convertToMap(List<Label> labels) {
+        if (labels == null) {
+            return null;
+        }
+        return labels.stream()
+            .collect(Collectors.toMap(Label::getName, Label::getValue));
+    }
+
+    public static List<Label> convertToLabelList(Map<String, String> labels) {
+        if (labels == null) {
+            return null;
+        }
+        return labels.entrySet().stream()
+            .map(entry -> new Label().setName(entry.getKey()).setValue(entry.getValue()))
+            .collect(Collectors.toList());
+    }
 }
