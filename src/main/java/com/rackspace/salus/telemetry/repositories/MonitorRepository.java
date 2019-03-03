@@ -19,6 +19,8 @@ package com.rackspace.salus.telemetry.repositories;
 import com.rackspace.salus.telemetry.model.Monitor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.UUID;
 
-public interface MonitorRepository extends PagingAndSortingRepository<Monitor, Long> {
+
+public interface MonitorRepository extends PagingAndSortingRepository<Monitor, UUID> {
 }
