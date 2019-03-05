@@ -16,6 +16,7 @@
 
 package com.rackspace.salus.telemetry.model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -53,5 +54,15 @@ public class PagedContent<T> {
     );
 
     return converted;
+  }
+
+  public static <T> PagedContent<T> ofSingleton(T content) {
+    return new PagedContent<T>()
+        .setContent(Collections.singletonList(content))
+        .setNumber(0)
+        .setTotalPages(1)
+        .setTotalElements(1)
+        .setLast(true)
+        .setFirst(true);
   }
 }
