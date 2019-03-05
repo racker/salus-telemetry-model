@@ -53,6 +53,9 @@ public class MonitorEvent {
         if(monitor.getLabels() != null) {
             config.setLabels(monitor.getLabels());
         }
+        if (monitor.getAgentType() != null) {
+            config.setAgentType(monitor.getAgentType());
+        }
         return this;
     }
 }
