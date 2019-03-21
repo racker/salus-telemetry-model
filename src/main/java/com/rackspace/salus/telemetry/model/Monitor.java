@@ -52,11 +52,13 @@ public class Monitor implements Serializable {
 
     @NotNull
     @Column(name="agent_type")
+    @Enumerated(EnumType.STRING)
     AgentType agentType;
 
     @Column(name="target_tenant")
     String targetTenant;
 
     @Column(name="selector_scope")
+    @Enumerated(EnumType.STRING)
     ConfigSelectorScope selectorScope;
 }
