@@ -35,7 +35,7 @@ public class LabelNamespacesTest {
   @Test
   public void testValidateUserLabel_invalid() {
     assertThat(
-        LabelNamespaces.validateUserLabel(LabelNamespaces.DISCOVERED + ".os"),
+        LabelNamespaces.validateUserLabel(LabelNamespaces.AGENT + ".os"),
         is(false)
     );
   }

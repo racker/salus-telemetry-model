@@ -23,9 +23,9 @@ import org.springframework.util.Assert;
 public class LabelNamespaces {
 
   /**
-   * Scopes the labels that were discovered by an Envoy and reported during attachment
+   * Scopes the labels that were provided by an Envoy during attachment
    */
-  public static final String DISCOVERED = "discovered";
+  public static final String AGENT = "agent";
 
   /**
    * Scopes the tags of the metrics ingested into the Event Engine that were fields originating
@@ -41,7 +41,7 @@ public class LabelNamespaces {
 
   private static final Set<String> ourNamespaces = new HashSet<>();
   static {
-    ourNamespaces.add(DISCOVERED);
+    ourNamespaces.add(AGENT);
     ourNamespaces.add(EVENT_ENGINE_TAGS);
     ourNamespaces.add(MONITORING_SYSTEM_METADATA);
   }
