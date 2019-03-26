@@ -33,10 +33,17 @@ public class LabelNamespaces {
    */
   public static final String EVENT_ENGINE_TAGS = "system";
 
+  /**
+   * Scopes the tags of the metrics ingested into the Event Engine that were supplied via the
+   * system metadata.
+   */
+  public static final String MONITORING_SYSTEM_METADATA = "monitoring_system.metadata";
+
   private static final Set<String> ourNamespaces = new HashSet<>();
   static {
     ourNamespaces.add(DISCOVERED);
     ourNamespaces.add(EVENT_ENGINE_TAGS);
+    ourNamespaces.add(MONITORING_SYSTEM_METADATA);
   }
 
   /**
