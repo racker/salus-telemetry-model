@@ -61,4 +61,6 @@ public class Monitor implements Serializable {
     @Column(name="selector_scope")
     @Enumerated(EnumType.STRING)
     ConfigSelectorScope selectorScope;
+
+    String[] zones;
 }

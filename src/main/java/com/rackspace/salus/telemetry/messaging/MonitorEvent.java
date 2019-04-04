@@ -30,12 +30,8 @@ public class MonitorEvent {
     //tenantOfEnvoy
     String tenantId;
 
-    OperationType operationType;
-
     //Optional: for remote checks
     String targetTenant;
-
-    AgentConfig config;
 
 
     public MonitorEvent setFromMonitor(Monitor monitor) {
@@ -43,18 +39,6 @@ public class MonitorEvent {
         monitorId = monitor.getId().toString();
         if(monitor.getTargetTenant() != null) {
             targetTenant = monitor.getTargetTenant();
-        }
-        if(config == null) {
-            config = new AgentConfig();
-        }
-        if(monitor.getContent() != null) {
-            config.setContent(monitor.getContent());
-        }
-        if(monitor.getLabels() != null) {
-            config.setLabels(monitor.getLabels());
-        }
-        if (monitor.getAgentType() != null) {
-            config.setAgentType(monitor.getAgentType());
         }
         return this;
     }

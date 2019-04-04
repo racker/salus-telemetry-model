@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.messaging;
+package com.rackspace.salus.telemetry.repositories;
 
-import java.util.Map;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import com.rackspace.salus.telemetry.model.BoundMonitor;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.Repository;
 
-import com.rackspace.salus.common.messaging.KafkaMessageKey;
-import com.rackspace.salus.telemetry.model.Resource;
-import lombok.Data;
 
-@Data
-public class ResourceEvent {
-    @NotBlank
-    String resourceId;
+
+public interface BoundMonitorRepository extends CrudRepository<BoundMonitor, BoundMonitor.Id> {
 }
