@@ -30,42 +30,41 @@ import java.util.UUID;
 // Will move to the newer ones once they're supported.
 //import javax.validation.constraints.NotBlank;
 
-@Entity @IdClass(BoundMonitor.Id.class)
-@Table(name = "boundMonitor",
+@Entity @IdClass(BoundMonitor.PrimaryKey.class)
+@Table(name = "bound_monitors",
         uniqueConstraints={@UniqueConstraint(columnNames={"monitor_id","tenant_id", "resource_id", "zone"})})
 @Data
 public class BoundMonitor implements Serializable {
-    public class Id {
-        UUID monitorId;
-        String tenantId;
-        String resourceId;
-        String zone;
-    }
+  @Data
+  public static class PrimaryKey implements Serializable {
+    UUID monitorId;
+    String tenantId;
+    String resourceId;
+    String zone;
+ }
     @javax.persistence.Id
     @NotNull
     @org.hibernate.annotations.Type(type="uuid-char")
-    @ManyToOne
+    @Column(name="monitor_id", length= 100)
     UUID monitorId;
 
     @javax.persistence.Id
     @NotBlank
-    @Column(name="tenant_id")
+    @Column(name="tenant_id", length=100)
     String tenantId;
 
     @javax.persistence.Id
     @NotNull
-    @Column(name="resource_id")
+    @Column(name="resource_id", length=100)
     String resourceId;
 
     @Column(name="resolved_template")
     String resolvedTemplate;
 
     @javax.persistence.Id
-    @org.hibernate.annotations.Index(name="zone")
+    @Column(name="zone", length=100)
     String zone;
 
-    @org.hibernate.annotations.Index(name="envoy_id")
     @Column(name="envoy_id")
     String envoyId;
-
 }
