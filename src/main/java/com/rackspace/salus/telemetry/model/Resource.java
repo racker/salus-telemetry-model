@@ -54,6 +54,4 @@ public class Resource implements Serializable {
     Boolean presenceMonitoringEnabled;
 
     String region;
-
-
 }

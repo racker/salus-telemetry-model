@@ -19,7 +19,5 @@ package com.rackspace.salus.telemetry.repositories;
 import com.rackspace.salus.telemetry.model.BoundMonitor;
 import org.springframework.data.repository.CrudRepository;
 
-
-
 public interface BoundMonitorRepository extends CrudRepository<BoundMonitor, BoundMonitor.PrimaryKey> {
 }
