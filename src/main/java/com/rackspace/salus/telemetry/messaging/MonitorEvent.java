@@ -16,7 +16,6 @@
 
 package com.rackspace.salus.telemetry.messaging;
 
-import com.rackspace.salus.telemetry.model.AgentConfig;
 import com.rackspace.salus.telemetry.model.Monitor;
 import lombok.Data;
 
@@ -29,6 +28,8 @@ public class MonitorEvent {
 
     //tenantOfEnvoy
     String tenantId;
+
+    String resourceId;
 
     //Optional: for remote checks
     String targetTenant;

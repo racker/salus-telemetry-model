@@ -27,5 +27,8 @@ import lombok.Data;
 @Data
 public class ResourceEvent {
     @NotBlank
+    String tenantId;
+
+    @NotBlank
     String resourceId;
 }
