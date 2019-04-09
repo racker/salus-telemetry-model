@@ -24,6 +24,7 @@ import javax.persistence.*;
 import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -61,4 +62,7 @@ public class Monitor implements Serializable {
     @Column(name="selector_scope")
     @Enumerated(EnumType.STRING)
     ConfigSelectorScope selectorScope;
+
+    @ElementCollection
+    List<String> zones;
 }

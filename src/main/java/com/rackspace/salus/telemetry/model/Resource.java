@@ -52,4 +52,6 @@ public class Resource implements Serializable {
 
     @NotNull
     Boolean presenceMonitoringEnabled;
+
+    String region;
 }
