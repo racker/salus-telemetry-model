@@ -41,9 +41,6 @@ public class MonitorEvent {
     public MonitorEvent setFromMonitor(Monitor monitor) {
         tenantId = monitor.getTenantId();
         monitorId = monitor.getId().toString();
-        if(monitor.getTargetTenant() != null) {
-            targetTenant = monitor.getTargetTenant();
-        }
         if(config == null) {
             config = new AgentConfig();
         }

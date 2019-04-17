@@ -18,15 +18,24 @@
 
 package com.rackspace.salus.telemetry.model;
 
-import lombok.Data;
-
-import javax.persistence.*;
-import org.hibernate.validator.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "monitors")
@@ -55,9 +64,6 @@ public class Monitor implements Serializable {
     @Column(name="agent_type")
     @Enumerated(EnumType.STRING)
     AgentType agentType;
-
-    @Column(name="target_tenant")
-    String targetTenant;
 
     @Column(name="selector_scope")
     @Enumerated(EnumType.STRING)

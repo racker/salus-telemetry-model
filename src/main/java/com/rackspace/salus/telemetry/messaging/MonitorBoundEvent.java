@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Rackspace US, Inc.
+ * Copyright 2019 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.repositories;
+package com.rackspace.salus.telemetry.messaging;
 
-import com.rackspace.salus.telemetry.model.Resource;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import lombok.Data;
 
-
-public interface ResourceRepository extends PagingAndSortingRepository<Resource, Long> {
+/**
+ * Indicates that the given envoy has one or more monitors that have changed binding
+ */
+@Data
+public class MonitorBoundEvent {
+  OperationType operationType;
+  String envoyId;
 }

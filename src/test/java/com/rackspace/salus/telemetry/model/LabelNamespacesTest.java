@@ -65,4 +65,16 @@ public class LabelNamespacesTest {
   public void testApplyNamespace_emptyLabel() {
     LabelNamespaces.applyNamespace("ns", "");
   }
+
+  @Test
+  public void testHasNamespace() {
+    assertThat(
+        LabelNamespaces.labelHasNamespace("agent.env", "agent"),
+        equalTo(true)
+    );
+    assertThat(
+        LabelNamespaces.labelHasNamespace("customOne", "agent"),
+        equalTo(false)
+    );
+  }
 }
