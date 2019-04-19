@@ -50,8 +50,8 @@ public class Monitor implements Serializable {
     String monitorName;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name="monitor_labels", joinColumns = @JoinColumn(name="id"))
-    Map<String,String> labels;
+    @CollectionTable(name="monitor_label_selectors", joinColumns = @JoinColumn(name="id"))
+    Map<String,String> labelSelector;
 
     @NotBlank
     @Column(name="tenant_id")

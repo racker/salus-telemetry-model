@@ -47,8 +47,8 @@ public class MonitorEvent {
         if(monitor.getContent() != null) {
             config.setContent(monitor.getContent());
         }
-        if(monitor.getLabels() != null) {
-            config.setLabels(monitor.getLabels());
+        if(monitor.getLabelSelector() != null) {
+            config.setLabels(monitor.getLabelSelector());
         }
         if (monitor.getAgentType() != null) {
             config.setAgentType(monitor.getAgentType());
