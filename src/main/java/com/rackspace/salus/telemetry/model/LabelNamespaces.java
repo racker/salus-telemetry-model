@@ -40,6 +40,8 @@ public class LabelNamespaces {
   public static final String MONITORING_SYSTEM_METADATA = "monitoring_system.metadata";
 
   private static final Set<String> ourNamespaces = new HashSet<>();
+  private static final String DELIM = ".";
+
   static {
     ourNamespaces.add(AGENT);
     ourNamespaces.add(EVENT_ENGINE_TAGS);
@@ -55,7 +57,7 @@ public class LabelNamespaces {
   public static String applyNamespace(String namespace, String labelName) {
     Assert.hasText(namespace, "namespace is required");
     Assert.hasText(labelName, "labelName is required");
-    return namespace + "." + labelName;
+    return namespace + DELIM + labelName;
   }
 
   /**
@@ -66,7 +68,11 @@ public class LabelNamespaces {
   public static boolean validateUserLabel(String label) {
     Assert.notNull(label, "label cannot be null");
     return ourNamespaces.stream()
-        .noneMatch(namespace -> label.startsWith(namespace + "."));
+        .noneMatch(namespace -> label.startsWith(namespace + DELIM));
+  }
+
+  public static boolean labelHasNamespace(String label, String namespace) {
+    return label.startsWith(namespace + DELIM);
   }
 
   private LabelNamespaces() {}
