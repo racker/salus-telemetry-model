@@ -27,14 +27,8 @@ import lombok.Data;
 @Data
 public class ResourceEvent {
     @NotBlank
-    Resource resource;
-
-    @NotNull
-    Map<String,String> oldLabels;
+    String tenantId;
 
     @NotBlank
-    OperationType operation;
-
-    @NotNull
-    boolean presenceMonitorChange;
+    String resourceId;
 }
