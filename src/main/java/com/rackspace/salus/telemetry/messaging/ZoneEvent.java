@@ -16,12 +16,21 @@
 
 package com.rackspace.salus.telemetry.messaging;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 
-/**
- * Indicates that the given envoy has one or more monitors that have changed binding
- */
 @Data
-public class MonitorBoundEvent {
-  String envoyId;
+@JsonTypeInfo(use = Id.MINIMAL_CLASS, property = "type")
+public abstract class ZoneEvent {
+
+  @NotEmpty
+  String zoneId;
+
+  /**
+   * The tenant owning the specified zone or null if it is a public zone.
+   */
+  String tenantId;
+
 }

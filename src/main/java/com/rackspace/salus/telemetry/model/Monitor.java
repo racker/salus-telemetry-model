@@ -69,6 +69,6 @@ public class Monitor implements Serializable {
     @Enumerated(EnumType.STRING)
     ConfigSelectorScope selectorScope;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     List<String> zones;
 }

@@ -16,12 +16,8 @@
 
 package com.rackspace.salus.telemetry.messaging;
 
-import lombok.Data;
-
 /**
- * Indicates that the given envoy has one or more monitors that have changed binding
+ * Indicates that a new Envoy-Resource has registered in a zone.
  */
-@Data
-public class MonitorBoundEvent {
-  String envoyId;
+public class NewResourceZoneEvent extends ZoneEvent {
 }

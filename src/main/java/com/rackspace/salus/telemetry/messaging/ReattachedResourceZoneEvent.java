@@ -17,11 +17,14 @@
 package com.rackspace.salus.telemetry.messaging;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
- * Indicates that the given envoy has one or more monitors that have changed binding
+ * Indicates that an Envoy-Resource has reattached to a pre-existing resource entry in a zone.
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class MonitorBoundEvent {
-  String envoyId;
+public class ReattachedResourceZoneEvent extends ZoneEvent {
+  String fromEnvoyId;
+  String toEnvoyId;
 }
