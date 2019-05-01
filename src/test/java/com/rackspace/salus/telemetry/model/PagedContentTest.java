@@ -16,12 +16,17 @@
 
 package com.rackspace.salus.telemetry.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 public class PagedContentTest {
 
@@ -37,12 +42,31 @@ public class PagedContentTest {
 
     final PagedContent<String> converted = original.map(integer -> Integer.toString(integer));
 
-    assertEquals(Arrays.asList("1", "3", "5", "7", "9"), converted.getContent());
-    assertTrue(converted.isFirst());
-    assertFalse(converted.isLast());
-    assertEquals(3, converted.getNumber());
-    assertEquals(300, converted.getTotalElements());
-    assertEquals(60, converted.getTotalPages());
+    assertThat(converted.getContent(), hasSize(5));
+    assertThat(converted.getContent(), contains("1", "3", "5", "7", "9"));
+    assertThat(converted.isFirst(), equalTo(true));
+    assertThat(converted.isLast(), equalTo(false));
+    assertThat(converted.getNumber(), equalTo(3));
+    assertThat(converted.getTotalElements(), equalTo(300L));
+    assertThat(converted.getTotalPages(), equalTo(60));
+  }
 
+  @Test
+  public void testFromPage() {
+
+    final List<Integer> content = Arrays.asList(1, 3, 5, 7, 9);
+
+    final PageImpl<Integer> page = new PageImpl<>(content, PageRequest.of(3, 5), 20);
+
+    final PagedContent<Integer> result = PagedContent.fromPage(page);
+
+    assertThat(result, notNullValue());
+    assertThat(result.getContent(), hasSize(5));
+    assertThat(result.getContent(), contains(1,3,5,7,9));
+    assertThat(result.isFirst(), equalTo(false));
+    assertThat(result.isLast(), equalTo(true));
+    assertThat(result.getNumber(), equalTo(3));
+    assertThat(result.getTotalElements(), equalTo(20L));
+    assertThat(result.getTotalPages(), equalTo(4));
   }
 }
