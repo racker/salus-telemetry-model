@@ -70,5 +70,6 @@ public class Monitor implements Serializable {
     ConfigSelectorScope selectorScope;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name="monitor_zones", joinColumns = @JoinColumn(name="id"))
     List<String> zones;
 }
