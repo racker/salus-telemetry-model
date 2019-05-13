@@ -41,7 +41,7 @@ public class ZoneEventTest {
 
   @Test
   public void testDeserialize_NewResourceZoneEvent() throws IOException {
-    String content = "{\"type\": \".NewResourceZoneEvent\", \"zoneId\": \"z-1\", \"tenantId\": \"t-1\"}";
+    String content = "{\"type\": \".NewResourceZoneEvent\", \"zoneName\": \"z-1\", \"tenantId\": \"t-1\"}";
 
     final ZoneEvent event = json.parseObject(content);
     assertThat(event, instanceOf(NewResourceZoneEvent.class));
@@ -54,7 +54,7 @@ public class ZoneEventTest {
   @Test
   public void testDeserialize_ReattachedResourceZoneEvent() throws IOException {
     String content = "{"
-        + "\"type\": \".ReattachedResourceZoneEvent\", \"zoneId\": \"z-1\", \"tenantId\": \"t-1\","
+        + "\"type\": \".ReattachedResourceZoneEvent\", \"zoneName\": \"z-1\", \"tenantId\": \"t-1\","
         + "\"fromEnvoyId\":\"e-1\", \"toEnvoyId\":\"e-2\""
         + "}";
 
