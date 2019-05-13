@@ -35,7 +35,7 @@ public class AgentConfig {
     String content;
 
     @NotNull
-    ConfigSelectorScope selectorScope = ConfigSelectorScope.ALL_OF;
+    ConfigSelectorScope selectorScope = ConfigSelectorScope.LOCAL;
 
     @NotEmpty
     Map<String,String> labels;

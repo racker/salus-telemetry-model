@@ -47,7 +47,7 @@ public class ZoneEventTest {
     assertThat(event, instanceOf(NewResourceZoneEvent.class));
 
     final NewResourceZoneEvent casted = (NewResourceZoneEvent) event;
-    assertThat(casted.getZoneId(), equalTo("z-1"));
+    assertThat(casted.getZoneName(), equalTo("z-1"));
     assertThat(casted.getTenantId(), equalTo("t-1"));
   }
 
@@ -62,7 +62,7 @@ public class ZoneEventTest {
     assertThat(event, instanceOf(ReattachedResourceZoneEvent.class));
 
     final ReattachedResourceZoneEvent casted = (ReattachedResourceZoneEvent) event;
-    assertThat(casted.getZoneId(), equalTo("z-1"));
+    assertThat(casted.getZoneName(), equalTo("z-1"));
     assertThat(casted.getTenantId(), equalTo("t-1"));
     assertThat(casted.getFromEnvoyId(), equalTo("e-1"));
     assertThat(casted.getToEnvoyId(), equalTo("e-2"));

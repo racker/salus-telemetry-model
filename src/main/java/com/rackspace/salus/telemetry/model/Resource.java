@@ -66,6 +66,7 @@ public class Resource implements Serializable {
      * Labels are an indexed and query'able aspect of resources that are used for monitor
      * matching.
      */
+    @ValidLabelKeys
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="resource_labels", joinColumns = @JoinColumn(name="id"))
     Map<String,String> labels;

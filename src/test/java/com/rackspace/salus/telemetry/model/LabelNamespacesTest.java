@@ -35,7 +35,7 @@ public class LabelNamespacesTest {
   @Test
   public void testValidateUserLabel_invalid() {
     assertThat(
-        LabelNamespaces.validateUserLabel(LabelNamespaces.AGENT + ".os"),
+        LabelNamespaces.validateUserLabel(LabelNamespaces.AGENT + "_os"),
         is(false)
     );
   }
@@ -48,7 +48,7 @@ public class LabelNamespacesTest {
   @Test
   public void testApplyNamespace() {
     final String result = LabelNamespaces.applyNamespace("ns", "name");
-    assertThat(result, equalTo("ns.name"));
+    assertThat(result, equalTo("ns_name"));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -69,7 +69,7 @@ public class LabelNamespacesTest {
   @Test
   public void testHasNamespace() {
     assertThat(
-        LabelNamespaces.labelHasNamespace("agent.env", "agent"),
+        LabelNamespaces.labelHasNamespace("agent_env", "agent"),
         equalTo(true)
     );
     assertThat(

@@ -26,7 +26,7 @@ import lombok.Data;
 public abstract class ZoneEvent {
 
   @NotEmpty
-  String zoneId;
+  String zoneName;
 
   /**
    * The tenant owning the specified zone or null if it is a public zone.

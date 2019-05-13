@@ -19,6 +19,6 @@
 package com.rackspace.salus.telemetry.model;
 
 public enum ConfigSelectorScope {
-    ALL_OF,
+    LOCAL,
     REMOTE
 }
