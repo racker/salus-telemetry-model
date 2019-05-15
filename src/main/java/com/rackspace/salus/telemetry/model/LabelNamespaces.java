@@ -37,7 +37,7 @@ public class LabelNamespaces {
    * Scopes the tags of the metrics ingested into the Event Engine that were supplied via the
    * system metadata.
    */
-  public static final String MONITORING_SYSTEM_METADATA = "resource_metadata";
+  public static final String MONITORING_SYSTEM_METADATA = "system_metadata";
 
   private static final Set<String> ourNamespaces = new HashSet<>();
   private static final String DELIM = "_";
