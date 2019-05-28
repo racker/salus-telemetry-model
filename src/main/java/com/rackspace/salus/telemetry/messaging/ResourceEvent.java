@@ -16,19 +16,32 @@
 
 package com.rackspace.salus.telemetry.messaging;
 
-import java.util.Map;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import com.rackspace.salus.common.messaging.KafkaMessageKey;
-import com.rackspace.salus.telemetry.model.Resource;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
+@KafkaMessageKey(properties = {"tenantId", "resourceId"})
 public class ResourceEvent {
     @NotBlank
     String tenantId;
 
     @NotBlank
     String resourceId;
+
+    /**
+     * Indicates that the labels or metadata of the resource have changed.
+     * Label selection should and content rendering should be re-evaluated.
+     */
+    boolean labelsChanged;
+
+    /**
+     * Indicates that the resource was deleted.
+     */
+    boolean deleted;
+
+    /**
+     * When non-null, indicates that a new Envoy instance has re-attached for this resource.
+     */
+    String reattachedEnvoyId;
 }

@@ -1,0 +1,6 @@
+{
+  "type": ".ReattachedEnvoyResourceEvent",
+  "tenantId": "t-1",
+  "resourceId": "r-1",
+  "envoyId": "e-1"
+}

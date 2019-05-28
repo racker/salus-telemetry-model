@@ -1,0 +1,7 @@
+{
+  "type": ".ReattachedResourceZoneEvent",
+  "zoneName": "z-1",
+  "tenantId": "t-1",
+  "fromEnvoyId": "e-1",
+  "toEnvoyId": "e-2"
+}

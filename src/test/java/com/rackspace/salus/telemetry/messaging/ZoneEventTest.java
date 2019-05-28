@@ -32,8 +32,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @JsonTest
 public class ZoneEventTest {
+  // disable application context loading
   @Configuration
-  public static class TestConfig{}
+  public static class TestConfig{ }
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired
@@ -41,7 +42,8 @@ public class ZoneEventTest {
 
   @Test
   public void testDeserialize_NewResourceZoneEvent() throws IOException {
-    String content = "{\"type\": \".NewResourceZoneEvent\", \"zoneName\": \"z-1\", \"tenantId\": \"t-1\"}";
+    final String content =
+        TestUtils.loadContent("/ZoneEventTest/resourceZoneEvent.json");
 
     final ZoneEvent event = json.parseObject(content);
     assertThat(event, instanceOf(NewResourceZoneEvent.class));
@@ -53,10 +55,8 @@ public class ZoneEventTest {
 
   @Test
   public void testDeserialize_ReattachedResourceZoneEvent() throws IOException {
-    String content = "{"
-        + "\"type\": \".ReattachedResourceZoneEvent\", \"zoneName\": \"z-1\", \"tenantId\": \"t-1\","
-        + "\"fromEnvoyId\":\"e-1\", \"toEnvoyId\":\"e-2\""
-        + "}";
+    final String content =
+        TestUtils.loadContent("/ZoneEventTest/reattachedResourceZoneEvent.json");
 
     final ZoneEvent event = json.parseObject(content);
     assertThat(event, instanceOf(ReattachedResourceZoneEvent.class));
@@ -67,4 +67,5 @@ public class ZoneEventTest {
     assertThat(casted.getFromEnvoyId(), equalTo("e-1"));
     assertThat(casted.getToEnvoyId(), equalTo("e-2"));
   }
+
 }

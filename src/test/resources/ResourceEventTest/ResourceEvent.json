@@ -1,0 +1,6 @@
+{
+  "tenantId": "t-1",
+  "resourceId": "r-1",
+  "labelsChanged": true,
+  "reattachedEnvoyId": "e-1"
+}

@@ -1,0 +1,5 @@
+{
+  "type": ".NewResourceZoneEvent",
+  "zoneName": "z-1",
+  "tenantId": "t-1"
+}
