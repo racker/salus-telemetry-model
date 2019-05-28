@@ -25,6 +25,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class ReattachedResourceZoneEvent extends ZoneEvent {
+  String resourceId;
   String fromEnvoyId;
   String toEnvoyId;
 }

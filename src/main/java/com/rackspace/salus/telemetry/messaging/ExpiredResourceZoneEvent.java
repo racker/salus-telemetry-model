@@ -20,10 +20,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Indicates that a new Envoy-Resource has registered in a zone.
+ * Indicates that an Envoy-Resource has been disconnected for longer than the allowed timeout.
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class NewResourceZoneEvent extends ZoneEvent {
-  String resourceId;
+public class ExpiredResourceZoneEvent extends ZoneEvent {
+  String envoyId;
 }
