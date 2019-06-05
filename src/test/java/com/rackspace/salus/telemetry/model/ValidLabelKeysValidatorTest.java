@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
+import lombok.Data;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -32,6 +33,7 @@ public class ValidLabelKeysValidatorTest {
 
   private LocalValidatorFactoryBean validatorFactoryBean;
 
+  @Data
   static class DataWithLabels {
     @ValidLabelKeys
     Map<String,String> labels;
@@ -50,12 +52,8 @@ public class ValidLabelKeysValidatorTest {
     labels.put("agent_discovered_os", "linux");
     labels.put("simple2", "value2");
 
-    final Resource resource = new Resource()
-        .setLabels(labels)
-        .setTenantId("t-1")
-        .setResourceId("r-1")
-        .setPresenceMonitoringEnabled(true);
-    final Set<ConstraintViolation<Resource>> results = validatorFactoryBean.validate(resource);
+    final DataWithLabels data = new DataWithLabels().setLabels(labels);
+    final Set<ConstraintViolation<DataWithLabels>> results = validatorFactoryBean.validate(data);
 
     assertThat(results, equalTo(Collections.emptySet()));
   }
@@ -93,12 +91,8 @@ public class ValidLabelKeysValidatorTest {
     Map<String, String> labels = new HashMap<>();
     labels.put(labelKey, "linux");
 
-    final Resource resource = new Resource()
-        .setLabels(labels)
-        .setTenantId("t-1")
-        .setResourceId("r-1")
-        .setPresenceMonitoringEnabled(true);
-    final Set<ConstraintViolation<Resource>> results = validatorFactoryBean.validate(resource);
+    final DataWithLabels data = new DataWithLabels().setLabels(labels);
+    final Set<ConstraintViolation<DataWithLabels>> results = validatorFactoryBean.validate(data);
 
     assertThat(results.size(), equalTo(0));
   }
@@ -107,15 +101,11 @@ public class ValidLabelKeysValidatorTest {
     Map<String, String> labels = new HashMap<>();
     labels.put(labelKey, "linux");
 
-    final Resource resource = new Resource()
-        .setLabels(labels)
-        .setTenantId("t-1")
-        .setResourceId("r-1")
-        .setPresenceMonitoringEnabled(true);
-    final Set<ConstraintViolation<Resource>> results = validatorFactoryBean.validate(resource);
+    final DataWithLabels data = new DataWithLabels().setLabels(labels);
+    final Set<ConstraintViolation<DataWithLabels>> results = validatorFactoryBean.validate(data);
 
     assertThat(results.size(), equalTo(1));
-    final ConstraintViolation<Resource> violation = results.iterator().next();
+    final ConstraintViolation<DataWithLabels> violation = results.iterator().next();
     assertThat(violation.getPropertyPath().toString(), equalTo("labels"));
     assertThat(violation.getMessage(), equalTo("All label names must consist of alpha-numeric or underscore characters"));
   }
