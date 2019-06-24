@@ -17,27 +17,33 @@
 package com.rackspace.salus.telemetry.model;
 
 import java.util.Map;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class AgentRelease {
     String id;
 
+    @NotBlank
     String version;
 
+    @NotNull
     AgentType type;
 
     /**
-     * The labels <code>os</code> and <code>arch</code> are required.
+     * The labels <code>os</code> and <code>arch</code> are required. Validated by service layer.
      */
+    @NotEmpty
     Map<String,String> labels;
 
+    @NotBlank
     String url;
-
-    Checksum checksum;
 
     /**
      * Path to the agent's executable within the package
      */
+    @NotBlank
     String exe;
 }
