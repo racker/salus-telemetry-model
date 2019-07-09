@@ -19,5 +19,10 @@ package com.rackspace.salus.telemetry.messaging;
 public enum OperationType {
     CREATE,
     UPDATE,
+    /**
+     * Roughly a combination of {@link #CREATE} and {@link #UPDATE} for application use cases
+     * that need the combined semantic.
+     */
+    UPSERT,
     DELETE
 }

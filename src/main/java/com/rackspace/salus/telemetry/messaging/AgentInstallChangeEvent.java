@@ -14,36 +14,21 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.model;
+package com.rackspace.salus.telemetry.messaging;
 
-import java.util.Map;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import com.rackspace.salus.common.messaging.KafkaMessageKey;
+import com.rackspace.salus.telemetry.model.AgentType;
 import lombok.Data;
 
 @Data
-public class AgentRelease {
-    String id;
+@KafkaMessageKey(properties = {"tenantId", "resourceId"})
+public class AgentInstallChangeEvent {
+  String tenantId;
 
-    @NotBlank
-    String version;
+  String resourceId;
 
-    @NotNull
-    AgentType type;
+  OperationType op;
 
-    /**
-     * The labels <code>os</code> and <code>arch</code> are required. Validated by service layer.
-     */
-    @NotEmpty
-    Map<String,String> labels;
+  AgentType agentType;
 
-    @NotBlank
-    String url;
-
-    /**
-     * Path to the agent's executable within the package
-     */
-    @NotBlank
-    String exe;
 }
