@@ -16,6 +16,10 @@
 
 package com.rackspace.salus.telemetry.model;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableSet;
+
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.util.Assert;
@@ -39,14 +43,12 @@ public class LabelNamespaces {
    */
   public static final String MONITORING_SYSTEM_METADATA = "system_metadata";
 
-  private static final Set<String> ourNamespaces = new HashSet<>();
+  private static final Set<String> ourNamespaces = unmodifiableSet(new HashSet<>(asList(
+      AGENT,
+      EVENT_ENGINE_TAGS,
+      MONITORING_SYSTEM_METADATA
+  )));
   private static final String DELIM = "_";
-
-  static {
-    ourNamespaces.add(AGENT);
-    ourNamespaces.add(EVENT_ENGINE_TAGS);
-    ourNamespaces.add(MONITORING_SYSTEM_METADATA);
-  }
 
   /**
    * Applies the given namespace to the label name/key
@@ -73,6 +75,10 @@ public class LabelNamespaces {
 
   public static boolean labelHasNamespace(String label, String namespace) {
     return label.startsWith(namespace + DELIM);
+  }
+
+  public static Collection<String> getNamespaces() {
+    return ourNamespaces;
   }
 
   private LabelNamespaces() {}
