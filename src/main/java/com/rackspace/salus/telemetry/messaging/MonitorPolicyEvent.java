@@ -18,8 +18,10 @@ package com.rackspace.salus.telemetry.messaging;
 
 import com.rackspace.salus.common.messaging.KafkaMessageKey;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @KafkaMessageKey(properties = {"policyId", "tenantId"})
 public class MonitorPolicyEvent extends PolicyEvent {
   String monitorId;
