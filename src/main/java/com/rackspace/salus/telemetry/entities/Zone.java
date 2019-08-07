@@ -40,6 +40,9 @@ import java.util.UUID;
 
 @Data
 public class Zone implements Serializable {
+
+  public static final String PUBLIC = "_PUBLIC_";
+
   @Id
   @GeneratedValue
   @Type(type="uuid-char")

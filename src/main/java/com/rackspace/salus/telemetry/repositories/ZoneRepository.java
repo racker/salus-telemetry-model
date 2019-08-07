@@ -31,8 +31,8 @@ public interface ZoneRepository extends PagingAndSortingRepository<Zone, UUID> {
 
     @Query(
         "select z from Zone z where z.tenantId = :tenantId"
-        + " or z.tenantId = com.rackspace.salus.telemetry.etcd.types.ResolvedZone.PUBLIC"
-            + " order by FIELD(tenantId, com.rackspace.salus.telemetry.etcd.types.ResolvedZone.PUBLIC) DESC"
+        + " or z.tenantId = com.rackspace.salus.telemetry.entities.Zone.PUBLIC"
+            + " order by FIELD(tenantId, com.rackspace.salus.telemetry.entities.Zone.PUBLIC) DESC"
             + ", name ASC")
     Page<Zone> findAllAvailableForTenant(String tenantId, Pageable page);
 
