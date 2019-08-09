@@ -25,4 +25,6 @@ public interface MonitorPolicyRepository extends PagingAndSortingRepository<Moni
 
   boolean existsByScopeAndSubscopeAndName(PolicyScope policyScope, String subscope, String name);
 
+  boolean existsByMonitorId(UUID monitorId);
+
 }

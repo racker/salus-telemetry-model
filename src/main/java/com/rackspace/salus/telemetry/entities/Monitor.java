@@ -53,6 +53,9 @@ import org.hibernate.validator.constraints.NotBlank;
 })
 @Data
 public class Monitor implements Serializable {
+
+    public static final String POLICY_TENANT = "_POLICY_";
+
     @Id
     @GeneratedValue
     @org.hibernate.annotations.Type(type="uuid-char")

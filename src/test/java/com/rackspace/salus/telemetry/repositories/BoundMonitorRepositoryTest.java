@@ -131,11 +131,16 @@ public class BoundMonitorRepositoryTest {
   }
 
   private void save(Monitor monitor, String zone, String resource, String envoyId) {
+    save(monitor, "defaultTenant", zone, resource, envoyId);
+  }
+
+  private void save(Monitor monitor, String tenantId, String zone, String resource, String envoyId) {
     final Monitor retrievedMonitor = entityManager.find(Monitor.class, monitor.getId());
     assertThat(retrievedMonitor, notNullValue());
 
     entityManager.persist(new BoundMonitor()
         .setMonitor(monitor)
+        .setTenantId(tenantId)
         .setZoneName(zone)
         .setResourceId(resource)
         .setEnvoyId(envoyId)
@@ -163,6 +168,34 @@ public class BoundMonitorRepositoryTest {
     assertThat(results.getContent().get(0).getResourceId(), equalTo("r-3"));
     assertThat(results.getContent().get(1).getResourceId(), equalTo("r-4"));
     assertThat(results.getTotalElements(), equalTo(6L));
+  }
+
+  @Test
+  public void findAllByTenantIdAndMonitor_TenantId() {
+    final String POLICY_TENANT = "_POLICY_";
+    final String CUSTOMER_TENANT = "TENANT";
+    final Monitor policyMonitor = createMonitor(POLICY_TENANT, ConfigSelectorScope.LOCAL);
+    final Monitor otherMonitor = createMonitor(CUSTOMER_TENANT, ConfigSelectorScope.LOCAL);
+
+    save(policyMonitor, CUSTOMER_TENANT,"z-1","r-1", null);
+    save(policyMonitor, CUSTOMER_TENANT,"z-1", "r-2", "e-1");
+    save(otherMonitor, CUSTOMER_TENANT, "public/1", "r-2", null);
+    save(policyMonitor, CUSTOMER_TENANT, "z-1", "r-3", "e-1");
+    save(policyMonitor, "CUSTOMER_TENANT", "public/1", "r-4", null);
+    save(policyMonitor, "otherTenant1", "public/1", "r-5", "e-1");
+    save(policyMonitor, "otherTenant2", "public/2", "r-6", "e-1");
+    save(policyMonitor, "otherTenant3", "public/3", "r-7", "e-1");
+
+    final Page<BoundMonitor> results = repository
+        .findAllByTenantIdAndMonitor_TenantId(CUSTOMER_TENANT, POLICY_TENANT, PageRequest.of(0, 2));
+
+    // A full page (2) should be found for CUSTOMER_TENANT.
+    assertThat(results.getContent(), hasSize(2));
+    assertThat(results.getContent().get(0).getResourceId(), equalTo("r-1"));
+    assertThat(results.getContent().get(1).getResourceId(), equalTo("r-2"));
+
+    // All Policy Monitors for CUSTOMER_TENANT should be returned.
+    assertThat(results.getTotalElements(), equalTo(3L));
   }
 
   @Test
