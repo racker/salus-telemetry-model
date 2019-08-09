@@ -45,7 +45,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "monitors", indexes = {
-    @Index(name = "by_tenant", columnList = "tenant_id")
+    @Index(name = "monitors_by_tenant", columnList = "tenant_id")
 })
 @NamedQueries({
     @NamedQuery(name = "Monitor.getDistinctLabelSelectors",
