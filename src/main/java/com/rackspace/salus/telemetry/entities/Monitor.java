@@ -85,6 +85,9 @@ public class Monitor implements Serializable {
     @CollectionTable(name="monitor_zones", joinColumns = @JoinColumn(name="monitor_id"))
     List<String> zones;
 
+    @Column(name="resource_id")
+    String resourceId;
+
     @CreationTimestamp
     @Column(name="created_timestamp")
     Instant createdTimestamp;
