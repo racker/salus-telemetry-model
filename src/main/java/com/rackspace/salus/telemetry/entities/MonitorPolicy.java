@@ -26,7 +26,7 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "policy_monitors")
+@Table(name = "monitor_policies")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class MonitorPolicy extends Policy {

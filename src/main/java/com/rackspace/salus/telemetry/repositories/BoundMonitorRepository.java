@@ -85,6 +85,12 @@ public interface BoundMonitorRepository extends CrudRepository<BoundMonitor, Bou
   List<BoundMonitor> findAllByTenantIdAndMonitor_TenantId(String tenantId, String policyTenant);
   Page<BoundMonitor> findAllByTenantIdAndMonitor_TenantId(String tenantId, String policyTenant, Pageable page);
 
+  List<BoundMonitor> findAllByTenantIdAndMonitor_IdIn(String tenantId, Collection<UUID> monitorIds);
+  Page<BoundMonitor> findAllByTenantIdAndMonitor_IdIn(String tenantId, Collection<UUID> monitorIds, Pageable page);
+
+  List<BoundMonitor> findAllByMonitor_TenantIdAndMonitor_IdIn(String tenantId, Collection<UUID> monitorIds);
+  Page<BoundMonitor> findAllByMonitor_TenantIdAndMonitor_IdIn(String tenantId, Collection<UUID> monitorIds, Pageable page);
+
   @Query("select b from BoundMonitor b"
       + " where b.monitor.tenantId = :tenantId"
       + "  and b.resourceId = :resourceId"
