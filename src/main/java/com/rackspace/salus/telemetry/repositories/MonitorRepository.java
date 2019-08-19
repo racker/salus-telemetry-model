@@ -29,6 +29,8 @@ public interface MonitorRepository extends PagingAndSortingRepository<Monitor, U
 
     boolean existsByIdAndTenantId(UUID id, String tenantId);
 
+    List<Monitor> findByIdIn(List<UUID> ids);
+
     Optional<Monitor> findByIdAndTenantId(UUID id, String tenantId);
 
     Page<Monitor> findByTenantId(String tenantId, Pageable pageable);
