@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.repositories;
+package com.rackspace.salus.telemetry.messaging;
 
-import com.rackspace.salus.telemetry.model.PolicyScope;
-import com.rackspace.salus.telemetry.entities.MonitorPolicy;
-import java.util.Optional;
-import java.util.UUID;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import com.rackspace.salus.common.messaging.KafkaMessageKey;
+import lombok.Data;
 
-public interface MonitorPolicyRepository extends PagingAndSortingRepository<MonitorPolicy, UUID> {
-
-  boolean existsByScopeAndSubscopeAndName(PolicyScope policyScope, String subscope, String name);
-
-  boolean existsByMonitorId(UUID monitorId);
-
-  Optional<MonitorPolicy> findByMonitorId(UUID monitorId);
-
+/**
+ * Indicates details relating to a tenant have changed,
+ * which could impact the policies applied to it.
+ */
+@Data
+@KafkaMessageKey(properties = {"tenantId"})
+public class TenantPolicyChangeEvent {
+  String tenantId;
 }

@@ -17,6 +17,7 @@
 package com.rackspace.salus.telemetry.repositories;
 
 import com.rackspace.salus.telemetry.entities.Monitor;
+import java.util.Optional;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface MonitorRepository extends PagingAndSortingRepository<Monitor, UUID> {
+
+    boolean existsByIdAndTenantId(UUID id, String tenantId);
+
+    List<Monitor> findByIdIn(List<UUID> ids);
+
+    Optional<Monitor> findByIdAndTenantId(UUID id, String tenantId);
 
     Page<Monitor> findByTenantId(String tenantId, Pageable pageable);
 

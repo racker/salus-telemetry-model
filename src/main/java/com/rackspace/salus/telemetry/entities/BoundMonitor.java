@@ -31,6 +31,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.NotBlank;
 
 // Using the old validation exceptions for podam support
 // Will move to the newer ones once they're supported.
@@ -59,9 +60,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 @IdClass(BoundMonitor.PrimaryKey.class)
 @Table(name = "bound_monitors",
 indexes = {
-    @Index(name = "by_envoy_id", columnList = "envoyId"),
-    @Index(name = "by_zone_envoy", columnList = "zoneName,envoyId"),
-    @Index(name = "by_resource", columnList = "resourceId")
+    @Index(name = "by_envoy_id", columnList = "envoy_id"),
+    @Index(name = "by_zone_envoy", columnList = "zone_name,envoy_id"),
+    @Index(name = "by_resource", columnList = "resource_id")
 })
 @Data
 public class BoundMonitor implements Serializable {
@@ -75,16 +76,18 @@ public class BoundMonitor implements Serializable {
      */
     @org.hibernate.annotations.Type(type="uuid-char")
     UUID monitor;
+    String tenantId;
     String resourceId;
     String zoneName;
-
-    // resourceTenant does not need to be part of the primary key
-    // since the Monitor, via monitorId, already scopes this binding to a tenant
   }
 
   @Id
   @ManyToOne
   Monitor monitor;
+
+  @NotBlank
+  @Column(name="tenant_id")
+  String tenantId;
 
   /**
    * For remote monitors, contains the binding of a specific monitoring zone.
@@ -92,7 +95,7 @@ public class BoundMonitor implements Serializable {
    */
   @Id
   @NotNull
-  @Column(length = 100)
+  @Column(name="zone_name", length = 100)
   String zoneName;
 
   /**
@@ -101,13 +104,14 @@ public class BoundMonitor implements Serializable {
    */
   @Id
   @NotNull
-  @Column(length = 100)
+  @Column(name="resource_id", length = 100)
   String resourceId;
 
   @Lob
+  @Column(name="rendered_content")
   String renderedContent;
 
-  @Column(length = 100)
+  @Column(name="envoy_id", length = 100)
   String envoyId;
 
   @CreationTimestamp

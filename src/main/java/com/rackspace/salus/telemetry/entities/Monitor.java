@@ -45,7 +45,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "monitors", indexes = {
-    @Index(name = "by_tenant_and_resource", columnList = "tenant_id, resource_id")
+    @Index(name = "monitors_by_tenant_and_resource", columnList = "tenant_id, resource_id")
 })
 @NamedQueries({
     @NamedQuery(name = "Monitor.getDistinctLabelSelectors",
@@ -53,6 +53,9 @@ import org.hibernate.validator.constraints.NotBlank;
 })
 @Data
 public class Monitor implements Serializable {
+
+    public static final String POLICY_TENANT = "_POLICY_";
+
     @Id
     @GeneratedValue
     @org.hibernate.annotations.Type(type="uuid-char")

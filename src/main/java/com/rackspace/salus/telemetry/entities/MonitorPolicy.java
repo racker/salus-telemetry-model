@@ -16,15 +16,17 @@
 
 package com.rackspace.salus.telemetry.entities;
 
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "policy_monitors")
+@Table(name = "monitor_policies")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class MonitorPolicy extends Policy {
@@ -33,7 +35,8 @@ public class MonitorPolicy extends Policy {
   @Column(name="name")
   String name;
 
-  @NotBlank
+  @NotNull
   @Column(name="monitor_id")
-  String monitorId;
+  @org.hibernate.annotations.Type(type="uuid-char")
+  UUID monitorId;
 }

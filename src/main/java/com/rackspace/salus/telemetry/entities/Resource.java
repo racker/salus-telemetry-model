@@ -94,7 +94,7 @@ public class Resource implements Serializable {
      * Unlike labels, metadata is not indexed and not used for resource/monitor matching.
      */
     @Type(type = "json")
-    @Column(columnDefinition = "text")
+        @Column(columnDefinition = "text")
     Map<String,String> metadata;
 
     @NotBlank
