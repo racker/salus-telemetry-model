@@ -19,8 +19,12 @@ package com.rackspace.salus.telemetry.messaging;
 import com.rackspace.salus.common.messaging.KafkaMessageKey;
 import lombok.Data;
 
+/**
+ * Indicates details relating to a tenant have changed,
+ * which could impact the policies applied to it.
+ */
 @Data
 @KafkaMessageKey(properties = {"tenantId"})
-public class TenantChangeEvent {
+public class TenantPolicyChangeEvent {
   String tenantId;
 }
