@@ -45,7 +45,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "monitors", indexes = {
-    @Index(name = "monitors_by_tenant", columnList = "tenant_id")
+    @Index(name = "monitors_by_tenant", columnList = "tenant_id"),
+    @Index(name = "by_tenant_and_resource", columnList = "tenant_id, resource_id")
 })
 @NamedQueries({
     @NamedQuery(name = "Monitor.getDistinctLabelSelectors",
@@ -87,6 +88,9 @@ public class Monitor implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="monitor_zones", joinColumns = @JoinColumn(name="monitor_id"))
     List<String> zones;
+
+    @Column(name="resource_id")
+    String resourceId;
 
     @CreationTimestamp
     @Column(name="created_timestamp")
