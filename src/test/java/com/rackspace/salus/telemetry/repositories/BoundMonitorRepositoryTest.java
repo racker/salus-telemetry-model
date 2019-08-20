@@ -58,10 +58,13 @@ public class BoundMonitorRepositoryTest {
   }
 
   private static final String MONITOR_TENANT = "monitor-t-1";
+
   @Autowired
   private TestEntityManager entityManager;
+
   @Autowired
   private BoundMonitorRepository repository;
+
   private PodamFactory podamFactory = new PodamFactoryImpl();
 
   @Test
