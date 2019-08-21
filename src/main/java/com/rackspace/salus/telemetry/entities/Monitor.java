@@ -18,6 +18,7 @@ package com.rackspace.salus.telemetry.entities;
 
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
+import com.rackspace.salus.telemetry.model.LabelSelectorMethod;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
@@ -67,6 +68,11 @@ public class Monitor implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="monitor_label_selectors", joinColumns = @JoinColumn(name="monitor_id"))
     Map<String,String> labelSelector;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name="label_selector_method")
+    LabelSelectorMethod labelSelectorMethod = LabelSelectorMethod.AND;
 
     @NotBlank
     @Column(name="tenant_id")
