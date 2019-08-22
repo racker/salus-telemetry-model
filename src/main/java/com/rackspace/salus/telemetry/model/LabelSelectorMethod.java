@@ -16,6 +16,16 @@
 
 package com.rackspace.salus.telemetry.model;
 
+/**
+ * This defines the operation to be used when performing label matching queries for
+ * objects with a labelSelector field.
+ *
+ * For example, a method of AND on a Monitor means that all the labels on the Monitor must
+ * be found on the Resource for the monitor to be applied.
+ * A method of OR on a Monitor means that at least one of the labels on the Monitor must
+ * be found on the Resource for the monitor to be applied.
+ *
+ */
 public enum LabelSelectorMethod {
   AND,
   OR
