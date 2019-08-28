@@ -97,6 +97,11 @@ public class Monitor implements Serializable {
     @Column(name="resource_id")
     String resourceId;
 
+    @ElementCollection
+    @CollectionTable(name="monitor_template_variables", joinColumns = @JoinColumn(name="monitor_id"),
+        indexes = @Index(name = "monitors_by_template_variable", columnList = "monitor_id"))
+    List<String> templateVariables;
+
     @CreationTimestamp
     @Column(name="created_timestamp")
     Instant createdTimestamp;

@@ -19,6 +19,7 @@ package com.rackspace.salus.telemetry.repositories;
 import com.rackspace.salus.telemetry.entities.Monitor;
 import java.util.Optional;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +39,9 @@ public interface MonitorRepository extends PagingAndSortingRepository<Monitor, U
     Page<Monitor> findByTenantId(String tenantId, Pageable pageable);
 
     List<Monitor> findByTenantIdAndResourceId(String tenantId, String resourceId);
+
+    @Query("select m from Monitor m join fetch m.templateVariables where :variable member of m.templateVariables")
+    Set<Monitor> findByTemplateVariablesContaining(String variable);
 
     @Query("select m from Monitor m where m.tenantId = :tenantId and :zone member of m.zones")
     Page<Monitor> findByTenantIdAndZonesContains(String tenantId, String zone, Pageable page);
