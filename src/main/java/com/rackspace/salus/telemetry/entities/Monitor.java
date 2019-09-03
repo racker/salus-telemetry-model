@@ -20,6 +20,7 @@ import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.LabelSelectorMethod;
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +97,9 @@ public class Monitor implements Serializable {
 
     @Column(name="resource_id")
     String resourceId;
+
+    @Column(name = "monitoring_interval") // just "interval" conflicts with SQL identifiers
+    Duration interval;
 
     @CreationTimestamp
     @Column(name="created_timestamp")
