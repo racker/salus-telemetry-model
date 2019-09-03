@@ -19,6 +19,7 @@ package com.rackspace.salus.telemetry.entities;
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.LabelSelectorMethod;
+import com.rackspace.salus.telemetry.model.MonitorType;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.Instant;
