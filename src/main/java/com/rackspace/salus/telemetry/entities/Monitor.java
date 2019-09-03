@@ -83,6 +83,11 @@ public class Monitor implements Serializable {
     String content;
 
     @NotNull
+    @Column(name="monitor_type")
+    @Enumerated(EnumType.STRING)
+    MonitorType monitorType;
+
+    @NotNull
     @Column(name="agent_type")
     @Enumerated(EnumType.STRING)
     AgentType agentType;
