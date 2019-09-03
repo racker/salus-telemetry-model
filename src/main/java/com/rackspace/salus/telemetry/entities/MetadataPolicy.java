@@ -41,7 +41,6 @@ public class MetadataPolicy extends Policy {
    * Otherwise the value should match the plugin type provided when a monitor is created.
    * e.g. ping, http_response, x509_cert, etc.
    */
-  @NotNull
   @Enumerated(EnumType.STRING)
   @Column(name="monitor_type")
   MonitorType monitorType;

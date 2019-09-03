@@ -17,12 +17,14 @@
 package com.rackspace.salus.telemetry.repositories;
 
 import com.rackspace.salus.telemetry.entities.MetadataPolicy;
+import com.rackspace.salus.telemetry.model.MonitorType;
 import com.rackspace.salus.telemetry.model.PolicyScope;
 import java.util.UUID;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface MetadataPolicyRepository extends PagingAndSortingRepository<MetadataPolicy, UUID> {
 
-  boolean existsByScopeAndSubscopeAndKey(PolicyScope policyScope, String subscope, String key);
+  boolean existsByScopeAndSubscopeAndMonitorTypeAndKey(
+      PolicyScope policyScope, String subscope, MonitorType type, String key);
 
 }
