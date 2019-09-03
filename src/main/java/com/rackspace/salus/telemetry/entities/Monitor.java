@@ -20,6 +20,7 @@ import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.LabelSelectorMethod;
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -101,6 +102,9 @@ public class Monitor implements Serializable {
     @CollectionTable(name="monitor_template_variables", joinColumns = @JoinColumn(name="monitor_id"),
         indexes = @Index(name = "monitors_by_template_variable", columnList = "monitor_id"))
     List<String> templateVariables;
+
+    @Column(name = "monitoring_interval") // just "interval" conflicts with SQL identifiers
+    Duration interval;
 
     @CreationTimestamp
     @Column(name="created_timestamp")

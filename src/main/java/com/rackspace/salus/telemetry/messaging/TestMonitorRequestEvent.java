@@ -27,4 +27,5 @@ public class TestMonitorRequestEvent {
   String envoyId;
   AgentType agentType;
   String renderedContent;
+  long timeout;
 }

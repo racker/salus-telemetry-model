@@ -104,8 +104,6 @@ public class Resource implements Serializable {
     @NotNull
     Boolean presenceMonitoringEnabled;
 
-    String region;
-
     /**
      * Indicates if this resource is or ever was associated with an Envoy.
      */
