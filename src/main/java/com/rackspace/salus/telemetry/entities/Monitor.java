@@ -88,6 +88,7 @@ public class Monitor implements Serializable {
 
     @NotNull
     @Column(name="monitor_type")
+    @Enumerated(EnumType.STRING)
     MonitorType monitorType;
 
     @NotNull
