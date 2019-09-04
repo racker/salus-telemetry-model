@@ -19,6 +19,7 @@ package com.rackspace.salus.telemetry.entities;
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.LabelSelectorMethod;
+import com.rackspace.salus.telemetry.model.MonitorType;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.Instant;
@@ -81,6 +82,11 @@ public class Monitor implements Serializable {
 
     @NotBlank
     String content;
+
+    @NotNull
+    @Column(name="monitor_type")
+    @Enumerated(EnumType.STRING)
+    MonitorType monitorType;
 
     @NotNull
     @Column(name="agent_type")

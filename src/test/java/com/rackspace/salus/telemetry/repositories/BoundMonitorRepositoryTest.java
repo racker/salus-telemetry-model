@@ -26,6 +26,7 @@ import com.rackspace.salus.telemetry.entities.BoundMonitor;
 import com.rackspace.salus.telemetry.entities.Monitor;
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
+import com.rackspace.salus.telemetry.model.MonitorType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -419,6 +420,7 @@ public class BoundMonitorRepositoryTest {
         .setSelectorScope(selectorScope)
         .setContent("{}")
         .setTenantId(monitorTenant)
+        .setMonitorType(MonitorType.http_response)
     );
   }
 }
