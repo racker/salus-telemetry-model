@@ -17,6 +17,7 @@
 package com.rackspace.salus.telemetry.repositories;
 
 import com.rackspace.salus.telemetry.entities.Monitor;
+import com.rackspace.salus.telemetry.model.MonitorType;
 import java.util.Optional;
 import java.util.List;
 import java.util.Set;
@@ -40,8 +41,21 @@ public interface MonitorRepository extends PagingAndSortingRepository<Monitor, U
 
     List<Monitor> findByTenantIdAndResourceId(String tenantId, String resourceId);
 
-    @Query("select m from Monitor m join fetch m.templateVariables where :variable member of m.templateVariables")
-    Set<Monitor> findByTemplateVariablesContaining(String variable);
+    @Query("select m from Monitor m join fetch m.monitorMetadataFields where m.tenantId = :tenantId "
+        + "and :variable member of m.monitorMetadataFields")
+    Set<Monitor> findByTenantIdAndMonitorMetadataFieldsContaining(String tenantId, String variable);
+
+    @Query("select m from Monitor m join fetch m.pluginMetadataFields where m.tenantId = :tenantId "
+        + "and :variable member of m.pluginMetadataFields")
+    Set<Monitor> findByTenantIdAndPluginMetadataFieldsContaining(String tenantId, String variable);
+
+    @Query("select m from Monitor m join fetch m.monitorMetadataFields where m.tenantId = :tenantId "
+        + "and m.monitorType = :type and :variable member of m.monitorMetadataFields")
+    Set<Monitor> findByTenantIdAndMonitorTypeAndMonitorMetadataFieldsContaining(String tenantId, MonitorType type, String variable);
+
+    @Query("select m from Monitor m join fetch m.pluginMetadataFields where m.tenantId = :tenantId "
+        + "and m.monitorType = :type and :variable member of m.pluginMetadataFields")
+    Set<Monitor> findByTenantIdAndMonitorTypeAndPluginMetadataFieldsContaining(String tenantId, MonitorType type, String variable);
 
     @Query("select m from Monitor m where m.tenantId = :tenantId and :zone member of m.zones")
     Page<Monitor> findByTenantIdAndZonesContains(String tenantId, String zone, Pageable page);

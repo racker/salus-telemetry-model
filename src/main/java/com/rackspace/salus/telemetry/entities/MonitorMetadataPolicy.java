@@ -16,47 +16,27 @@
 
 package com.rackspace.salus.telemetry.entities;
 
-import com.rackspace.salus.telemetry.model.MetadataValueType;
 import com.rackspace.salus.telemetry.model.MonitorType;
-import com.rackspace.salus.telemetry.model.TargetClassName;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "metadata_policies")
+@Table(name = "monitor_metadata_policies")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MetadataPolicy extends Policy {
-
-  @NotNull
-  @Enumerated(EnumType.STRING)
-  @Column(name="target_class_name")
-  TargetClassName targetClassName;
+public class MonitorMetadataPolicy extends MetadataPolicy {
 
   /**
-   * All values are stored as strings, so a type must also be stored
-   * so the consumers of these policies know what it should be converted to.
+   * If left blank, this will apply to all monitor types.
+   * Otherwise the value should match the plugin type provided when a monitor is created.
+   * e.g. ping, http_response, x509_cert, etc.
    */
-  @NotNull
   @Enumerated(EnumType.STRING)
-  @Column(name="value_type")
-  MetadataValueType valueType;
-
-  /**
-   * The key does not include the prefix of "rackspace.metadata."
-   */
-  @NotBlank
-  @Column(name="metadata_key")
-  String key;
-
-  @NotBlank
-  @Column(name="metadata_value")
-  String value;
+  @Column(name="monitor_type")
+  MonitorType monitorType;
 }

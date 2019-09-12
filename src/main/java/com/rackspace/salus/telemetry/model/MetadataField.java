@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.repositories;
+package com.rackspace.salus.telemetry.model;
 
-import com.rackspace.salus.telemetry.entities.MetadataPolicy;
-import com.rackspace.salus.telemetry.model.PolicyScope;
-import com.rackspace.salus.telemetry.model.TargetClassName;
-import java.util.UUID;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public interface MetadataPolicyRepository extends PagingAndSortingRepository<MetadataPolicy, UUID> {
-
-  boolean existsByScopeAndSubscopeAndTargetClassNameAndKey(
-      PolicyScope policyScope, String subscope, TargetClassName className, String key);
-
+/**
+ * This annotation helps identify which fields can be replaced by default policy metadata values.
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface MetadataField {
 }

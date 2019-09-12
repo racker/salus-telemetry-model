@@ -19,5 +19,6 @@ package com.rackspace.salus.telemetry.model;
 public enum MetadataValueType {
   DURATION,
   STRING,
+  STRING_LIST,
   INT
 }
