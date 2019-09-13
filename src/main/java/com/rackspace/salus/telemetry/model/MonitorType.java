@@ -28,7 +28,7 @@ public enum MonitorType {
   net,
   procstat,
   mysql,
-  postgres,
-  sql_server
+  postgresql,
+  sqlserver
 
 }
