@@ -81,6 +81,7 @@ public class Monitor implements Serializable {
     String tenantId;
 
     @NotBlank
+    @Column(length=1000)
     String content;
 
     @NotNull

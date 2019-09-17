@@ -26,5 +26,9 @@ public enum MonitorType {
   diskio,
   mem,
   net,
-  procstat
+  procstat,
+  mysql,
+  postgresql,
+  sqlserver
+
 }
