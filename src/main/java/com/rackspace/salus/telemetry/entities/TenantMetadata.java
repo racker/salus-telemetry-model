@@ -38,7 +38,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "tenant_metadata", indexes = {
-    @Index(name = "by_tenant", columnList = "tenant_id"),
+    @Index(name = "metadata_by_tenant", columnList = "tenant_id"),
     @Index(name = "by_account_type", columnList = "account_type")
 })
 @NamedQueries({

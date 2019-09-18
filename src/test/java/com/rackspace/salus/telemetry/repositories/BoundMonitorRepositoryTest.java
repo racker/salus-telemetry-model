@@ -27,6 +27,7 @@ import com.rackspace.salus.telemetry.entities.Monitor;
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.MonitorType;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -421,6 +422,7 @@ public class BoundMonitorRepositoryTest {
         .setContent("{}")
         .setTenantId(monitorTenant)
         .setMonitorType(MonitorType.http_response)
+        .setInterval(Duration.ofSeconds(60))
     );
   }
 }

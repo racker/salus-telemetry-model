@@ -19,6 +19,7 @@ package com.rackspace.salus.telemetry.entities;
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.LabelSelectorMethod;
+import com.rackspace.salus.telemetry.model.MetadataField;
 import com.rackspace.salus.telemetry.model.MonitorType;
 import java.io.Serializable;
 import java.time.Duration;
@@ -52,7 +53,13 @@ import org.hibernate.validator.constraints.NotBlank;
 })
 @NamedQueries({
     @NamedQuery(name = "Monitor.getDistinctLabelSelectors",
-        query = "select distinct entry(m.labelSelector) from Monitor m where m.tenantId = :tenantId")
+        query = "select distinct entry(m.labelSelector) from Monitor m where m.tenantId = :tenantId"),
+    @NamedQuery(name = "Monitor.getTenantsUsingPolicyMetadataInMonitor",
+        query = "select distinct m.tenantId from Monitor m join m.monitorMetadataFields "
+            + "where :metadataKey member of m.monitorMetadataFields"),
+    @NamedQuery(name = "Monitor.getTenantsUsingPolicyMetadataInPlugin",
+        query = "select distinct m.tenantId from Monitor m join m.pluginMetadataFields "
+            + "where :metadataKey member of m.pluginMetadataFields")
 })
 @Data
 public class Monitor implements Serializable {
@@ -100,12 +107,25 @@ public class Monitor implements Serializable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="monitor_zones", joinColumns = @JoinColumn(name="monitor_id"))
+    @MetadataField
     List<String> zones;
 
     @Column(name="resource_id")
     String resourceId;
 
+    @ElementCollection
+    @CollectionTable(name="monitor_metadata_fields", joinColumns = @JoinColumn(name="monitor_id"),
+        indexes = @Index(name = "monitors_by_metadata_field", columnList = "monitor_id"))
+    List<String> monitorMetadataFields;
+
+    @ElementCollection
+    @CollectionTable(name="plugin_metadata_fields", joinColumns = @JoinColumn(name="monitor_id"),
+        indexes = @Index(name = "monitors_by_plugin_metadata_field", columnList = "monitor_id"))
+    List<String> pluginMetadataFields;
+
+    @NotNull
     @Column(name = "monitoring_interval") // just "interval" conflicts with SQL identifiers
+    @MetadataField
     Duration interval;
 
     @CreationTimestamp
@@ -115,4 +135,13 @@ public class Monitor implements Serializable {
     @UpdateTimestamp
     @Column(name="updated_timestamp")
     Instant updatedTimestamp;
+
+    @Override
+    public String toString() {
+        // This must be overridden otherwise the lazily loaded attributes will lead to exceptions.
+        return String.format("id=%s, name=%s, tenantId=%s, monitorType=%s, resourceId=%s, "
+            + "selectorScope=%s, labelSelector=%s, labelSelectorMethod=%s, zones=%s, interval=%s",
+            id, monitorName, tenantId, monitorType, resourceId, selectorScope, labelSelector,
+            labelSelectorMethod, zones, interval);
+    }
 }
