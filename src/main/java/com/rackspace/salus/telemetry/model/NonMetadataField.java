@@ -22,9 +22,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation helps identify which fields can be replaced by default policy metadata values.
+ * This annotation helps identify which fields cannot be replaced by default policy metadata values.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface MetadataField {
+public @interface NonMetadataField {
 }
