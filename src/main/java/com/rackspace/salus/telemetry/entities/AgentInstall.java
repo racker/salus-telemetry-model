@@ -37,6 +37,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -77,6 +78,7 @@ public class AgentInstall {
   @NotNull
   @Enumerated(EnumType.STRING)
   @Column(name="label_selector_method")
+  @ColumnDefault("AND")
   LabelSelectorMethod labelSelectorMethod = LabelSelectorMethod.AND;
 
   @CreationTimestamp
