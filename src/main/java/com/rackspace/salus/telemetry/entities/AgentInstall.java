@@ -78,7 +78,7 @@ public class AgentInstall {
   @NotNull
   @Enumerated(EnumType.STRING)
   @Column(name="label_selector_method")
-  @ColumnDefault("AND")
+  @ColumnDefault("\'AND\'")
   LabelSelectorMethod labelSelectorMethod = LabelSelectorMethod.AND;
 
   @CreationTimestamp
