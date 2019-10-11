@@ -23,6 +23,7 @@ import com.rackspace.salus.telemetry.entities.AgentInstall;
 import com.rackspace.salus.telemetry.entities.AgentRelease;
 import com.rackspace.salus.telemetry.entities.BoundAgentInstall;
 import com.rackspace.salus.telemetry.model.AgentType;
+import com.rackspace.salus.telemetry.model.LabelSelectorMethod;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +57,25 @@ public class BoundAgentInstallRepositoryTest {
   public void findAllByTenantResourceAgentType() {
     final AgentRelease release = saveRelease("1.0.0", AgentType.TELEGRAF);
 
-    final AgentInstall install = saveInstall(release, Collections.singletonMap("os","linux"));
+    final AgentInstall install = saveInstall(release, Collections.singletonMap("os","linux"), LabelSelectorMethod.AND);
+
+    final BoundAgentInstall binding1 = saveBinding(install, "r-1");
+    // extra entry to verify filtering
+    saveBinding(install, "r-2");
+
+    final List<BoundAgentInstall> results = repository
+        .findAllByTenantResourceAgentType("t-1", "r-1", AgentType.TELEGRAF);
+
+    assertThat(results).containsExactlyInAnyOrder(
+        binding1
+    );
+  }
+
+  @Test
+  public void findAllByTenantResourceAgentTypeUsingOr() {
+    final AgentRelease release = saveRelease("1.0.0", AgentType.TELEGRAF);
+
+    final AgentInstall install = saveInstall(release, Collections.singletonMap("os","linux"), LabelSelectorMethod.OR);
 
     final BoundAgentInstall binding1 = saveBinding(install, "r-1");
     // extra entry to verify filtering
@@ -76,9 +95,9 @@ public class BoundAgentInstallRepositoryTest {
     final AgentRelease releaseF = saveRelease("1.1.1", AgentType.FILEBEAT);
 
     final AgentInstall installT = saveInstall(
-        releaseT, Collections.singletonMap("os", "linux"));
+        releaseT, Collections.singletonMap("os", "linux"), LabelSelectorMethod.AND);
     final AgentInstall installF = saveInstall(
-        releaseF, Collections.singletonMap("os", "linux"));
+        releaseF, Collections.singletonMap("os", "linux"), LabelSelectorMethod.AND);
 
     saveBinding(installT, "r-both");
     saveBinding(installF, "r-both");
@@ -137,12 +156,13 @@ public class BoundAgentInstallRepositoryTest {
       );
   }
 
-  private AgentInstall saveInstall(AgentRelease agentRelease, Map<String, String> installSelector) {
+  private AgentInstall saveInstall(AgentRelease agentRelease, Map<String, String> installSelector, LabelSelectorMethod labelSelectorMethod) {
     return em.persistAndFlush(
           new AgentInstall()
               .setAgentRelease(agentRelease)
               .setTenantId("t-1")
               .setLabelSelector(installSelector)
+              .setLabelSelectorMethod(labelSelectorMethod)
       );
   }
 }

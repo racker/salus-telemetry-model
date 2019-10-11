@@ -16,6 +16,7 @@
 
 package com.rackspace.salus.telemetry.entities;
 
+import com.rackspace.salus.telemetry.model.LabelSelectorMethod;
 import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
@@ -23,6 +24,8 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -32,7 +35,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -69,6 +74,12 @@ public class AgentInstall {
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name="agent_install_label_selectors", joinColumns = @JoinColumn(name="agent_install_id"))
   Map<String,String> labelSelector;
+
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  @Column(name="label_selector_method")
+  @ColumnDefault("\'AND\'")
+  LabelSelectorMethod labelSelectorMethod = LabelSelectorMethod.AND;
 
   @CreationTimestamp
   @Column(name="created_timestamp")
