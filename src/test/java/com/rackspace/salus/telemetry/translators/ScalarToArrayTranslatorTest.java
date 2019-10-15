@@ -23,8 +23,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Map;
 import org.junit.Test;
 
-public class RenameFieldTranslatorTest {
-
+public class ScalarToArrayTranslatorTest {
   private final ObjectMapper objectMapper = new ObjectMapper();
 
   @Test
@@ -34,20 +33,22 @@ public class RenameFieldTranslatorTest {
         "field-not-match", "value-not-match"
     );
 
-    final RenameFieldTranslator translator = new RenameFieldTranslator()
-        .setFrom("field-match")
-        .setTo("new-field");
-
     final ObjectNode contentTree = objectMapper.valueToTree(content);
+
+    final ScalarToArrayTranslator translator = new ScalarToArrayTranslator()
+        .setFrom("field-match")
+        .setTo("now-an-array");
 
     translator.translate(contentTree);
 
     assertThat(contentTree).hasSize(2);
 
-    assertThat(contentTree.get("new-field")).isNotNull();
-    assertThat(contentTree.get("new-field").asText()).isEqualTo("value-match");
-
     assertThat(contentTree.get("field-match")).isNull();
+
+    assertThat(contentTree.get("now-an-array")).isNotNull();
+    assertThat(contentTree.get("now-an-array").isArray()).isTrue();
+    assertThat(contentTree.get("now-an-array")).hasSize(1);
+    assertThat(contentTree.get("now-an-array").get(0).asText()).isEqualTo("value-match");
 
     assertThat(contentTree.get("field-not-match")).isNotNull();
     assertThat(contentTree.get("field-not-match").asText()).isEqualTo("value-not-match");
@@ -59,11 +60,11 @@ public class RenameFieldTranslatorTest {
         "field-not-match", "value-not-match"
     );
 
-    final RenameFieldTranslator translator = new RenameFieldTranslator()
-        .setFrom("field-match")
-        .setTo("new-field");
-
     final ObjectNode contentTree = objectMapper.valueToTree(content);
+
+    final ScalarToArrayTranslator translator = new ScalarToArrayTranslator()
+        .setFrom("field-match")
+        .setTo("now-an-array");
 
     translator.translate(contentTree);
 

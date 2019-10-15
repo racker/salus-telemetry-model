@@ -24,21 +24,23 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * This abstract class is a base class for implementations of monitor content translators. Each
- * subclass should declare validated properties to specify the translation and the
- * implementation of {@link #translate(ObjectNode)}.
+ * subclass should declare validated properties to specify the translation and the implementation of
+ * {@link #translate(ObjectNode)}.
  * <p>
- *   As a new translator sub-class is introduced and entry must be added to the
- *   {@link JsonSubTypes} where the type name is assigned for each.
+ * As a new translator sub-class is introduced and entry must be added to the {@link JsonSubTypes}
+ * where the type name is assigned for each.
  * </p>
  * <p>
- *   <em>Implementation Note</em>: mixing a data type with implementation details is an anti-pattern, but the
- *   co-location of both aspects ensures a robust, maintainable strategy as more translator
- *   types are implemented.
+ * <em>Implementation Note</em>: mixing a data type with implementation details is an anti-pattern,
+ * but the
+ * co-location of both aspects ensures a robust, maintainable strategy as more translator types are
+ * implemented.
  * </p>
  */
 @JsonTypeInfo(use = Id.NAME, property = MonitorTranslator.TYPE_PROPERTY)
 @JsonSubTypes({
-    @Type(name = "renameField", value = RenameFieldTranslator.class)
+    @Type(name = "renameField", value = RenameFieldTranslator.class),
+    @Type(name = "scalarToArray", value = ScalarToArrayTranslator.class)
 })
 public abstract class MonitorTranslator {
 
@@ -46,6 +48,7 @@ public abstract class MonitorTranslator {
 
   /**
    * Translate the given monitor content tree for the monitor of the given type.
+   *
    * @param contentTree can be manipulated in place, if this translator finds it is applicable
    */
   public abstract void translate(ObjectNode contentTree);
