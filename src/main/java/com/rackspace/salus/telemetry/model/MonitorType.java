@@ -30,6 +30,6 @@ public enum MonitorType {
   mysql,
   postgresql,
   sqlserver,
-  log
-
+  log,
+  system
 }
