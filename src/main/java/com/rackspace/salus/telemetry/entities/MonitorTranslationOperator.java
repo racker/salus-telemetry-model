@@ -50,6 +50,9 @@ public class MonitorTranslationOperator {
   @org.hibernate.annotations.Type(type="uuid-char")
   UUID id;
 
+  @Column(nullable = false, unique = true)
+  String name;
+
   @Column(name = "agent_type", nullable = false)
   @Enumerated(EnumType.STRING)
   AgentType agentType;

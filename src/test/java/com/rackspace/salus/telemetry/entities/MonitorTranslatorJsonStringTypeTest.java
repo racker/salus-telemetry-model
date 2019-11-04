@@ -49,6 +49,7 @@ public class MonitorTranslatorJsonStringTypeTest {
   @Test
   public void testPersistRoundtrip() {
     final MonitorTranslationOperator operator = new MonitorTranslationOperator()
+        .setName("cpu-rename")
         .setAgentType(AgentType.TELEGRAF)
         .setAgentVersions(">= 1.12.0")
         .setMonitorType(MonitorType.cpu)
