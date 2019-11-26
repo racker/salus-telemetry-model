@@ -32,7 +32,7 @@ public enum MonitorType {
   sqlserver,
   log,
   system,
-  tablespace,
-  dataguard,
-  rman
+  oracle_tablespace,
+  oracle_dataguard,
+  oracle_rman
 }
