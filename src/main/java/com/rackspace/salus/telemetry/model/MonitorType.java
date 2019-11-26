@@ -31,5 +31,8 @@ public enum MonitorType {
   postgresql,
   sqlserver,
   log,
-  system
+  system,
+  tablespace,
+  dataguard,
+  rman
 }
