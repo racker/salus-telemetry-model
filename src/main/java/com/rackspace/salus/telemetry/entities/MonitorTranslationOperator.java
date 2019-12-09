@@ -31,7 +31,6 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 /**
  * This entity persists a specific instance of a monitor translation for a given agent type and
@@ -41,7 +40,6 @@ import org.hibernate.annotations.TypeDef;
 @Table(name = "monitor_translation_operators", indexes = {
     @Index(name = "monitor_translation_operators_by_agent_type", columnList = "agent_type")
 })
-@TypeDef(name = "monitorTypeJsonString", typeClass = MonitorTranslatorJsonStringType.class)
 @Data
 public class MonitorTranslationOperator {
 
@@ -80,6 +78,6 @@ public class MonitorTranslationOperator {
    * Persisted column contains the JSON serialization of a concrete subclass of {@link MonitorTranslator}
    */
   @Column(name = "translator_spec", nullable = false, length = 500)
-  @Type(type = "monitorTypeJsonString")
+  @Type(type = "json")
   MonitorTranslator translatorSpec;
 }

@@ -18,6 +18,7 @@ package com.rackspace.salus.telemetry.entities;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.rackspace.salus.telemetry.EnableSalusJpa;
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.MonitorType;
@@ -25,21 +26,18 @@ import com.rackspace.salus.telemetry.translators.RenameFieldTranslator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureJson // since some app components need ObjectMapper
-public class MonitorTranslatorJsonStringTypeTest {
+public class JsonClobTypeTest {
   @Configuration
-  @EntityScan("com.rackspace.salus.telemetry.entities")
-  @EnableJpaRepositories("com.rackspace.salus.telemetry.repositories")
+  @EnableSalusJpa
   static class TestConfiguration {
   }
 

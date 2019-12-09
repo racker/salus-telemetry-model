@@ -1,0 +1,1 @@
+-- This migration file is purposely empty since baseline alignment is not needed for H2

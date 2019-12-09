@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+import com.rackspace.salus.telemetry.EnableSalusJpa;
 import com.rackspace.salus.telemetry.entities.BoundMonitor;
 import com.rackspace.salus.telemetry.entities.Monitor;
 import com.rackspace.salus.telemetry.model.AgentType;
@@ -36,14 +37,12 @@ import java.util.UUID;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -54,8 +53,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 public class BoundMonitorRepositoryTest {
 
   @Configuration
-  @EntityScan("com.rackspace.salus.telemetry.entities")
-  @EnableJpaRepositories("com.rackspace.salus.telemetry.repositories")
+  @EnableSalusJpa
   static class TestConfiguration {
   }
 

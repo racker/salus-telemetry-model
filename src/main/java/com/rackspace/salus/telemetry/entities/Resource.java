@@ -17,7 +17,6 @@
 package com.rackspace.salus.telemetry.entities;
 
 import com.rackspace.salus.telemetry.model.ValidLabelKeys;
-import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Map;
@@ -38,7 +37,6 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -60,7 +58,6 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Resource.getAllDistinctTenants",
     query = "select distinct r.tenantId from Resource r")
 })
-@TypeDef(name = "json", typeClass = JsonStringType.class)
 @Data
 public class Resource implements Serializable {
     @Id
@@ -94,7 +91,6 @@ public class Resource implements Serializable {
      * Unlike labels, metadata is not indexed and not used for resource/monitor matching.
      */
     @Type(type = "json")
-        @Column(columnDefinition = "text")
     Map<String,String> metadata;
 
     @NotBlank
