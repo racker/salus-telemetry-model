@@ -23,6 +23,7 @@ import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.MonitorType;
 import com.rackspace.salus.telemetry.translators.RenameFieldTranslator;
+import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +63,20 @@ public class JsonClobTypeTest {
 
     assertThat(saved.getId()).isNotNull();
     assertThat(saved).isEqualToIgnoringGivenFields(operator, "id");
+  }
+
+  @Test
+  public void testNullClobValue() {
+    final Resource resource = new Resource()
+        .setTenantId("t-1")
+        .setResourceId("r-1")
+        .setLabels(Map.of())
+        .setPresenceMonitoringEnabled(true);
+
+    final Resource saved =
+        entityManager.persistFlushFind(resource);
+
+    assertThat(saved.getId()).isNotNull();
+    assertThat(saved).isEqualToIgnoringGivenFields(resource, "id");
   }
 }

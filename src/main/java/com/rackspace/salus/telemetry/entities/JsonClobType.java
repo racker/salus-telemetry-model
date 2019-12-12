@@ -100,6 +100,8 @@ public class JsonClobType
         } catch (IOException | SQLException e) {
           throw new IllegalArgumentException("Failed to deserialize JSON column", e);
         }
+      } else if (value == null) {
+        return null;
       }
 
       throw unknownWrap(value.getClass());
