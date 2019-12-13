@@ -41,6 +41,8 @@ public interface MonitorRepository extends PagingAndSortingRepository<Monitor, U
 
     List<Monitor> findByTenantIdAndResourceId(String tenantId, String resourceId);
 
+    Page<Monitor> findByTenantIdAndResourceIdIsNullAndLabelSelectorIsNull(String tenantId, Pageable page);
+
     @Query("select m from Monitor m join fetch m.monitorMetadataFields where m.tenantId = :tenantId "
         + "and :variable member of m.monitorMetadataFields")
     Set<Monitor> findByTenantIdAndMonitorMetadataFieldsContaining(String tenantId, String variable);
