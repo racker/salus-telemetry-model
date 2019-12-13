@@ -41,6 +41,18 @@ public interface MonitorRepository extends PagingAndSortingRepository<Monitor, U
 
     List<Monitor> findByTenantIdAndResourceId(String tenantId, String resourceId);
 
+    /**
+     * Returns any monitor with an empty labelSelector for the given tenant.
+     *
+     * An empty labelSelector is classed as null within sql due to being stored as an
+     * ElementCollection. They are retrieved using a LEFT OUTER JOIN.
+     *
+     * @param tenantId The tenant to get monitors for.
+     * @param page The page of results to return.
+     * @return A page of monitors.
+     */
+    Page<Monitor> findByTenantIdAndResourceIdIsNullAndLabelSelectorIsNull(String tenantId, Pageable page);
+
     @Query("select m from Monitor m join fetch m.monitorMetadataFields where m.tenantId = :tenantId "
         + "and :variable member of m.monitorMetadataFields")
     Set<Monitor> findByTenantIdAndMonitorMetadataFieldsContaining(String tenantId, String variable);
