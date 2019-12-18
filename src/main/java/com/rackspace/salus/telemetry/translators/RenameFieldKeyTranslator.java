@@ -26,7 +26,7 @@ import lombok.EqualsAndHashCode;
  * Renames a field, if present, to a new name with the same value.
  */
 @Data @EqualsAndHashCode(callSuper = false)
-public class RenameFieldTranslator extends MonitorTranslator {
+public class RenameFieldKeyTranslator extends MonitorTranslator {
 
   @NotEmpty
   String from;

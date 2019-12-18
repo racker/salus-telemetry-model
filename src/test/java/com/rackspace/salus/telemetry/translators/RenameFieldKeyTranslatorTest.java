@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Map;
 import org.junit.Test;
 
-public class RenameFieldTranslatorTest {
+public class RenameFieldKeyTranslatorTest {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -34,7 +34,7 @@ public class RenameFieldTranslatorTest {
         "field-not-match", "value-not-match"
     );
 
-    final RenameFieldTranslator translator = new RenameFieldTranslator()
+    final RenameFieldKeyTranslator translator = new RenameFieldKeyTranslator()
         .setFrom("field-match")
         .setTo("new-field");
 
@@ -59,7 +59,7 @@ public class RenameFieldTranslatorTest {
         "field-not-match", "value-not-match"
     );
 
-    final RenameFieldTranslator translator = new RenameFieldTranslator()
+    final RenameFieldKeyTranslator translator = new RenameFieldKeyTranslator()
         .setFrom("field-match")
         .setTo("new-field");
 
