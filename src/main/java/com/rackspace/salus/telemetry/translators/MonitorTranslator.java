@@ -41,7 +41,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 @JsonSubTypes({
     @Type(name = "joinHostPort", value = JoinHostPortTranslator.class),
     @Type(name = "renameFieldKey", value = RenameFieldKeyTranslator.class),
-    @Type(name = "replaceFieldValue", value = ReplaceStringFieldValueTranslator.class),
+    @Type(name = "replaceStringFieldValue", value = ReplaceStringFieldValueTranslator.class),
+    @Type(name = "replaceIntFieldValue", value = ReplaceIntFieldValueTranslator.class),
     @Type(name = "scalarToArray", value = ScalarToArrayTranslator.class)
 })
 public abstract class MonitorTranslator {
