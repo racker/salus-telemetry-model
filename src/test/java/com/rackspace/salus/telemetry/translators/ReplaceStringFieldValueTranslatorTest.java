@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Map;
 import org.junit.Test;
 
-public class ReplaceFieldValueTranslatorTest {
+public class ReplaceStringFieldValueTranslatorTest {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -34,7 +34,7 @@ public class ReplaceFieldValueTranslatorTest {
         "field-not-match", "value"
     );
 
-    final ReplaceFieldValueTranslator translator = new ReplaceFieldValueTranslator()
+    final ReplaceStringFieldValueTranslator translator = new ReplaceStringFieldValueTranslator()
         .setField("type")
         .setValue("dns_query");
 
@@ -57,7 +57,7 @@ public class ReplaceFieldValueTranslatorTest {
         "field-not-match", "value"
     );
 
-    final ReplaceFieldValueTranslator translator = new ReplaceFieldValueTranslator()
+    final ReplaceStringFieldValueTranslator translator = new ReplaceStringFieldValueTranslator()
         .setField("new-field")
         .setValue("new-value");
 

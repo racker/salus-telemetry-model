@@ -26,13 +26,13 @@ import lombok.EqualsAndHashCode;
  * If the field didn't already exist it will be added.
  */
 @Data @EqualsAndHashCode(callSuper = false)
-public class ReplaceFieldValueTranslator extends MonitorTranslator {
+public class ReplaceIntFieldValueTranslator extends MonitorTranslator {
 
   @NotEmpty
   String field;
 
   @NotEmpty
-  String value;
+  int value;
 
   @Override
   public void translate(ObjectNode contentTree) {
