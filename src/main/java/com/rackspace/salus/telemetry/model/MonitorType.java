@@ -24,6 +24,7 @@ public enum MonitorType {
   cpu,
   disk,
   diskio,
+  dns,
   mem,
   net,
   procstat,
