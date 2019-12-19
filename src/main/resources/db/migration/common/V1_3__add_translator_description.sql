@@ -1,0 +1,1 @@
+ALTER TABLE monitor_translation_operators ADD description VARCHAR(255);
