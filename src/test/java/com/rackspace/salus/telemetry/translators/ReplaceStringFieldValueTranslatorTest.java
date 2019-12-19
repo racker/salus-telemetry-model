@@ -23,20 +23,43 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Map;
 import org.junit.Test;
 
-public class RenameFieldTranslatorTest {
+public class ReplaceStringFieldValueTranslatorTest {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
   @Test
-  public void testTranslate() {
+  public void testTranslateReplaceExisting() {
     final Map<String,String> content = Map.of(
-        "field-match", "value-match",
-        "field-not-match", "value-not-match"
+        "type", "dns",
+        "field-not-match", "value"
     );
 
-    final RenameFieldTranslator translator = new RenameFieldTranslator()
-        .setFrom("field-match")
-        .setTo("new-field");
+    final ReplaceStringFieldValueTranslator translator = new ReplaceStringFieldValueTranslator()
+        .setField("type")
+        .setValue("dns_query");
+
+    final ObjectNode contentTree = objectMapper.valueToTree(content);
+
+    translator.translate(contentTree);
+
+    assertThat(contentTree).hasSize(2);
+
+    assertThat(contentTree.get("type")).isNotNull();
+    assertThat(contentTree.get("type").asText()).isEqualTo("dns_query");
+
+    assertThat(contentTree.get("field-not-match")).isNotNull();
+    assertThat(contentTree.get("field-not-match").asText()).isEqualTo("value");
+  }
+
+  @Test
+  public void testTranslateReplaceMissing() {
+    final Map<String, String> content = Map.of(
+        "field-not-match", "value"
+    );
+
+    final ReplaceStringFieldValueTranslator translator = new ReplaceStringFieldValueTranslator()
+        .setField("new-field")
+        .setValue("new-value");
 
     final ObjectNode contentTree = objectMapper.valueToTree(content);
 
@@ -45,31 +68,9 @@ public class RenameFieldTranslatorTest {
     assertThat(contentTree).hasSize(2);
 
     assertThat(contentTree.get("new-field")).isNotNull();
-    assertThat(contentTree.get("new-field").asText()).isEqualTo("value-match");
-
-    assertThat(contentTree.get("field-match")).isNull();
+    assertThat(contentTree.get("new-field").asText()).isEqualTo("new-value");
 
     assertThat(contentTree.get("field-not-match")).isNotNull();
-    assertThat(contentTree.get("field-not-match").asText()).isEqualTo("value-not-match");
-  }
-
-  @Test
-  public void testTranslate_missingFrom() {
-    final Map<String,String> content = Map.of(
-        "field-not-match", "value-not-match"
-    );
-
-    final RenameFieldTranslator translator = new RenameFieldTranslator()
-        .setFrom("field-match")
-        .setTo("new-field");
-
-    final ObjectNode contentTree = objectMapper.valueToTree(content);
-
-    translator.translate(contentTree);
-
-    assertThat(contentTree).hasSize(1);
-
-    assertThat(contentTree.get("field-not-match")).isNotNull();
-    assertThat(contentTree.get("field-not-match").asText()).isEqualTo("value-not-match");
+    assertThat(contentTree.get("field-not-match").asText()).isEqualTo("value");
   }
 }

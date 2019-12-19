@@ -22,7 +22,7 @@ import com.rackspace.salus.telemetry.EnableSalusJpa;
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.MonitorType;
-import com.rackspace.salus.telemetry.translators.RenameFieldTranslator;
+import com.rackspace.salus.telemetry.translators.RenameFieldKeyTranslator;
 import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +53,7 @@ public class JsonClobTypeTest {
         .setAgentVersions(">= 1.12.0")
         .setMonitorType(MonitorType.cpu)
         .setSelectorScope(ConfigSelectorScope.LOCAL)
-        .setTranslatorSpec(new RenameFieldTranslator()
+        .setTranslatorSpec(new RenameFieldKeyTranslator()
             .setFrom("from-field")
             .setTo("to-field")
         );
