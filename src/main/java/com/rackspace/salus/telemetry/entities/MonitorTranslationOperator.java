@@ -51,6 +51,9 @@ public class MonitorTranslationOperator {
   @Column(nullable = false, unique = true)
   String name;
 
+  @Column(name = "description")
+  String description;
+
   @Column(name = "agent_type", nullable = false)
   @Enumerated(EnumType.STRING)
   AgentType agentType;
