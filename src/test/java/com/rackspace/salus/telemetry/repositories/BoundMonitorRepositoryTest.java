@@ -419,7 +419,7 @@ public class BoundMonitorRepositoryTest {
         .setSelectorScope(selectorScope)
         .setContent("{}")
         .setTenantId(monitorTenant)
-        .setMonitorType(MonitorType.http_response)
+        .setMonitorType(MonitorType.http)
         .setInterval(Duration.ofSeconds(60))
     );
   }
