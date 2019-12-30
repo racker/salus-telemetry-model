@@ -22,7 +22,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Replaces a field with the new value.
+ * Replaced the monitor type with the new value provided.
  * If the field didn't already exist it will be added.
  */
 @Data @EqualsAndHashCode(callSuper = false)
