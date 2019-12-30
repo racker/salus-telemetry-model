@@ -40,6 +40,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 @JsonTypeInfo(use = Id.NAME, property = MonitorTranslator.TYPE_PROPERTY)
 @JsonSubTypes({
     @Type(name = "joinHostPort", value = JoinHostPortTranslator.class),
+    @Type(name = "renameType", value = RenameTypeTranslator.class),
     @Type(name = "renameFieldKey", value = RenameFieldKeyTranslator.class),
     @Type(name = "replaceStringFieldValue", value = ReplaceStringFieldValueTranslator.class),
     @Type(name = "replaceIntFieldValue", value = ReplaceIntFieldValueTranslator.class),
