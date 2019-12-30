@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rackspace.salus.telemetry.errors.MonitorContentTranslationException;
 
 /**
  * This abstract class is a base class for implementations of monitor content translators. Each
@@ -55,6 +56,6 @@ public abstract class MonitorTranslator {
    *
    * @param contentTree can be manipulated in place, if this translator finds it is applicable
    */
-  public abstract void translate(ObjectNode contentTree);
+  public abstract void translate(ObjectNode contentTree) throws MonitorContentTranslationException;
 
 }
