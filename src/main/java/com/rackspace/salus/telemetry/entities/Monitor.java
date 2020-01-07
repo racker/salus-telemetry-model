@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -120,6 +121,11 @@ public class Monitor implements Serializable {
     @Column(name="resource_id")
     @NonMetadataField
     String resourceId;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "monitor_excluded_resource_ids", joinColumns = @JoinColumn(name="monitor_id"))
+    @NonMetadataField
+    Set<String> excludedResourceIds;
 
     @ElementCollection
     @CollectionTable(name="monitor_metadata_fields", joinColumns = @JoinColumn(name="monitor_id"),
