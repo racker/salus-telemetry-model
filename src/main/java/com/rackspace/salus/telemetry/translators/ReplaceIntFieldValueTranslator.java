@@ -33,7 +33,7 @@ public class ReplaceIntFieldValueTranslator extends MonitorTranslator {
   String field;
 
   @NotNull
-  int value;
+  Integer value;
 
   @Override
   public void translate(ObjectNode contentTree) {
