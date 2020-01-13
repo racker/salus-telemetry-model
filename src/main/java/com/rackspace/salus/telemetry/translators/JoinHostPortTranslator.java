@@ -18,6 +18,7 @@ package com.rackspace.salus.telemetry.translators;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rackspace.salus.telemetry.errors.MonitorContentTranslationException;
 import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -40,16 +41,18 @@ public class JoinHostPortTranslator extends MonitorTranslator {
   String to;
 
   @Override
-  public void translate(ObjectNode contentTree) {
+  public void translate(ObjectNode contentTree) throws MonitorContentTranslationException {
     final JsonNode hostNode = contentTree.get(fromHost);
     final JsonNode portNode = contentTree.get(fromPort);
 
-    if (hostNode != null && portNode != null) {
-      // only remove when both present
-      contentTree.remove(fromHost);
-      contentTree.remove(fromPort);
-
-      contentTree.put(to, String.join(":", hostNode.asText(), portNode.asText()));
+    if (hostNode == null || portNode == null) {
+      throw new MonitorContentTranslationException(
+          "Both host and port must be set to use JoinHostPortTranslator");
     }
+    // only remove when both present
+    contentTree.remove(fromHost);
+    contentTree.remove(fromPort);
+
+    contentTree.put(to, String.join(":", hostNode.asText(), portNode.asText()));
   }
 }

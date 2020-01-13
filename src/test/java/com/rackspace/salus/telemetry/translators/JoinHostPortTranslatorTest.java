@@ -17,9 +17,11 @@
 package com.rackspace.salus.telemetry.translators;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rackspace.salus.telemetry.errors.MonitorContentTranslationException;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -27,7 +29,7 @@ public class JoinHostPortTranslatorTest {
   private final ObjectMapper objectMapper = new ObjectMapper();
 
   @Test
-  public void testTranslate_numericPort() throws IOException {
+  public void testTranslate_numericPort() throws IOException, MonitorContentTranslationException {
     final String content = "{\"host\":\"somewhere\",\"port\":80}";
 
     final ObjectNode contentTree = (ObjectNode) objectMapper.readTree(content);
@@ -45,7 +47,7 @@ public class JoinHostPortTranslatorTest {
   }
 
   @Test
-  public void testTranslate_stringPort() throws IOException {
+  public void testTranslate_stringPort() throws IOException, MonitorContentTranslationException {
     final String content = "{\"host\":\"somewhere\",\"port\":\"80\"}";
 
     final ObjectNode contentTree = (ObjectNode) objectMapper.readTree(content);
@@ -73,12 +75,9 @@ public class JoinHostPortTranslatorTest {
         .setFromHost("host")
         .setFromPort("port")
         .setTo("address");
-    translator.translate(contentTree);
 
-    assertThat(contentTree).hasSize(1);
-
-    // confirm that it leaves the host field as is
-    assertThat(contentTree.get("host")).isNotNull();
-    assertThat(contentTree.get("host").asText()).isEqualTo("somewhere");
+    assertThatThrownBy(() -> translator.translate(contentTree))
+        .isInstanceOf(MonitorContentTranslationException.class)
+        .hasMessage("Both host and port must be set to use JoinHostPortTranslator");
   }
 }

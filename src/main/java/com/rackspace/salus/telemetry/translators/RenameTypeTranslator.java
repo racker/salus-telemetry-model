@@ -17,6 +17,7 @@
 package com.rackspace.salus.telemetry.translators;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rackspace.salus.telemetry.errors.MonitorContentTranslationException;
 import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,13 +29,15 @@ import lombok.EqualsAndHashCode;
 @Data @EqualsAndHashCode(callSuper = false)
 public class RenameTypeTranslator extends MonitorTranslator {
 
-  private static final String MONITOR_TYPE_FIELD = "type";
-
   @NotEmpty
   String value;
 
   @Override
-  public void translate(ObjectNode contentTree) {
-    contentTree.put(MONITOR_TYPE_FIELD, value);
+  public void translate(ObjectNode contentTree) throws MonitorContentTranslationException {
+    if (!contentTree.has(MonitorTranslator.TYPE_PROPERTY)) {
+      throw new MonitorContentTranslationException(
+          "Cannot set type on monitor that has no existing type.");
+    }
+    contentTree.put(MonitorTranslator.TYPE_PROPERTY, value);
   }
 }
