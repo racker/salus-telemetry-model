@@ -18,6 +18,7 @@ package com.rackspace.salus.telemetry.translators;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -31,7 +32,7 @@ public class ReplaceIntFieldValueTranslator extends MonitorTranslator {
   @NotEmpty
   String field;
 
-  @NotEmpty
+  @NotNull
   int value;
 
   @Override
