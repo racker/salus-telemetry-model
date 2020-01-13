@@ -18,9 +18,9 @@ package com.rackspace.salus.telemetry.model;
 
 public enum MonitorType {
   ping,
-  http_response,
+  http,
   net_response,
-  x509_cert,
+  ssl,
   cpu,
   disk,
   diskio,
