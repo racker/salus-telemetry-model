@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,8 @@ public class MonitorTranslationOperator {
   /**
    * Optional field that narrows applicability to a specific monitor type.
    */
-  @Column(name = "monitor_type")
+  @Enumerated(EnumType.STRING)
+  @Column(name = "monitor_type", nullable = false)
   MonitorType monitorType;
 
   /**
