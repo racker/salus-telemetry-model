@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.rackspace.salus.telemetry.model;
 
 public enum MonitorType {
+  // powered by telegraf
   apache,
   ping,
   http,
@@ -34,7 +35,10 @@ public enum MonitorType {
   sqlserver,
   log,
   system,
+  // powered by https://github.com/racker/salus-oracle-agent
   oracle_tablespace,
   oracle_dataguard,
-  oracle_rman
+  oracle_rman,
+  // powered by https://github.com/racker/salus-packages-agent
+  packages
 }
