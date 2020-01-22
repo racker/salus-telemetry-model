@@ -37,9 +37,15 @@ public class RenameFieldKeyTranslator extends MonitorTranslator {
   @Override
   public void translate(ObjectNode contentTree) {
 
-    final JsonNode node = contentTree.remove(from);
-    if (node != null) {
+
+    if (contentTree.hasNonNull(from)) {
+      final JsonNode node = contentTree.remove(from);
       contentTree.set(to, node);
+    } else {
+      // if a null value is set we still remove the node since it does not have a valid key
+      contentTree.remove(from);
+      // and set a null node
+      contentTree.putNull(to);
     }
   }
 }
