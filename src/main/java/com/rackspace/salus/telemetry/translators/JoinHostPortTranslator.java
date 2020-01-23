@@ -45,14 +45,15 @@ public class JoinHostPortTranslator extends MonitorTranslator {
     final JsonNode hostNode = contentTree.get(fromHost);
     final JsonNode portNode = contentTree.get(fromPort);
 
-    if (hostNode == null || portNode == null) {
+    if (contentTree.hasNonNull(fromHost) && contentTree.hasNonNull(fromPort)) {
+      // only remove when both present
+      contentTree.remove(fromHost);
+      contentTree.remove(fromPort);
+
+      contentTree.put(to, String.join(":", hostNode.asText(), portNode.asText()));
+    } else {
       throw new MonitorContentTranslationException(
           "Both host and port must be set to use JoinHostPortTranslator");
     }
-    // only remove when both present
-    contentTree.remove(fromHost);
-    contentTree.remove(fromPort);
-
-    contentTree.put(to, String.join(":", hostNode.asText(), portNode.asText()));
   }
 }

@@ -19,7 +19,9 @@ package com.rackspace.salus.telemetry.translators;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
 
@@ -67,9 +69,32 @@ public class RenameFieldKeyTranslatorTest {
 
     translator.translate(contentTree);
 
-    assertThat(contentTree).hasSize(1);
+    assertThat(contentTree).hasSize(2);
 
     assertThat(contentTree.get("field-not-match")).isNotNull();
     assertThat(contentTree.get("field-not-match").asText()).isEqualTo("value-not-match");
+    assertThat(contentTree.get("field-match")).isNull();
+    assertThat(contentTree.get("new-field")).isNotNull();
+    assertThat(contentTree.get("new-field")).isInstanceOf(NullNode.class);
+  }
+
+  @Test
+  public void testTranslate_null() {
+    final Map<String,String> content = new HashMap<>();
+    content.put("field-match", null);
+
+    final RenameFieldKeyTranslator translator = new RenameFieldKeyTranslator()
+        .setFrom("field-match")
+        .setTo("new-field");
+
+    final ObjectNode contentTree = objectMapper.valueToTree(content);
+
+    translator.translate(contentTree);
+
+    assertThat(contentTree).hasSize(1);
+
+    assertThat(contentTree.get("field-not-match")).isNull();
+    assertThat(contentTree.get("new-field")).isNotNull();
+    assertThat(contentTree.get("new-field")).isInstanceOf(NullNode.class);
   }
 }

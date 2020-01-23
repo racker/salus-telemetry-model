@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,35 +18,34 @@ package com.rackspace.salus.telemetry.translators;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.time.Duration;
 import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Takes the value of a scalar field (<code>from</code>) and creates an array at
- * <code>to</code> containing that value. <code>from</code> can be the same as <code>to</code> in
- * order to perform an "in place" translation. If the <code>from</code> field is absent, nothing
- * is changed.
+ * It will convert the provided field from a Java Duration to the format expected
+ * by Go.  For example, "PT20S" will be converted to "20s".
+ * If the value is null, no action will be taken.
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ScalarToArrayTranslator extends MonitorTranslator {
+public class GoDurationTranslator extends MonitorTranslator {
   @NotEmpty
-  String from;
-
-  @NotEmpty
-  String to;
+  String field;
 
   @Override
   public void translate(ObjectNode contentTree) {
-    if (contentTree.hasNonNull(from)) {
-      final JsonNode node = contentTree.remove(from);
-      contentTree.putArray(to).add(node);
-    } else {
-      // if a null value is set we still remove the node since it does not have a valid key
-      contentTree.remove(from);
-      // and set an empty array node
-      contentTree.putArray(to);
+
+    if (contentTree.hasNonNull(field)) {
+      final JsonNode node = contentTree.remove(field);
+      String nodes = node.asText();
+      Duration duration = Duration.parse(nodes);
+      if (duration.toSecondsPart() == 0) {
+        contentTree.put(field, String.format("%dm", duration.toMinutes()));
+      } else {
+        contentTree.put(field, String.format("%ds", duration.toSeconds()));
+      }
     }
   }
 }

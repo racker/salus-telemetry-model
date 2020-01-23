@@ -19,7 +19,9 @@ package com.rackspace.salus.telemetry.translators;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.IOException;
 import java.util.Map;
 import org.junit.Test;
 
@@ -68,9 +70,30 @@ public class ScalarToArrayTranslatorTest {
 
     translator.translate(contentTree);
 
-    assertThat(contentTree).hasSize(1);
+    assertThat(contentTree).hasSize(2);
 
     assertThat(contentTree.get("field-not-match")).isNotNull();
     assertThat(contentTree.get("field-not-match").asText()).isEqualTo("value-not-match");
+    assertThat(contentTree.get("now-an-array")).hasSize(0);
+  }
+
+  @Test
+  public void testTranslate_nullValue() throws IOException {
+    // We cannot use a map to test null due to https://github.com/FasterXML/jackson-databind/issues/2430
+    String content = "{\"field-match\": null}";
+
+    final ObjectNode contentTree = (ObjectNode) objectMapper.readTree(content);
+
+    final ScalarToArrayTranslator translator = new ScalarToArrayTranslator()
+        .setFrom("field-match")
+        .setTo("now-an-array");
+
+    translator.translate(contentTree);
+
+    assertThat(contentTree).hasSize(1);
+    assertThat(contentTree.get("field-match")).isNull();
+    assertThat(contentTree.get("now-an-array")).isNotNull();
+    assertThat(contentTree.get("now-an-array")).isInstanceOf(ArrayNode.class);
+    assertThat(contentTree.get("now-an-array")).hasSize(0);
   }
 }
