@@ -24,13 +24,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * It will convert the provided field from a Java Duration to the format expected
- * by Go.  For example, "PT20S" will be converted to "20s".
+ * It will convert the provided field from a Java Duration to a long value of raw seconds.
+ * For example, "PT20S" will be converted to "20".
  * If the value is null, no action will be taken.
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class GoDurationTranslator extends MonitorTranslator {
+public class DurationInSecondsTranslator extends MonitorTranslator {
   @NotEmpty
   String field;
 
@@ -40,11 +40,7 @@ public class GoDurationTranslator extends MonitorTranslator {
     if (contentTree.hasNonNull(field)) {
       final JsonNode node = contentTree.remove(field);
       Duration duration = Duration.parse(node.asText());
-      if (duration.toSecondsPart() == 0) {
-        contentTree.put(field, String.format("%dm", duration.toMinutes()));
-      } else {
-        contentTree.put(field, String.format("%ds", duration.toSeconds()));
-      }
+      contentTree.put(field, duration.toSeconds());
     }
   }
 }

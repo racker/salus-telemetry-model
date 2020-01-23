@@ -40,6 +40,7 @@ import com.rackspace.salus.telemetry.errors.MonitorContentTranslationException;
  */
 @JsonTypeInfo(use = Id.NAME, property = MonitorTranslator.TYPE_PROPERTY)
 @JsonSubTypes({
+    @Type(name = "durationInSeconds", value = DurationInSecondsTranslator.class),
     @Type(name = "goDuration", value = GoDurationTranslator.class),
     @Type(name = "joinHostPort", value = JoinHostPortTranslator.class),
     @Type(name = "renameType", value = RenameTypeTranslator.class),
