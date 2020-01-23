@@ -19,6 +19,7 @@ package com.rackspace.salus.telemetry.translators;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.HashMap;
@@ -100,5 +101,6 @@ public class GoDurationTranslatorTest {
 
     assertThat(contentTree).hasSize(1);
     assertThat(contentTree.get("timeout")).isNotNull();
+    assertThat(contentTree.get("timeout")).isInstanceOf(NullNode.class);
   }
 }
