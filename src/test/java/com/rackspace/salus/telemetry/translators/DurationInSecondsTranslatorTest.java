@@ -22,11 +22,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
 
-public class GoDurationTranslatorTest {
+public class DurationInSecondsTranslatorTest {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -36,7 +35,7 @@ public class GoDurationTranslatorTest {
         "timeout", "PT30S"
     );
 
-    final GoDurationTranslator translator = new GoDurationTranslator()
+    final DurationInSecondsTranslator translator = new DurationInSecondsTranslator()
         .setField("timeout");
 
     final ObjectNode contentTree = objectMapper.valueToTree(content);
@@ -46,7 +45,7 @@ public class GoDurationTranslatorTest {
     assertThat(contentTree).hasSize(1);
 
     assertThat(contentTree.get("timeout")).isNotNull();
-    assertThat(contentTree.get("timeout").asText()).isEqualTo("30s");
+    assertThat(contentTree.get("timeout").asText()).isEqualTo("30");
   }
 
   @Test
@@ -55,7 +54,7 @@ public class GoDurationTranslatorTest {
         "timeout", "PT3M"
     );
 
-    final GoDurationTranslator translator = new GoDurationTranslator()
+    final DurationInSecondsTranslator translator = new DurationInSecondsTranslator()
         .setField("timeout");
 
     final ObjectNode contentTree = objectMapper.valueToTree(content);
@@ -65,7 +64,7 @@ public class GoDurationTranslatorTest {
     assertThat(contentTree).hasSize(1);
 
     assertThat(contentTree.get("timeout")).isNotNull();
-    assertThat(contentTree.get("timeout").asText()).isEqualTo("3m");
+    assertThat(contentTree.get("timeout").asText()).isEqualTo("180");
   }
 
   @Test
@@ -74,7 +73,7 @@ public class GoDurationTranslatorTest {
         "timeout", "PT1M30S"
     );
 
-    final GoDurationTranslator translator = new GoDurationTranslator()
+    final DurationInSecondsTranslator translator = new DurationInSecondsTranslator()
         .setField("timeout");
 
     final ObjectNode contentTree = objectMapper.valueToTree(content);
@@ -84,7 +83,7 @@ public class GoDurationTranslatorTest {
     assertThat(contentTree).hasSize(1);
 
     assertThat(contentTree.get("timeout")).isNotNull();
-    assertThat(contentTree.get("timeout").asText()).isEqualTo("90s");
+    assertThat(contentTree.get("timeout").asText()).isEqualTo("90");
   }
 
   @Test
@@ -92,7 +91,7 @@ public class GoDurationTranslatorTest {
     // We cannot use a map to test null due to https://github.com/FasterXML/jackson-databind/issues/2430
     String content = "{\"timeout\": null}";
 
-    final GoDurationTranslator translator = new GoDurationTranslator()
+    final DurationInSecondsTranslator translator = new DurationInSecondsTranslator()
         .setField("timeout");
 
     final ObjectNode contentTree = (ObjectNode) objectMapper.readTree(content);
