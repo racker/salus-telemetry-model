@@ -18,7 +18,6 @@ create table hibernate_sequence
 (
     next_val bigint not null
 )
-    auto_increment = 1,
-    engine = MyISAM;
+    auto_increment = 1;
 
 INSERT INTO hibernate_sequence (next_val) VALUES (0);
