@@ -29,7 +29,8 @@ public class ExpressionValidator implements ConstraintValidator<ComparatorValida
   @Constraint(validatedBy = ExpressionValidator.class) // validator
   @Documented
   public @interface ComparatorValidation {
-    String message() default "Valid comparators are: >, >=, <, <="; // default error message
+    String message() default "Valid comparators are: "
+        + "==, !=, >, >=, <, <=, =~, !~"; // default error message
 
     Class<?>[] groups() default {}; // required
 

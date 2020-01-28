@@ -85,17 +85,25 @@ public class EventEngineTaskParameters {
 
   public enum Comparator  {
 
+    EQUAL_TO,
+    NOT_EQUAL_TO,
     GREATER_THAN,
     GREATER_THAN_OR_EQUAL_TO,
     LESS_THAN,
-    LESS_THAN_OR_EQUAL_TO;
+    LESS_THAN_OR_EQUAL_TO,
+    REGEX_MATCH,
+    NOT_REGEX_MATCH;
 
     static private HashMap<String, Comparator> convertString = new HashMap<>();
     static {
-        convertString.put(">", GREATER_THAN);
-        convertString.put("<", LESS_THAN);
-        convertString.put(">=", GREATER_THAN_OR_EQUAL_TO);
-        convertString.put("<=", LESS_THAN_OR_EQUAL_TO);
+      convertString.put("==", EQUAL_TO);
+      convertString.put("!=", NOT_EQUAL_TO);
+      convertString.put(">", GREATER_THAN);
+      convertString.put("<", LESS_THAN);
+      convertString.put(">=", GREATER_THAN_OR_EQUAL_TO);
+      convertString.put("<=", LESS_THAN_OR_EQUAL_TO);
+      convertString.put("=~", REGEX_MATCH);
+      convertString.put("!~", NOT_REGEX_MATCH);
     }
     static public boolean valid(String c) {
         return (convertString.get(c) != null);
