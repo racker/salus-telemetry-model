@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,12 +28,14 @@ import com.rackspace.salus.telemetry.entities.Monitor;
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.MonitorType;
+import com.rackspace.salus.test.EnableTestContainersDatabase;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,7 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 @RunWith(SpringRunner.class)
+@EnableTestContainersDatabase
 @DataJpaTest(showSql = false)
 @AutoConfigureJson
 public class BoundMonitorRepositoryTest {
@@ -222,10 +225,10 @@ public class BoundMonitorRepositoryTest {
     // VERIFY
 
     assertThat(results, hasSize(4));
-    assertThat(results.get(0).getResourceId(), equalTo("r-1"));
-    assertThat(results.get(1).getResourceId(), equalTo("r-2"));
-    assertThat(results.get(2).getResourceId(), equalTo("r-3"));
-    assertThat(results.get(3).getResourceId(), equalTo("r-4"));
+    final Set<String> resourceIds = results.stream()
+        .map(BoundMonitor::getResourceId)
+        .collect(Collectors.toSet());
+    assertThat(resourceIds, equalTo(Set.of("r-1", "r-2", "r-3", "r-4")));
   }
 
   @Test

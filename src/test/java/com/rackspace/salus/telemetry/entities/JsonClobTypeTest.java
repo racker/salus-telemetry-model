@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.MonitorType;
 import com.rackspace.salus.telemetry.translators.RenameFieldKeyTranslator;
+import com.rackspace.salus.test.EnableTestContainersDatabase;
 import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +35,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
+@EnableTestContainersDatabase
 @DataJpaTest
 @AutoConfigureJson // since some app components need ObjectMapper
 public class JsonClobTypeTest {
@@ -77,6 +79,7 @@ public class JsonClobTypeTest {
         entityManager.persistFlushFind(resource);
 
     assertThat(saved.getId()).isNotNull();
-    assertThat(saved).isEqualToIgnoringGivenFields(resource, "id");
+    assertThat(saved).isEqualToIgnoringGivenFields(resource,
+        "id", "createdTimestamp", "updatedTimestamp");
   }
 }
