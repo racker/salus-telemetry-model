@@ -30,5 +30,7 @@ public interface AgentInstallRepository extends CrudRepository<AgentInstall, UUI
 
   Page<AgentInstall> findAllByTenantId(String tenantId, Pageable pageable);
 
+  List<AgentInstall> findByTenantIdAndLabelSelectorIsNull(String tenantId);
+
   List<AgentInstall> findAllByTenantIdAndAgentRelease_Id(String tenantId, UUID agentReleaseId);
 }
