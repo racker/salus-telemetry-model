@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,21 @@
 
 package com.rackspace.salus.telemetry.messaging;
 
-import lombok.Data;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Indicates details relating to a tenant have changed,
- * which could impact the policies applied to it.
+ * Declares the properties of the annotated class that will be used to compose a Kafka message key
+ * using {@link KafkaMessageKeyBuilder}.
  */
-@Data
-@KafkaMessageKey(properties = {"tenantId"})
-public class TenantPolicyChangeEvent {
-  String tenantId;
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface KafkaMessageKey {
+
+  /**
+   * the property names of this class to compose into the Kafka message key
+   */
+  String[] properties();
 }

@@ -16,7 +16,6 @@
 
 package com.rackspace.salus.telemetry.messaging;
 
-import com.rackspace.salus.common.messaging.KafkaMessageKey;
 import java.util.Map;
 // Using the old validation exceptions for podam support
 // Will move to the newer ones once they're supported.

@@ -16,7 +16,6 @@
 
 package com.rackspace.salus.telemetry.messaging;
 
-import com.rackspace.salus.common.messaging.KafkaMessageKey;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
