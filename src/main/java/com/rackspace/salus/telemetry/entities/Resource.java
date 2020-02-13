@@ -34,6 +34,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
@@ -68,7 +69,8 @@ public class Resource implements Serializable {
      * This will typically be something like CORE device ID or Xen ID for public cloud VMs.
      * This must be unique for a given tenant.
      */
-    @NotNull
+    @Pattern(regexp="[A-Za-z0-9:-]+")
+    @NotBlank
     @Column(name="resource_id")
     String resourceId;
 
