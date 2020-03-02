@@ -56,7 +56,7 @@ public class EventEngineTaskParameters {
 
     @Valid
     Expression expression;
-    Integer consecutiveCount;
+    Integer consecutiveCount = 1;
   }
 
   @Data
