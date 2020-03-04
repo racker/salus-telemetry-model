@@ -56,7 +56,7 @@ public class EventEngineTaskParameters {
 
     @Valid
     Expression expression;
-    Integer stateDuration = 1;
+    Integer stateDuration;
   }
 
   @Data
