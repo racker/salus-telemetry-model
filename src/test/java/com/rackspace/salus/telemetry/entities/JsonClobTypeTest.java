@@ -58,7 +58,8 @@ public class JsonClobTypeTest {
         .setTranslatorSpec(new RenameFieldKeyTranslator()
             .setFrom("from-field")
             .setTo("to-field")
-        );
+        )
+        .setOrder(0);
 
     final MonitorTranslationOperator saved =
         entityManager.persistFlushFind(operator);

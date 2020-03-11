@@ -16,7 +16,6 @@
 
 package com.rackspace.salus.telemetry.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.MonitorType;
@@ -92,6 +91,6 @@ public class MonitorTranslationOperator {
    * A translation with an order of 1 will occur before one with an order of 2.
    * If the field is not set it will be treated as 0.
    */
-  @Column(name = "order")
+  @Column(name = "priority_order")
   int order;
 }
