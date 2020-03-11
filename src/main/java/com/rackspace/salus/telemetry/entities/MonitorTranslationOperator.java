@@ -16,6 +16,7 @@
 
 package com.rackspace.salus.telemetry.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rackspace.salus.telemetry.model.AgentType;
 import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.MonitorType;
@@ -84,4 +85,13 @@ public class MonitorTranslationOperator {
   @Column(name = "translator_spec", nullable = false, length = 500)
   @Type(type = "json")
   MonitorTranslator translatorSpec;
+
+  /**
+   * Optional field
+   * If set, it will be used to determine the order the translations on a monitor are performed in.
+   * A translation with an order of 1 will occur before one with an order of 2.
+   * If the field is not set it will be treated as 0.
+   */
+  @Column(name = "order")
+  int order;
 }
