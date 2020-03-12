@@ -17,7 +17,7 @@
 package com.rackspace.salus.telemetry.model;
 
 public enum MonitorType {
-  // powered by telegraf
+  // powered by https://github.com/racker/telegraf
   apache,
   ping,
   http,
@@ -34,6 +34,7 @@ public enum MonitorType {
   postgresql,
   redis,
   sqlserver,
+  smtp,
   log,
   system,
   // powered by https://github.com/racker/salus-oracle-agent
