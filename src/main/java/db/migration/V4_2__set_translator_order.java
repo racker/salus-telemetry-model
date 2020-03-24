@@ -29,7 +29,9 @@ import org.flywaydb.core.api.migration.Context;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.stereotype.Component;
 
+@Component
 public class V4_2__set_translator_order extends BaseJavaMigration {
 
   @Override
@@ -38,7 +40,7 @@ public class V4_2__set_translator_order extends BaseJavaMigration {
     jdbcTemplate.execute("UPDATE monitor_translation_operators SET priority_order = 0");
 
     List<MigrationTranslator> translators = jdbcTemplate
-        .query("SELECT * FROM monitor_translation_operators WHERE (monitor_type = 'apache' OR monitor_type = 'http')", new TestTranslatorMapper());
+        .query("SELECT * FROM monitor_translation_operators WHERE (monitor_type = 'apache' OR monitor_type = 'http')", new MigrationTranslatorMapper());
 
 
     for(MigrationTranslator translator : translators) {
@@ -52,7 +54,7 @@ public class V4_2__set_translator_order extends BaseJavaMigration {
     int priority_order;
   }
 
-  private class TestTranslatorMapper implements RowMapper<MigrationTranslator> {
+  private class MigrationTranslatorMapper implements RowMapper<MigrationTranslator> {
 
     @SneakyThrows
     @Override

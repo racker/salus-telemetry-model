@@ -21,6 +21,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -29,6 +30,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Target(ElementType.TYPE)
 @Configuration
 @EntityScan("com.rackspace.salus.telemetry.entities")
+@ComponentScan("db.migration")
 @EnableJpaRepositories("com.rackspace.salus.telemetry.repositories")
 @PropertySource("classpath:spring-flyway.properties")
 public @interface EnableSalusJpa {
