@@ -66,9 +66,9 @@ public class V4_2__set_translator_order extends BaseJavaMigration {
       JsonNode type = node.get("type");
       if(type.asText().equals("renameFieldKey")) {
         value.priority_order = 2;
-      }else if(type.asText().equals("goDuration")) {
+      } else if(type.asText().equals("goDuration")) {
         value.priority_order = 1;
-      }else {
+      } else {
         value.priority_order = 0;
       }
       return value;
