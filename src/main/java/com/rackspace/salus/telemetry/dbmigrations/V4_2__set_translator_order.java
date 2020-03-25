@@ -15,7 +15,7 @@
  *
  */
 
-package db.migration;
+package com.rackspace.salus.telemetry.dbmigrations;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +26,7 @@ import java.util.UUID;
 import lombok.SneakyThrows;
 import org.flywaydb.core.api.migration.BaseJavaMigration;
 import org.flywaydb.core.api.migration.Context;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;

@@ -30,7 +30,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Target(ElementType.TYPE)
 @Configuration
 @EntityScan("com.rackspace.salus.telemetry.entities")
-@ComponentScan("db.migration")
+@ComponentScan("com.rackspace.salus.telemetry.dbmigrations")
 @EnableJpaRepositories("com.rackspace.salus.telemetry.repositories")
 @PropertySource("classpath:spring-flyway.properties")
 public @interface EnableSalusJpa {
