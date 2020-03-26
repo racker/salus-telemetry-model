@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ package com.rackspace.salus.telemetry.repositories;
 
 import com.rackspace.salus.telemetry.entities.Monitor;
 import com.rackspace.salus.telemetry.model.MonitorType;
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -40,6 +40,10 @@ public interface MonitorRepository extends PagingAndSortingRepository<Monitor, U
     Page<Monitor> findByTenantId(String tenantId, Pageable pageable);
 
     List<Monitor> findByTenantIdAndResourceId(String tenantId, String resourceId);
+
+    Optional<Monitor> findByTenantIdAndPolicyId(String tenantId, UUID policyId);
+
+    Page<Monitor> findByTenantIdAndPolicyIdIsNotNull(String tenantId, Pageable pageable);
 
     /**
      * Returns any monitor with an empty labelSelector for the given tenant.

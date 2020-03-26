@@ -143,6 +143,11 @@ public class Monitor implements Serializable {
     @Column(name = "monitoring_interval") // just "interval" conflicts with SQL identifiers
     Duration interval;
 
+    @Column(name = "policy_id")
+    @NonMetadataField
+    @org.hibernate.annotations.Type(type="uuid-char")
+    UUID policyId;
+
     @CreationTimestamp
     @Column(name="created_timestamp")
     @NonMetadataField

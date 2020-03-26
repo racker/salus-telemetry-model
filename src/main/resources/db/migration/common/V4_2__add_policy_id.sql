@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,4 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.messaging;
-
-import java.util.UUID;
-import lombok.Data;
-
-@Data
-@KafkaMessageKey(properties = {"tenantId", "monitorId"})
-public class PolicyMonitorUpdateEvent {
-  String tenantId;
-  UUID monitorId;
-}
+ALTER TABLE monitors ADD policy_id varchar(255) null;
