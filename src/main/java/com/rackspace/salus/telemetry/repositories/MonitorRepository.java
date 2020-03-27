@@ -44,6 +44,7 @@ public interface MonitorRepository extends PagingAndSortingRepository<Monitor, U
     Optional<Monitor> findByTenantIdAndPolicyId(String tenantId, UUID policyId);
 
     Page<Monitor> findByTenantIdAndPolicyIdIsNotNull(String tenantId, Pageable pageable);
+    List<Monitor> findByTenantIdAndPolicyIdIsNotNull(String tenantId);
 
     /**
      * Returns any monitor with an empty labelSelector for the given tenant.
