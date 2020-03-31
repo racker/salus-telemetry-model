@@ -17,6 +17,7 @@
 package com.rackspace.salus.telemetry.repositories;
 
 import com.rackspace.salus.telemetry.entities.Monitor;
+import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
 import com.rackspace.salus.telemetry.model.MonitorType;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,7 @@ public interface MonitorRepository extends PagingAndSortingRepository<Monitor, U
 
     Page<Monitor> findByTenantIdAndPolicyIdIsNotNull(String tenantId, Pageable pageable);
     List<Monitor> findByTenantIdAndPolicyIdIsNotNull(String tenantId);
+    Set<Monitor> findByTenantIdAndSelectorScopeAndZonesIsNull(String tenantId, ConfigSelectorScope scope);
 
     /**
      * Returns any monitor with an empty labelSelector for the given tenant.

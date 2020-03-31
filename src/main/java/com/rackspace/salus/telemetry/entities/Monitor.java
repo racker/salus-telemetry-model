@@ -116,6 +116,7 @@ public class Monitor implements Serializable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="monitor_zones", joinColumns = @JoinColumn(name="monitor_id"))
+    @NonMetadataField // technically metadata can be used but not in the same way as others
     List<String> zones;
 
     @Column(name="resource_id")
