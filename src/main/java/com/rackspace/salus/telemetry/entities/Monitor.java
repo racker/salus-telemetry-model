@@ -24,6 +24,7 @@ import com.rackspace.salus.telemetry.model.NonMetadataField;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -117,7 +118,7 @@ public class Monitor implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="monitor_zones", joinColumns = @JoinColumn(name="monitor_id"))
     @NonMetadataField // technically metadata can be used but not in the same way as others
-    List<String> zones;
+    List<String> zones = new ArrayList<>();
 
     @Column(name="resource_id")
     @NonMetadataField

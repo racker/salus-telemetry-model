@@ -19,6 +19,7 @@ package com.rackspace.salus.telemetry.entities;
 import com.rackspace.salus.telemetry.model.ValidLabelKeys;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -61,6 +62,8 @@ import org.hibernate.validator.constraints.NotBlank;
 })
 @Data
 public class Resource implements Serializable {
+    public static final String REGION_METADATA = "region";
+
     @Id
     @GeneratedValue
     Long id;
@@ -93,7 +96,7 @@ public class Resource implements Serializable {
      * Unlike labels, metadata is not indexed and not used for resource/monitor matching.
      */
     @Type(type = "json")
-    Map<String,String> metadata;
+    Map<String,String> metadata = new HashMap<>();
 
     @NotBlank
     @Column(name="tenant_id")
