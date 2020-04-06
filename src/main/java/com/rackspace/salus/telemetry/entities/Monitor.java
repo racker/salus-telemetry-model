@@ -61,7 +61,10 @@ import org.hibernate.validator.constraints.NotBlank;
             + "where :metadataKey member of m.monitorMetadataFields"),
     @NamedQuery(name = "Monitor.getTenantsUsingPolicyMetadataInPlugin",
         query = "select distinct m.tenantId from Monitor m join m.pluginMetadataFields "
-            + "where :metadataKey member of m.pluginMetadataFields")
+            + "where :metadataKey member of m.pluginMetadataFields"),
+    @NamedQuery(name = "Monitor.getTenantsUsingZoneMetadata",
+        query = "select distinct m.tenantId from Monitor m left outer join m.zones as z where "
+            + "m.selectorScope = 'REMOTE' and z.size = 0")
 })
 @Data
 public class Monitor implements Serializable {
