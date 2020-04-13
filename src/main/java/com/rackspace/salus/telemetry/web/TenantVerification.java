@@ -24,7 +24,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class TenantVerification extends HandlerInterceptorAdapter {
 
-  public static final String ERROR_MSG = "Tenant must be created before any operations can be performed on it";
+  public static final String ERROR_MSG = "Tenant must be created before any operations can be performed with it";
 
   public static final String HEADER_TENANT = "X-Tenant-Id";
   TenantMetadataRepository tenantMetadataRepository;
