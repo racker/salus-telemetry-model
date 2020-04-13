@@ -25,7 +25,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface TenantMetadataRepository extends PagingAndSortingRepository<TenantMetadata, UUID> {
   Optional<TenantMetadata> findByTenantId(String tenantId);
 
-  @Cacheable(cacheNames = "tenant_ids", key = "#tenantId")
+  @Cacheable(cacheNames = "tenant_ids", key = "#tenantId",
+      // avoid caching tenants that don't exist yet
+      unless = "#result == false")
   boolean existsByTenantId(String tenantId);
 }
 
