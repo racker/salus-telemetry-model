@@ -19,9 +19,15 @@ package com.rackspace.salus.telemetry.repositories;
 import com.rackspace.salus.telemetry.entities.TenantMetadata;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface TenantMetadataRepository extends PagingAndSortingRepository<TenantMetadata, UUID> {
   Optional<TenantMetadata> findByTenantId(String tenantId);
+
+  @Cacheable(cacheNames = "tenant_ids", key = "#tenantId",
+      // avoid caching tenants that don't exist yet
+      unless = "#result == false")
+  boolean existsByTenantId(String tenantId);
 }
 
