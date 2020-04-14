@@ -24,6 +24,7 @@ import com.rackspace.salus.telemetry.model.NonMetadataField;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,7 +61,10 @@ import org.hibernate.validator.constraints.NotBlank;
             + "where :metadataKey member of m.monitorMetadataFields"),
     @NamedQuery(name = "Monitor.getTenantsUsingPolicyMetadataInPlugin",
         query = "select distinct m.tenantId from Monitor m join m.pluginMetadataFields "
-            + "where :metadataKey member of m.pluginMetadataFields")
+            + "where :metadataKey member of m.pluginMetadataFields"),
+    @NamedQuery(name = "Monitor.getTenantsUsingZoneMetadata",
+        query = "select distinct m.tenantId from Monitor m left outer join m.zones as z where "
+            + "m.selectorScope = 'REMOTE' and z.size = 0")
 })
 @Data
 public class Monitor implements Serializable {
@@ -116,7 +120,8 @@ public class Monitor implements Serializable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="monitor_zones", joinColumns = @JoinColumn(name="monitor_id"))
-    List<String> zones;
+    @NonMetadataField // technically metadata can be used but not in the same way as others
+    List<String> zones = new ArrayList<>();
 
     @Column(name="resource_id")
     @NonMetadataField

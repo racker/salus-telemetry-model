@@ -17,7 +17,6 @@
 package com.rackspace.salus.telemetry.entities;
 
 import com.rackspace.salus.telemetry.model.MetadataValueType;
-import com.rackspace.salus.telemetry.model.MonitorType;
 import com.rackspace.salus.telemetry.model.TargetClassName;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +33,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class MetadataPolicy extends Policy {
+
+  public static final String ZONE_METADATA_PREFIX = "monitoring_zone_";
+  public static final String DEFAULT_ZONE = "default";
 
   @NotNull
   @Enumerated(EnumType.STRING)
