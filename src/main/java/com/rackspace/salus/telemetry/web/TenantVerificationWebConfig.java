@@ -33,6 +33,7 @@ public class TenantVerificationWebConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     log.debug("Enabling Tenant Verification interceptor");
-    registry.addInterceptor(new TenantVerification(tenantMetadataRepository));
+    registry.addInterceptor(new TenantVerification(tenantMetadataRepository))
+        .excludePathPatterns("/api/admin/**");
   }
 }
