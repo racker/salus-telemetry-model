@@ -20,8 +20,10 @@ import com.rackspace.salus.telemetry.model.NotFoundException;
 import com.rackspace.salus.telemetry.repositories.TenantMetadataRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+@Slf4j
 public class TenantVerification extends HandlerInterceptorAdapter {
 
   public static final String ERROR_MSG = "Tenant must be created before any operations can be performed with it";
@@ -38,6 +40,7 @@ public class TenantVerification extends HandlerInterceptorAdapter {
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
       Object handler) throws Exception {
     String tenantId = request.getHeader(HEADER_TENANT);
+    log.trace("Verifying tenant {} exists in the system", tenantId);
     if (tenantId == null) {
       // cross-service requests will not contain the header.
       // neither should any request to the admin api.
