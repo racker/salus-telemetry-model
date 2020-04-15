@@ -28,7 +28,7 @@ public class TenantVerification extends HandlerInterceptorAdapter {
 
   public static final String ERROR_MSG = "Tenant must be created before any operations can be performed with it";
 
-  public static final String HEADER_TENANT = "X-Tenant-Id";
+  public static final String HEADER_TENANT = "Requested-Tenant-Id";
   TenantMetadataRepository tenantMetadataRepository;
 
   public TenantVerification(TenantMetadataRepository repository) {
