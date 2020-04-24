@@ -40,5 +40,5 @@ public interface ResourceRepository extends PagingAndSortingRepository<Resource,
 
   List<Resource> findAllByTenantIdAndPresenceMonitoringEnabled(String tenantId, boolean presenceMonitoringEnabled);
 
-  Page<Resource> findByResourceIdIn(List<Long> resourceIds, Pageable page);
+  Page<Resource> findByIdIn(List<Long> resourceIds, Pageable page);
 }
