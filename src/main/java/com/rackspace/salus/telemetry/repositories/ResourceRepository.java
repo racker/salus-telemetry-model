@@ -40,6 +40,5 @@ public interface ResourceRepository extends PagingAndSortingRepository<Resource,
 
   List<Resource> findAllByTenantIdAndPresenceMonitoringEnabled(String tenantId, boolean presenceMonitoringEnabled);
 
-  @Query("from Resource r where r.id in :resourceIds")
-  Page<Resource> findByResourceId(List<Long> resourceIds, Pageable page);
+  Page<Resource> findByResourceIdIn(List<Long> resourceIds, Pageable page);
 }
