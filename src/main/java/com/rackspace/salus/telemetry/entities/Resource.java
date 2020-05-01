@@ -96,6 +96,7 @@ public class Resource implements Serializable {
      * Unlike labels, metadata is not indexed and not used for resource/monitor matching.
      */
     @Type(type = "json")
+    @NotNull
     Map<String,String> metadata = new HashMap<>();
 
     @NotBlank
