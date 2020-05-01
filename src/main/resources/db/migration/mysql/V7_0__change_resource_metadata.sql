@@ -16,4 +16,4 @@
 
 alter table resources
     change column metadata
-        metadata longtext not null;;
+        metadata longtext not null;
