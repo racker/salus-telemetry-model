@@ -48,4 +48,9 @@ public class RenameFieldKeyTranslator extends MonitorTranslator {
       contentTree.putNull(to);
     }
   }
+
+  @Override
+  public String info() {
+    return String.format("The key '%s' is renamed to '%s'", from, to);
+  }
 }

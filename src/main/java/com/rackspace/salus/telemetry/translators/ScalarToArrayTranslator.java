@@ -49,4 +49,13 @@ public class ScalarToArrayTranslator extends MonitorTranslator {
       contentTree.putArray(to);
     }
   }
+
+  @Override
+  public String info() {
+    if (from.equals(to)) {
+      return String.format("'%s' becomes a singleton array", from);
+    } else {
+      return String.format("'%s' becomes the singleton array named '%s'", from, to);
+    }
+  }
 }
