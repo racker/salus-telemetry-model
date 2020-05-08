@@ -56,4 +56,10 @@ public class JoinHostPortTranslator extends MonitorTranslator {
           "Both host and port must be set to use JoinHostPortTranslator");
     }
   }
+
+  @Override
+  public String info() {
+    return String.format("The value of '%s' and '%s' are combined into '%s:%s' and named '%s'",
+        fromHost, fromPort, fromHost, fromPort, to);
+  }
 }

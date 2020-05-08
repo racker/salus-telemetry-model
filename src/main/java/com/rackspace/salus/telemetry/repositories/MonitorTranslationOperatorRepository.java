@@ -25,6 +25,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface MonitorTranslationOperatorRepository extends
     PagingAndSortingRepository<MonitorTranslationOperator, UUID> {
 
+  List<MonitorTranslationOperator> findAll();
+
   List<MonitorTranslationOperator> findAllByAgentType(AgentType agentType);
 
 }

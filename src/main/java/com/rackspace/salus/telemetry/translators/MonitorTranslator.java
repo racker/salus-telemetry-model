@@ -60,4 +60,6 @@ public abstract class MonitorTranslator {
    */
   public abstract void translate(ObjectNode contentTree) throws MonitorContentTranslationException;
 
+  public abstract String info();
+
 }

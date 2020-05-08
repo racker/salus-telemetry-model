@@ -47,4 +47,9 @@ public class GoDurationTranslator extends MonitorTranslator {
       }
     }
   }
+
+  @Override
+  public String info() {
+    return String.format("'%s' becomes a Golang formatted duration", field);
+  }
 }

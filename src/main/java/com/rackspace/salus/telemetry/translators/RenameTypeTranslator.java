@@ -40,4 +40,9 @@ public class RenameTypeTranslator extends MonitorTranslator {
     }
     contentTree.put(MonitorTranslator.TYPE_PROPERTY, value);
   }
+
+  @Override
+  public String info() {
+    return String.format("The monitor's type is renamed to '%s'", value);
+  }
 }

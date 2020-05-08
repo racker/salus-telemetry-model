@@ -43,4 +43,9 @@ public class DurationInSecondsTranslator extends MonitorTranslator {
       contentTree.put(field, duration.toSeconds());
     }
   }
+
+  @Override
+  public String info() {
+    return String.format("'%s' becomes a number of seconds", field);
+  }
 }

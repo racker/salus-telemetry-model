@@ -38,4 +38,9 @@ public class ReplaceStringFieldValueTranslator extends MonitorTranslator {
   public void translate(ObjectNode contentTree) {
     contentTree.put(field, value);
   }
+
+  @Override
+  public String info() {
+    return String.format("The value of '%s' is set to '%s'", field, value);
+  }
 }
