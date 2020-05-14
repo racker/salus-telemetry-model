@@ -24,7 +24,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Component;
 
 @Component
-public class V7_1__update_metadata_to_empty_from_null extends BaseJavaMigration {
+public class V7_0__update_metadata_to_empty_from_null extends BaseJavaMigration {
 
   @Override
   public void migrate(Context context) throws Exception {
