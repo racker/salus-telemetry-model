@@ -20,7 +20,6 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
@@ -35,7 +34,6 @@ public class MonitorPolicy extends Policy {
   @Column(name="name")
   String name;
 
-  @NotNull
   @Column(name="monitor_id")
   @org.hibernate.annotations.Type(type="uuid-char")
   UUID monitorId;
