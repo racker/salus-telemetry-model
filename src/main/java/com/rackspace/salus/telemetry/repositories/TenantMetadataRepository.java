@@ -30,4 +30,3 @@ public interface TenantMetadataRepository extends PagingAndSortingRepository<Ten
       unless = "#result == false")
   boolean existsByTenantId(String tenantId);
 }
-
