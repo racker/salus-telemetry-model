@@ -41,7 +41,9 @@ import org.hibernate.validator.constraints.NotBlank;
 })
 @NamedQueries({
     @NamedQuery(name = "TenantMetadata.getByAccountType",
-        query = "select distinct t.tenantId from TenantMetadata t where t.accountType = :accountType")
+        query = "select distinct t.tenantId from TenantMetadata t where t.accountType = :accountType"),
+    @NamedQuery(name = "TenantMetadata.getAllDistinctTenants",
+        query = "select distinct t.tenantId from TenantMetadata t")
 })
 @Data
 public class TenantMetadata {
