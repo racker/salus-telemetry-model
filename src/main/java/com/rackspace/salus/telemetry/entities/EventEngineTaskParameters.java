@@ -62,7 +62,6 @@ public class EventEngineTaskParameters {
   @Data
   @EvalExpressionValidation
   public static class EvalExpression {
-
     @NotEmpty
     List<String> operands;
     @NotBlank
@@ -76,11 +75,19 @@ public class EventEngineTaskParameters {
     @NotEmpty
     String field;
     @NotNull
-    Number threshold;
+    Object threshold;
     @NotEmpty
     @ExpressionValidator.ComparatorValidation()
     String comparator;
 
+    /**
+     * A method used within tests to help podam know how to populate the threshold field.
+     * Otherwise it does not know what to insert for an 'Object'.
+     * @param value A random string value to be used as the threshold.
+     */
+    public void podamHelper(String value) {
+      this.threshold = value;
+    }
   }
 
   public enum Comparator  {
