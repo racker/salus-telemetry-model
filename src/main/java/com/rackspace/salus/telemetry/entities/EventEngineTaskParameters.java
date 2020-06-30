@@ -20,11 +20,10 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.rackspace.salus.telemetry.model.ValidLabelKeys;
 import com.rackspace.salus.telemetry.validators.EvalExpressionValidator.EvalExpressionValidation;
-import com.rackspace.salus.telemetry.validators.ExpressionValidator;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
@@ -83,28 +82,24 @@ public class EventEngineTaskParameters {
   }
 
   public enum Comparator  {
-    EQUAL_TO,
-    NOT_EQUAL_TO,
-    GREATER_THAN,
-    GREATER_THAN_OR_EQUAL_TO,
-    LESS_THAN,
-    LESS_THAN_OR_EQUAL_TO,
-    REGEX_MATCH,
-    NOT_REGEX_MATCH;
+    EQUAL_TO("=="),
+    NOT_EQUAL_TO("!="),
+    GREATER_THAN(">"),
+    GREATER_THAN_OR_EQUAL_TO(">="),
+    LESS_THAN("<"),
+    LESS_THAN_OR_EQUAL_TO("<="),
+    REGEX_MATCH("=~"),
+    NOT_REGEX_MATCH("!~");
 
-    static private final HashMap<String, Comparator> convertString = new HashMap<>();
-    static {
-      convertString.put("==", EQUAL_TO);
-      convertString.put("!=", NOT_EQUAL_TO);
-      convertString.put(">", GREATER_THAN);
-      convertString.put("<", LESS_THAN);
-      convertString.put(">=", GREATER_THAN_OR_EQUAL_TO);
-      convertString.put("<=", LESS_THAN_OR_EQUAL_TO);
-      convertString.put("=~", REGEX_MATCH);
-      convertString.put("!~", NOT_REGEX_MATCH);
+    private final String friendlyName;
+
+    Comparator(String friendlyName) {
+      this.friendlyName = friendlyName;
     }
-    static public boolean valid(String c) {
-        return (convertString.get(c) != null);
+
+    @JsonValue
+    public String getFriendlyName() {
+      return this.friendlyName;
     }
   }
 
@@ -136,8 +131,7 @@ public class EventEngineTaskParameters {
   @Data
   @EqualsAndHashCode(callSuper = false)
   public static class ComparisonExpression extends Expression {
-    @ExpressionValidator.ComparatorValidation()
-    String comparator;
+    Comparator comparator;
     String metricName;
     Object comparisonValue;
 
