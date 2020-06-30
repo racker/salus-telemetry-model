@@ -16,29 +16,42 @@
 
 package com.rackspace.salus.telemetry.entities;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.rackspace.salus.telemetry.model.ValidLabelKeys;
 import com.rackspace.salus.telemetry.validators.EvalExpressionValidator.EvalExpressionValidation;
 import com.rackspace.salus.telemetry.validators.ExpressionValidator;
-import com.rackspace.salus.telemetry.validators.TaskParametersValidator;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-@TaskParametersValidator.AtLeastOneOf()
 public class EventEngineTaskParameters {
 
-  @Valid
-  LevelExpression info;
-  @Valid
-  LevelExpression warning;
-  @Valid
-  LevelExpression critical;
+  @Min(1)
+  @Max(10)
+  Integer criticalStateDuration;
+
+  @Min(1)
+  @Max(10)
+  Integer warningStateDuration;
+
+  @Min(1)
+  @Max(10)
+  Integer infoStateDuration;
+
+  @NotEmpty
+  List<StateExpression> stateExpressions = new ArrayList<>();
 
   @Valid
   List<EvalExpression> evalExpressions;
@@ -52,14 +65,6 @@ public class EventEngineTaskParameters {
   Map<String, String> labelSelector;
 
   @Data
-  public static class LevelExpression {
-
-    @Valid
-    Expression expression;
-    Integer stateDuration;
-  }
-
-  @Data
   @EvalExpressionValidation
   public static class EvalExpression {
     @NotEmpty
@@ -70,28 +75,14 @@ public class EventEngineTaskParameters {
     String as;
   }
 
-  @Data
-  public static class Expression {
-    @NotEmpty
-    String field;
-    @NotNull
-    Object threshold;
-    @NotEmpty
-    @ExpressionValidator.ComparatorValidation()
-    String comparator;
-
-    /**
-     * A method used within tests to help podam know how to populate the threshold field.
-     * Otherwise it does not know what to insert for an 'Object'.
-     * @param value A random string value to be used as the threshold.
-     */
-    public void podamHelper(String value) {
-      this.threshold = value;
-    }
+  public enum TaskState {
+    CRITICAL,
+    WARNING,
+    INFO,
+    OK
   }
 
   public enum Comparator  {
-
     EQUAL_TO,
     NOT_EQUAL_TO,
     GREATER_THAN,
@@ -101,7 +92,7 @@ public class EventEngineTaskParameters {
     REGEX_MATCH,
     NOT_REGEX_MATCH;
 
-    static private HashMap<String, Comparator> convertString = new HashMap<>();
+    static private final HashMap<String, Comparator> convertString = new HashMap<>();
     static {
       convertString.put("==", EQUAL_TO);
       convertString.put("!=", NOT_EQUAL_TO);
@@ -114,6 +105,49 @@ public class EventEngineTaskParameters {
     }
     static public boolean valid(String c) {
         return (convertString.get(c) != null);
+    }
+  }
+
+  @Data
+  public static class StateExpression {
+    Expression expression;
+    TaskState state;
+    String message;
+  }
+
+  @JsonTypeInfo(use = Id.NAME, property = "type")
+  @JsonSubTypes({
+      @Type(name = "logical", value = LogicalExpression.class),
+      @Type(name = "comparison", value = ComparisonExpression.class)})
+  public static abstract class Expression {
+  }
+
+  @Data
+  @EqualsAndHashCode(callSuper = false)
+  public static class LogicalExpression extends Expression {
+    Operator operator;
+    List<Expression> expressions;
+
+    public enum Operator {
+      AND, OR
+    }
+  }
+
+  @Data
+  @EqualsAndHashCode(callSuper = false)
+  public static class ComparisonExpression extends Expression {
+    @ExpressionValidator.ComparatorValidation()
+    String comparator;
+    String metricName;
+    Object comparisonValue;
+
+    /**
+     * A method used within tests to help podam know how to populate the threshold field.
+     * Otherwise it does not know what to insert for an 'Object'.
+     * @param value A random string value to be used as the threshold.
+     */
+    public void podamHelper(String value) {
+      this.comparisonValue = value;
     }
   }
 }
