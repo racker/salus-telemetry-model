@@ -12,6 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
 package com.rackspace.salus.telemetry.repositories;
@@ -27,14 +28,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 public interface MonitorRepository extends PagingAndSortingRepository<Monitor, UUID> {
 
     boolean existsByIdAndTenantId(UUID id, String tenantId);
-
-    List<Monitor> findByIdIn(List<UUID> ids);
-
-    Page<Monitor> findByIdIn(List<UUID> ids, Pageable pageable);
 
     Optional<Monitor> findByIdAndTenantId(UUID id, String tenantId);
 
@@ -84,4 +82,9 @@ public interface MonitorRepository extends PagingAndSortingRepository<Monitor, U
 
     @Query("select count(m) from Monitor m where m.tenantId = :tenantId and :zone member of m.zones")
     int countAllByTenantIdAndZonesContains(String tenantId, String zone);
+
+    @Query(nativeQuery = true,
+        countQuery     = "SELECT count(*) FROM monitors WHERE tenant_id = :tenantId AND (id LIKE %:searchCriteria% OR monitor_name LIKE %:searchCriteria%) ORDER BY monitor_name",
+        value          = "SELECT * FROM monitors WHERE tenant_id = :tenantId AND (id LIKE %:searchCriteria% OR monitor_name LIKE %:searchCriteria%) ORDER BY monitor_name")
+    Page<Monitor> search(@Param("tenantId")String tenantId, @Param("searchCriteria")String searchCriteria, Pageable pageable);
 }
