@@ -1,28 +1,18 @@
 package com.rackspace.salus.telemetry.validators;
 
-import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import com.rackspace.salus.telemetry.entities.EventEngineTaskParameters.EvalExpression;
-import com.rackspace.salus.telemetry.validators.EvalExpressionValidator.EvalExpressionValidation;
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import com.rackspace.salus.telemetry.model.BasicEvalNode;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import javax.validation.Payload;
 
 
-public class EvalExpressionValidator implements
-    ConstraintValidator<EvalExpressionValidation, EvalExpression> {
+public class BasicEvalNodeValidator implements
+    ConstraintValidator<ValidBasicEvalNode, BasicEvalNode> {
 
   public static String functionRegex = "(\\w+)\\((.*)\\)";
   private static List<String> functionList = Arrays.asList(
@@ -70,23 +60,7 @@ public class EvalExpressionValidator implements
   }
 
   @Override
-  public boolean isValid(EvalExpression evalExpression, ConstraintValidatorContext context) {
-    return evalExpression.getOperands().stream().allMatch(this::isValidOperand);
-  }
-
-  @Target({TYPE, ANNOTATION_TYPE}) // class level constraint
-  @Retention(RUNTIME)
-  @Constraint(validatedBy = EvalExpressionValidator.class) // validator
-  @Documented
-  public @interface EvalExpressionValidation {
-
-    @SuppressWarnings("unused")
-    String message() default "Invalid eval expression"; // default error message
-
-    @SuppressWarnings("unused")
-    Class<?>[] groups() default {}; // required
-
-    @SuppressWarnings("unused")
-    Class<? extends Payload>[] payload() default {}; // required
+  public boolean isValid(BasicEvalNode evalNode, ConstraintValidatorContext context) {
+    return evalNode.getOperands().stream().allMatch(this::isValidOperand);
   }
 }

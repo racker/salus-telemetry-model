@@ -40,11 +40,15 @@ public class GoDurationTranslator extends MonitorTranslator {
     if (contentTree.hasNonNull(field)) {
       final JsonNode node = contentTree.remove(field);
       Duration duration = Duration.parse(node.asText());
-      if (duration.toSecondsPart() == 0) {
-        contentTree.put(field, String.format("%dm", duration.toMinutes()));
-      } else {
-        contentTree.put(field, String.format("%ds", duration.toSeconds()));
-      }
+      contentTree.put(field, getGoDuration(duration));
+    }
+  }
+
+  public static String getGoDuration(Duration duration) {
+    if (duration.toSecondsPart() == 0) {
+      return String.format("%dm", duration.toMinutes());
+    } else {
+      return String.format("%ds", duration.toSeconds());
     }
   }
 
