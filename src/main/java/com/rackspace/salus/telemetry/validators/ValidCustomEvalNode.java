@@ -27,9 +27,9 @@ import javax.validation.Payload;
 
 @Target(TYPE)
 @Retention(RUNTIME)
-@Constraint(validatedBy = BasicEvalNodeValidator.class)
+@Constraint(validatedBy = CustomEvalNodeValidator.class)
 @Documented
-public @interface ValidBasicEvalNode {
+public @interface ValidCustomEvalNode {
 
   String message() default "Invalid custom metric.";
 

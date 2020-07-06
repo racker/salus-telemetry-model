@@ -32,7 +32,7 @@ import lombok.Data;
  *
  */
 @Data
-public class DerivativeNode extends CustomMetricExpression {
+public class DerivativeNode extends MetricExpressionBase {
   @NotBlank
   String metric;
   Duration duration = Duration.ofMinutes(1);
@@ -41,7 +41,7 @@ public class DerivativeNode extends CustomMetricExpression {
   boolean nonNegative;
 
   /**
-   * @return The duration value in the go farmat used by TickScript.
+   * @return The duration value in the go format used by TickScript.
    */
   @JsonIgnore
   public String getGoDuration() {

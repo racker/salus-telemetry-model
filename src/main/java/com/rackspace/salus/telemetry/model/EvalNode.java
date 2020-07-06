@@ -23,7 +23,7 @@ import lombok.Data;
  * Represents any functions that can be used within the EvalNode in TickScript.
  */
 @Data
-public abstract class EvalNode extends CustomMetricExpression {
+public abstract class EvalNode extends MetricExpressionBase {
   String as;
 
   @JsonIgnore

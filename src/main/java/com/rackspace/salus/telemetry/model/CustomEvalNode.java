@@ -16,9 +16,7 @@
 
 package com.rackspace.salus.telemetry.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rackspace.salus.telemetry.validators.BasicEvalNodeValidator;
-import com.rackspace.salus.telemetry.validators.ValidBasicEvalNode;
+import com.rackspace.salus.telemetry.validators.ValidCustomEvalNode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -35,17 +33,16 @@ import lombok.Data;
  * If more complex eval expressions are required a custom class should be created.
  */
 @Data
-@ValidBasicEvalNode
-public class BasicEvalNode extends EvalNode {
+@ValidCustomEvalNode
+public class CustomEvalNode extends EvalNode {
   @NotEmpty
   List<String> operands;
   @NotBlank
   String operator;
 
-  @JsonIgnore
-  final Pattern evalExpression = Pattern.compile(BasicEvalNodeValidator.functionRegex);
-  @JsonIgnore
-  final Pattern validRealNumber = Pattern.compile("^[-+]?([0-9]+(\\.[0-9]+)?|\\.[0-9]+)$");
+  public final static String functionRegex = "(\\w+)\\((.*)\\)";
+  final static Pattern evalExpression = Pattern.compile(functionRegex);
+  final static Pattern validRealNumber = Pattern.compile("^[-+]?([0-9]+(\\.[0-9]+)?|\\.[0-9]+)$");
 
   @Override
   public String getLambda() {

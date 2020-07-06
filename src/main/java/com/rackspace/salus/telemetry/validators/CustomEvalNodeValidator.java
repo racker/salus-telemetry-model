@@ -1,6 +1,8 @@
 package com.rackspace.salus.telemetry.validators;
 
-import com.rackspace.salus.telemetry.model.BasicEvalNode;
+import static com.rackspace.salus.telemetry.model.CustomEvalNode.functionRegex;
+
+import com.rackspace.salus.telemetry.model.CustomEvalNode;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -11,10 +13,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 
-public class BasicEvalNodeValidator implements
-    ConstraintValidator<ValidBasicEvalNode, BasicEvalNode> {
+public class CustomEvalNodeValidator implements
+    ConstraintValidator<ValidCustomEvalNode, CustomEvalNode> {
 
-  public static String functionRegex = "(\\w+)\\((.*)\\)";
   private static List<String> functionList = Arrays.asList(
 
       // Stateful functions
@@ -60,7 +61,7 @@ public class BasicEvalNodeValidator implements
   }
 
   @Override
-  public boolean isValid(BasicEvalNode evalNode, ConstraintValidatorContext context) {
+  public boolean isValid(CustomEvalNode evalNode, ConstraintValidatorContext context) {
     return evalNode.getOperands().stream().allMatch(this::isValidOperand);
   }
 }

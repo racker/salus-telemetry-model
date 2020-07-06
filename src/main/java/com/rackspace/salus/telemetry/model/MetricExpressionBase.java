@@ -23,8 +23,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonSubTypes({
-    @Type(name = "custom", value = BasicEvalNode.class),
+    @Type(name = "custom", value = CustomEvalNode.class),
     @Type(name = "percent", value = PercentageEvalNode.class),
     @Type(name = "rate", value = DerivativeNode.class)})
-public abstract class CustomMetricExpression {
+public abstract class MetricExpressionBase {
 }

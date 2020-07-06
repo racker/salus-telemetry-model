@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.rackspace.salus.telemetry.model.CustomMetricExpression;
+import com.rackspace.salus.telemetry.model.MetricExpressionBase;
 import com.rackspace.salus.telemetry.model.ValidLabelKeys;
 import com.rackspace.salus.telemetry.validators.ValidCustomMetricList;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class EventEngineTaskParameters {
   List<StateExpression> stateExpressions = new ArrayList<>();
 
   @ValidCustomMetricList
-  List<@Valid CustomMetricExpression> customMetrics;
+  List<@Valid MetricExpressionBase> customMetrics;
 
   Integer windowLength;
   List<String> windowFields;

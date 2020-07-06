@@ -16,17 +16,23 @@
 
 package com.rackspace.salus.telemetry.validators;
 
-import com.rackspace.salus.telemetry.model.CustomMetricExpression;
+import com.rackspace.salus.telemetry.model.MetricExpressionBase;
 import com.rackspace.salus.telemetry.model.DerivativeNode;
 import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * Verifies only a single DerivativeNode is included in the custom metrics list.
+ *
+ * Per https://github.com/influxdata/kapacitor/issues/2064 it appears that at most two of these
+ * could be provided.  For now, we will only support one until we know more is needed.
+ */
 public class CustomMetricListValidator implements
-    ConstraintValidator<ValidCustomMetricList, List<CustomMetricExpression>> {
+    ConstraintValidator<ValidCustomMetricList, List<MetricExpressionBase>> {
 
   @Override
-  public boolean isValid(List<CustomMetricExpression> customMetrics,
+  public boolean isValid(List<MetricExpressionBase> customMetrics,
       ConstraintValidatorContext constraintValidatorContext) {
     if (customMetrics == null) {
       return true;

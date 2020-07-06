@@ -26,11 +26,11 @@ import lombok.Data;
  */
 @Data
 public class PercentageEvalNode extends EvalNode {
-  String x;
-  String y;
+  String part;
+  String total;
 
   @Override
   public String getLambda() {
-    return String.format("lambda: (float(\"%s\") / float(\"%s\")) * 100.0", x, y);
+    return String.format("lambda: (float(\"%s\") / float(\"%s\")) * 100.0", part, total);
   }
 }
