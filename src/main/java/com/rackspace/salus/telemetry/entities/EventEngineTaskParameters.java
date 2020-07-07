@@ -21,15 +21,15 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.rackspace.salus.telemetry.model.MetricExpressionBase;
 import com.rackspace.salus.telemetry.model.ValidLabelKeys;
-import com.rackspace.salus.telemetry.validators.EvalExpressionValidator.EvalExpressionValidation;
+import com.rackspace.salus.telemetry.validators.ValidCustomMetricList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -52,8 +52,8 @@ public class EventEngineTaskParameters {
   @NotEmpty
   List<StateExpression> stateExpressions = new ArrayList<>();
 
-  @Valid
-  List<EvalExpression> evalExpressions;
+  @ValidCustomMetricList
+  List<@Valid MetricExpressionBase> customMetrics;
 
   Integer windowLength;
   List<String> windowFields;
@@ -62,17 +62,6 @@ public class EventEngineTaskParameters {
 
   @ValidLabelKeys
   Map<String, String> labelSelector;
-
-  @Data
-  @EvalExpressionValidation
-  public static class EvalExpression {
-    @NotEmpty
-    List<String> operands;
-    @NotBlank
-    String operator;
-    @NotBlank
-    String as;
-  }
 
   public enum TaskState {
     CRITICAL,
