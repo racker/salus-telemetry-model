@@ -18,6 +18,7 @@ package com.rackspace.salus.telemetry.repositories;
 
 import com.rackspace.salus.telemetry.entities.EventEngineTask;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,8 @@ import org.springframework.data.repository.CrudRepository;
 public interface EventEngineTaskRepository extends CrudRepository<EventEngineTask, UUID> {
 
   Page<EventEngineTask> findByTenantId(String tenantId, Pageable pageable);
+
+  Optional<EventEngineTask> findByTenantIdAndId(String tenantId, UUID id);
 
   List<EventEngineTask> findByTenantIdAndMeasurement(String tenantId, String measurement);
 }

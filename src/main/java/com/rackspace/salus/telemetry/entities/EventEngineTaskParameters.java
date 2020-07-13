@@ -16,32 +16,44 @@
 
 package com.rackspace.salus.telemetry.entities;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.rackspace.salus.telemetry.model.MetricExpressionBase;
 import com.rackspace.salus.telemetry.model.ValidLabelKeys;
-import com.rackspace.salus.telemetry.validators.EvalExpressionValidator.EvalExpressionValidation;
-import com.rackspace.salus.telemetry.validators.ExpressionValidator;
-import com.rackspace.salus.telemetry.validators.TaskParametersValidator;
-import java.util.HashMap;
+import com.rackspace.salus.telemetry.validators.ValidCustomMetricList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-@TaskParametersValidator.AtLeastOneOf()
 public class EventEngineTaskParameters {
 
-  @Valid
-  LevelExpression info;
-  @Valid
-  LevelExpression warning;
-  @Valid
-  LevelExpression critical;
+  @Min(1)
+  @Max(10)
+  Integer criticalStateDuration;
 
-  @Valid
-  List<EvalExpression> evalExpressions;
+  @Min(1)
+  @Max(10)
+  Integer warningStateDuration;
+
+  @Min(1)
+  @Max(10)
+  Integer infoStateDuration;
+
+  @NotEmpty
+  List<StateExpression> stateExpressions = new ArrayList<>();
+
+  @ValidCustomMetricList
+  List<@Valid MetricExpressionBase> customMetrics;
 
   Integer windowLength;
   List<String> windowFields;
@@ -51,34 +63,65 @@ public class EventEngineTaskParameters {
   @ValidLabelKeys
   Map<String, String> labelSelector;
 
-  @Data
-  public static class LevelExpression {
+  public enum TaskState {
+    CRITICAL,
+    WARNING,
+    INFO
+  }
 
-    @Valid
+  public enum Comparator  {
+    EQUAL_TO("=="),
+    NOT_EQUAL_TO("!="),
+    GREATER_THAN(">"),
+    GREATER_THAN_OR_EQUAL_TO(">="),
+    LESS_THAN("<"),
+    LESS_THAN_OR_EQUAL_TO("<="),
+    REGEX_MATCH("=~"),
+    NOT_REGEX_MATCH("!~");
+
+    private final String friendlyName;
+
+    Comparator(String friendlyName) {
+      this.friendlyName = friendlyName;
+    }
+
+    @JsonValue
+    public String getFriendlyName() {
+      return this.friendlyName;
+    }
+  }
+
+  @Data
+  public static class StateExpression {
     Expression expression;
-    Integer stateDuration;
+    TaskState state;
+    String message;
+  }
+
+  @JsonTypeInfo(use = Id.NAME, property = "type")
+  @JsonSubTypes({
+      @Type(name = "logical", value = LogicalExpression.class),
+      @Type(name = "comparison", value = ComparisonExpression.class)})
+  public static abstract class Expression {
   }
 
   @Data
-  @EvalExpressionValidation
-  public static class EvalExpression {
-    @NotEmpty
-    List<String> operands;
-    @NotBlank
-    String operator;
-    @NotBlank
-    String as;
+  @EqualsAndHashCode(callSuper = false)
+  public static class LogicalExpression extends Expression {
+    Operator operator;
+    List<Expression> expressions;
+
+    public enum Operator {
+      AND, OR
+    }
   }
 
   @Data
-  public static class Expression {
-    @NotEmpty
-    String field;
-    @NotNull
-    Object threshold;
-    @NotEmpty
-    @ExpressionValidator.ComparatorValidation()
-    String comparator;
+  @EqualsAndHashCode(callSuper = false)
+  public static class ComparisonExpression extends Expression {
+    Comparator comparator;
+    String metricName;
+    Object comparisonValue;
 
     /**
      * A method used within tests to help podam know how to populate the threshold field.
@@ -86,34 +129,7 @@ public class EventEngineTaskParameters {
      * @param value A random string value to be used as the threshold.
      */
     public void podamHelper(String value) {
-      this.threshold = value;
-    }
-  }
-
-  public enum Comparator  {
-
-    EQUAL_TO,
-    NOT_EQUAL_TO,
-    GREATER_THAN,
-    GREATER_THAN_OR_EQUAL_TO,
-    LESS_THAN,
-    LESS_THAN_OR_EQUAL_TO,
-    REGEX_MATCH,
-    NOT_REGEX_MATCH;
-
-    static private HashMap<String, Comparator> convertString = new HashMap<>();
-    static {
-      convertString.put("==", EQUAL_TO);
-      convertString.put("!=", NOT_EQUAL_TO);
-      convertString.put(">", GREATER_THAN);
-      convertString.put("<", LESS_THAN);
-      convertString.put(">=", GREATER_THAN_OR_EQUAL_TO);
-      convertString.put("<=", LESS_THAN_OR_EQUAL_TO);
-      convertString.put("=~", REGEX_MATCH);
-      convertString.put("!~", NOT_REGEX_MATCH);
-    }
-    static public boolean valid(String c) {
-        return (convertString.get(c) != null);
+      this.comparisonValue = value;
     }
   }
 }
