@@ -37,4 +37,6 @@ public interface ZoneRepository extends PagingAndSortingRepository<Zone, UUID> {
     Page<Zone> findAllAvailableForTenant(String tenantId, Pageable page);
 
     boolean existsByTenantIdAndName(String tenantId, String name);
+
+  void deleteAllByTenantId(String tenantId);
 }

@@ -30,5 +30,7 @@ public interface EnvoyTokenRepository extends CrudRepository<EnvoyToken,String> 
   Optional<EnvoyToken> findByToken(String tokenValue);
 
   Page<EnvoyToken> findByTenantId(String tenantId, Pageable pageable);
+
+  void deleteAllByTenantId(String tenantId);
   
 }

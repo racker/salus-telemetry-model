@@ -46,6 +46,8 @@ public interface MonitorRepository extends PagingAndSortingRepository<Monitor, U
     List<Monitor> findByTenantIdAndPolicyIdIsNotNull(String tenantId);
     Set<Monitor> findByTenantIdAndSelectorScopeAndZonesIsNull(String tenantId, ConfigSelectorScope scope);
 
+    void deleteAllByTenantId(String tenantId);
+
     /**
      * Returns any monitor with an empty labelSelector for the given tenant.
      *

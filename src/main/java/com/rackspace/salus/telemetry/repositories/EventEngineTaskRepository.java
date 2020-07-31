@@ -31,4 +31,6 @@ public interface EventEngineTaskRepository extends CrudRepository<EventEngineTas
   Optional<EventEngineTask> findByTenantIdAndId(String tenantId, UUID id);
 
   List<EventEngineTask> findByTenantIdAndMeasurement(String tenantId, String measurement);
+
+  void deleteAllByTenantId(String tenantId);
 }

@@ -42,4 +42,6 @@ public interface ResourceRepository extends PagingAndSortingRepository<Resource,
   Page<Resource> findByIdIn(List<Long> resourceIds, Pageable page);
 
   Page<Resource> findByTenantIdAndResourceIdContaining(String tenantId, String resourceId, Pageable page);
+
+  void deleteAllByTenantId(String tenantId);
 }
