@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
 package com.rackspace.salus.telemetry.repositories;
@@ -23,6 +24,7 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface AgentInstallRepository extends CrudRepository<AgentInstall, UUID> {
 
@@ -34,5 +36,6 @@ public interface AgentInstallRepository extends CrudRepository<AgentInstall, UUI
 
   List<AgentInstall> findAllByTenantIdAndAgentRelease_Id(String tenantId, UUID agentReleaseId);
 
+  @Transactional
   void deleteAllByTenantId(String tenantId);
 }
