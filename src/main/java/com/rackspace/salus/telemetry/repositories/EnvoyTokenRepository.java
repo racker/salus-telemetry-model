@@ -12,6 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
 package com.rackspace.salus.telemetry.repositories;
@@ -19,6 +20,7 @@ package com.rackspace.salus.telemetry.repositories;
 import com.rackspace.salus.telemetry.entities.EnvoyToken;
 import java.util.Optional;
 import java.util.UUID;
+import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
@@ -31,6 +33,7 @@ public interface EnvoyTokenRepository extends CrudRepository<EnvoyToken,String> 
 
   Page<EnvoyToken> findByTenantId(String tenantId, Pageable pageable);
 
+  @Transactional
   void deleteAllByTenantId(String tenantId);
   
 }

@@ -20,6 +20,7 @@ package com.rackspace.salus.telemetry.repositories;
 import com.rackspace.salus.telemetry.entities.Resource;
 import java.util.List;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -43,5 +44,6 @@ public interface ResourceRepository extends PagingAndSortingRepository<Resource,
 
   Page<Resource> findByTenantIdAndResourceIdContaining(String tenantId, String resourceId, Pageable page);
 
+  @Transactional
   void deleteAllByTenantId(String tenantId);
 }
