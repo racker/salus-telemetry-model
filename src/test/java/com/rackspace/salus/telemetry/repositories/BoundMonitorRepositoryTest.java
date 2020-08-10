@@ -338,6 +338,7 @@ public class BoundMonitorRepositoryTest {
         final Monitor monitor = podamFactory.manufacturePojo(Monitor.class);
         monitor.setId(null);
         monitor.setTenantId(String.format("t-%d", tenantIndex));
+        monitor.setInterval(Duration.ofSeconds(60));
         final Monitor savedMonitor = entityManager.persistFlushFind(monitor);
         monitors.add(savedMonitor);
 
