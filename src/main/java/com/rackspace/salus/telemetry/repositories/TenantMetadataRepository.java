@@ -29,4 +29,6 @@ public interface TenantMetadataRepository extends PagingAndSortingRepository<Ten
       // avoid caching tenants that don't exist yet
       unless = "#result == false")
   boolean existsByTenantId(String tenantId);
+
+  void deleteAllByTenantId(String tenantId);
 }

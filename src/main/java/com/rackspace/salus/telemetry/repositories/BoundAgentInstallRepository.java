@@ -44,4 +44,8 @@ public interface BoundAgentInstallRepository extends CrudRepository<BoundAgentIn
   );
 
   List<BoundAgentInstall> findAllByAgentInstall_Id(UUID agentInstallId);
+
+  @Query("from BoundAgentInstall b "
+      + " where b.agentInstall.tenantId = :tenantId" )
+  List<BoundAgentInstall> findAllByTenant(String tenantId);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,17 +12,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 package com.rackspace.salus.telemetry.repositories;
 
 import com.rackspace.salus.telemetry.entities.Zone;
+import java.util.Optional;
+import java.util.UUID;
+import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-
-import java.util.Optional;
-import java.util.UUID;
 
 public interface ZoneRepository extends PagingAndSortingRepository<Zone, UUID> {
     Optional<Zone> findByTenantIdAndName(String tenantId, String name);
@@ -37,4 +38,7 @@ public interface ZoneRepository extends PagingAndSortingRepository<Zone, UUID> {
     Page<Zone> findAllAvailableForTenant(String tenantId, Pageable page);
 
     boolean existsByTenantIdAndName(String tenantId, String name);
+
+    @Transactional
+    void deleteAllByTenantId(String tenantId);
 }
