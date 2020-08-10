@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ public class Resource implements Serializable {
      * This will typically be something like CORE device ID or Xen ID for public cloud VMs.
      * This must be unique for a given tenant.
      */
-    @Pattern(regexp="[A-Za-z0-9:-]+")
+    @Pattern(regexp="[A-Za-z0-9.:-]+")
     @NotBlank
     @Column(name="resource_id")
     String resourceId;
