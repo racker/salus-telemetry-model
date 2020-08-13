@@ -63,6 +63,8 @@ public class EventEngineTaskParameters {
   @ValidLabelKeys
   Map<String, String> labelSelector;
 
+  String messageTemplate;
+
   public enum TaskState {
     CRITICAL,
     WARNING,
