@@ -108,4 +108,9 @@ public interface BoundMonitorRepository extends CrudRepository<BoundMonitor, Bou
 
   List<BoundMonitor> findAllByMonitor_IdAndZoneNameIn(UUID monitorId, Collection<String> zoneNames);
   List<BoundMonitor> findAllByMonitor_IdAndResourceIdAndZoneNameIn(UUID monitorId, String resourceId, Collection<String> zoneNames);
+
+  @Query("select b from BoundMonitor b"
+      + " where b.resourceId = :resourceId"
+      + " and b.monitor.tenantId = :tenantId")
+  List<BoundMonitor> findMonitorsBoundToResourceAndTenant(String tenantId, String resourceId);
 }
