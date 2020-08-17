@@ -356,7 +356,7 @@ public class BoundMonitorRepositoryTest {
     }
 
     final List<UUID> monitorIds = repository
-        .findMonitorsBoundToResource("t-0", "r-1");
+        .findMonitorIdsBoundToTenantAndResource("t-0", "r-1");
 
     assertThat(monitorIds, hasSize(5));
 
