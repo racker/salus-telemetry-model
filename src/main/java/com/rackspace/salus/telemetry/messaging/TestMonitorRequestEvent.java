@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 package com.rackspace.salus.telemetry.messaging;
 
 import com.rackspace.salus.telemetry.model.AgentType;
+import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
+import com.rackspace.salus.telemetry.model.MonitorType;
 import lombok.Data;
 
 @Data
@@ -26,6 +28,8 @@ public class TestMonitorRequestEvent {
   String resourceId;
   String envoyId;
   AgentType agentType;
+  MonitorType monitorType;
+  ConfigSelectorScope scope;
   String renderedContent;
   long timeout;
 }
