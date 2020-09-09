@@ -26,6 +26,7 @@ import com.rackspace.salus.telemetry.model.MonitorType;
 import com.rackspace.salus.telemetry.repositories.BoundMonitorRepository;
 import com.rackspace.salus.test.EnableTestContainersDatabase;
 import java.time.Duration;
+import java.util.List;
 import javax.persistence.Tuple;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,6 +74,23 @@ public class BoundMonitor_NamedQueryTest {
   }
 
   @Test
+  public void testGetLeastLoadedPublicPoller_nullsExcluded() {
+    final String zoneName = randomAlphanumeric(10);
+    final String poller = randomAlphanumeric(5);
+    createRemoteBindings(3, zoneName, poller, randomAlphanumeric(10));
+    createRemoteBindings(2, zoneName, null, randomAlphanumeric(10));
+
+    final List<Tuple> result = entityManager.getEntityManager()
+        .createNamedQuery("BoundMonitor.publicPollerLoading", Tuple.class)
+        .setParameter("zoneName", zoneName)
+        .getResultList();
+
+    assertThat(result).hasSize(1);
+    assertThat(result.get(0).get("pollerResourceId")).isEqualTo(poller);
+    assertThat(result.get(0).get("load")).isEqualTo(3L);
+  }
+
+  @Test
   public void testGetLeastLoadedPrivatePoller() {
     final String tenantId = randomAlphanumeric(10);
     final String zoneName = randomAlphanumeric(10);
@@ -94,6 +112,25 @@ public class BoundMonitor_NamedQueryTest {
     assertThat(result.get(1)).isEqualTo(10L);
   }
 
+  @Test
+  public void testGetLeastLoadedPrivatePoller_nullsExcluded() {
+    final String tenantId = randomAlphanumeric(10);
+    final String zoneName = randomAlphanumeric(10);
+    final String poller = randomAlphanumeric(5);
+    createRemoteBindings(3, zoneName, poller, tenantId);
+    createRemoteBindings(2, zoneName, null, tenantId);
+
+    final List<Tuple> result = entityManager.getEntityManager()
+        .createNamedQuery("BoundMonitor.privatePollerLoading", Tuple.class)
+        .setParameter("tenantId", tenantId)
+        .setParameter("zoneName", zoneName)
+        .getResultList();
+
+    assertThat(result).hasSize(1);
+    assertThat(result.get(0).get("pollerResourceId")).isEqualTo(poller);
+    assertThat(result.get(0).get("load")).isEqualTo(3L);
+  }
+
   private void createRemoteBindings(int count, String zoneName, String pollerResourceId,
                                     String tenantId) {
     final Monitor monitor = createMonitor(tenantId, ConfigSelectorScope.REMOTE, MonitorType.http);
@@ -104,7 +141,7 @@ public class BoundMonitor_NamedQueryTest {
               .setTenantId(tenantId)
               .setZoneName(zoneName)
               .setResourceId(randomAlphanumeric(10))
-              .setEnvoyId("e-"+pollerResourceId)
+              .setEnvoyId(pollerResourceId != null ? "e-"+pollerResourceId : null)
               .setPollerResourceId(pollerResourceId)
               .setRenderedContent("{}")
       );

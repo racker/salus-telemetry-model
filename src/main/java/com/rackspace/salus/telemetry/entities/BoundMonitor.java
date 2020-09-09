@@ -75,6 +75,7 @@ indexes = {
         "select b.pollerResourceId as pollerResourceId, count(b) as load"
             + " from BoundMonitor b"
             + " where b.zoneName = :zoneName"
+            + "  and b.pollerResourceId is not null"
             + " group by b.pollerResourceId"
             + " order by load asc"),
     /*
@@ -87,6 +88,7 @@ indexes = {
             + " from BoundMonitor b"
             + " where b.tenantId = :tenantId"
             + "  and b.zoneName = :zoneName"
+            + "  and b.pollerResourceId is not null"
             + " group by b.pollerResourceId"
             + " order by load asc")
 })
