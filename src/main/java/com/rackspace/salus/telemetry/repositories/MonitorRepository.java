@@ -29,9 +29,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface MonitorRepository extends PagingAndSortingRepository<Monitor, UUID> {
+public interface MonitorRepository extends RevisionRepository<Monitor, UUID, Integer>, PagingAndSortingRepository<Monitor, UUID> {
 
     boolean existsByIdAndTenantId(UUID id, String tenantId);
 

@@ -12,6 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
 package com.rackspace.salus.telemetry.entities;
@@ -33,6 +34,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -43,13 +45,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.history.RevisionMetadata;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.hibernate.envers.Audited;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
+@Audited
 @Table(name = "monitors", indexes = {
     @Index(name = "monitors_by_tenant_and_resource", columnList = "tenant_id, resource_id")
 })
@@ -156,12 +168,26 @@ public class Monitor implements Serializable {
     @CreationTimestamp
     @Column(name="created_timestamp")
     @NonMetadataField
+    @CreatedDate
     Instant createdTimestamp;
 
     @UpdateTimestamp
     @Column(name="updated_timestamp")
     @NonMetadataField
+    @LastModifiedDate
     Instant updatedTimestamp;
+
+    @Column(name = "created_by")
+    @CreatedBy
+    private String createdBy;
+
+    @Column(name = "modified_by")
+    @LastModifiedBy
+    private String modifiedBy;
+
+    @Transient
+    private RevisionMetadata<Integer> editVersion;
+
 
     @Override
     public String toString() {
