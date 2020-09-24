@@ -19,12 +19,8 @@ package com.rackspace.salus.telemetry.repositories;
 import com.rackspace.salus.telemetry.entities.AgentHistory;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface AgentHistoryRepository extends CrudRepository<AgentHistory, UUID> {
-
-  @Query("select a from AgentHistory a where a.envoyID = :envoyId "
-      + "and a.connectedClosedAt IS NULL ORDER BY a.connectedAt DESC")
-  List<AgentHistory> findAllByEnvoyIdAAndConnectedClosedAtNull(String envoyId);
+  List<AgentHistory> findAllByEnvoyIdAndDisconnectedAtIsNull(String envoyId);
 }

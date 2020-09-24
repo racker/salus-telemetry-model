@@ -25,15 +25,13 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Data
-@Table(name = "agent_history"
-//    ,
-//    indexes = {
-//        @Index(name = "by_envoyID", columnList = "envoy_id")
-//    }
+@Table(name = "agent_history",
+    indexes = {
+        @Index(name = "by_envoy", columnList = "envoy_id")
+    }
 )
 public class AgentHistory {
 
@@ -45,21 +43,21 @@ public class AgentHistory {
   @Column(name ="connected_timestamp", nullable = false)
   Instant connectedAt;
 
-  @Column(name ="connection_closed_timestamp")
-  Instant connectedClosedAt;
+  @Column(name ="disconnected_timestamp")
+  Instant disconnectedAt;
 
   @Column(name ="tenant_id", nullable = false)
-  String tenantID;
+  String tenantId;
 
   @Column(name ="resource_id",nullable = false)
-  String resourceID;
+  String resourceId;
 
   @Column(name ="envoy_id",nullable = false)
-  String envoyID;
+  String envoyId;
 
   @Column(name ="remote_ip",nullable = false)
-  String remoteIP;
+  String remoteIp;
 
   @Column(name ="zone_id")
-  String zoneID;
+  String zoneId;
 }
