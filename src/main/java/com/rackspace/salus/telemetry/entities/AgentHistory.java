@@ -30,7 +30,8 @@ import lombok.Data;
 @Data
 @Table(name = "agent_history",
     indexes = {
-        @Index(name = "by_envoy", columnList = "envoy_id")
+        @Index(name = "by_tenant_envoy_id", columnList = "tenant_id, envoy_id"),
+        @Index(name = "by_tenant_resource_id", columnList = "tenant_id, resource_id")
     }
 )
 public class AgentHistory {
