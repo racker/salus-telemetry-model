@@ -26,5 +26,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface AgentHistoryRepository extends PagingAndSortingRepository<AgentHistory, UUID> {
   List<AgentHistory> findAllByEnvoyIdAndDisconnectedAtIsNull(String envoyId);
   Page<AgentHistory> findByTenantIdAndEnvoyId(String tenantId, String envoyId, Pageable pageable);
-  Page<AgentHistory> findByResourceIdAndEnvoyId(String resourceId, String envoyId, Pageable pageable);
+  Page<AgentHistory> findByTenantIdAndResourceId(String tenantId, String resourceId, Pageable pageable);
 }
