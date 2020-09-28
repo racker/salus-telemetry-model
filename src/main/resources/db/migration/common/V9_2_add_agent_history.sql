@@ -12,5 +12,8 @@ create table agent_history
 )
     engine = InnoDB;
 
-create index byTenantOrEnvoyId
+create index by_tenant_envoy
     on agent_history (tenant_id, envoy_id);
+
+create index by_resource_envoy
+    on agent_history (resource_id, envoy_id);
