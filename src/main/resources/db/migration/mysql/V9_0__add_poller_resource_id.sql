@@ -14,22 +14,7 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.messaging;
+ALTER TABLE bound_monitors ADD poller_resource_id varchar(255);
 
-import com.rackspace.salus.telemetry.model.AgentType;
-import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
-import com.rackspace.salus.telemetry.model.MonitorType;
-import lombok.Data;
-
-@Data
-public class TestMonitorRequestEvent {
-  String correlationId;
-  String tenantId;
-  String resourceId;
-  String envoyId;
-  AgentType agentType;
-  MonitorType monitorType;
-  ConfigSelectorScope scope;
-  String renderedContent;
-  long timeout;
-}
+CREATE INDEX by_poller_resource_id ON bound_monitors (poller_resource_id);
+CREATE INDEX by_tenant_poller_resource_id ON bound_monitors (tenant_id, poller_resource_id);

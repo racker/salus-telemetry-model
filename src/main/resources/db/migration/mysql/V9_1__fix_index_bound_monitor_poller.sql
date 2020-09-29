@@ -14,22 +14,7 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.messaging;
-
-import com.rackspace.salus.telemetry.model.AgentType;
-import com.rackspace.salus.telemetry.model.ConfigSelectorScope;
-import com.rackspace.salus.telemetry.model.MonitorType;
-import lombok.Data;
-
-@Data
-public class TestMonitorRequestEvent {
-  String correlationId;
-  String tenantId;
-  String resourceId;
-  String envoyId;
-  AgentType agentType;
-  MonitorType monitorType;
-  ConfigSelectorScope scope;
-  String renderedContent;
-  long timeout;
-}
+CREATE INDEX by_zone_and_poller ON bound_monitors (zone_name, poller_resource_id);
+CREATE INDEX by_tenant_zone_and_poller ON bound_monitors (tenant_id, zone_name, poller_resource_id);
+DROP INDEX by_poller_resource_id ON bound_monitors;
+DROP INDEX by_tenant_poller_resource_id ON bound_monitors;

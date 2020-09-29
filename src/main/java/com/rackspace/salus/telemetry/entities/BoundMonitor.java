@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@ import javax.persistence.IdClass;
 import javax.persistence.Index;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
@@ -63,6 +65,32 @@ indexes = {
     @Index(name = "by_envoy_id", columnList = "envoy_id"),
     @Index(name = "by_zone_envoy", columnList = "zone_name,envoy_id"),
     @Index(name = "by_resource", columnList = "resource_id")
+})
+@NamedQueries({
+    /*
+     * @param zoneName
+     * @return (pollerResourceId, load)
+     */
+    @NamedQuery(name = "BoundMonitor.publicPollerLoading", query =
+        "select b.pollerResourceId as pollerResourceId, count(b) as load"
+            + " from BoundMonitor b"
+            + " where b.zoneName = :zoneName"
+            + "  and b.pollerResourceId is not null"
+            + " group by b.pollerResourceId"
+            + " order by load asc"),
+    /*
+     * @param tenantId
+     * @param zoneName
+     * @return (pollerResourceId, load)
+     */
+    @NamedQuery(name = "BoundMonitor.privatePollerLoading", query =
+        "select b.pollerResourceId as pollerResourceId, count(b) as load"
+            + " from BoundMonitor b"
+            + " where b.tenantId = :tenantId"
+            + "  and b.zoneName = :zoneName"
+            + "  and b.pollerResourceId is not null"
+            + " group by b.pollerResourceId"
+            + " order by load asc")
 })
 @Data
 public class BoundMonitor implements Serializable {
@@ -113,6 +141,9 @@ public class BoundMonitor implements Serializable {
 
   @Column(name="envoy_id", length = 100)
   String envoyId;
+
+  @Column(name="poller_resource_id", length = 100)
+  String pollerResourceId;
 
   @CreationTimestamp
   @Column(name="created_timestamp")
