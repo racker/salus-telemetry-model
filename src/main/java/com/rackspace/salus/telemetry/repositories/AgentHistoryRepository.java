@@ -19,9 +19,12 @@ package com.rackspace.salus.telemetry.repositories;
 import com.rackspace.salus.telemetry.entities.AgentHistory;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface AgentHistoryRepository extends CrudRepository<AgentHistory, UUID> {
+public interface AgentHistoryRepository extends PagingAndSortingRepository<AgentHistory, UUID> {
   Optional<AgentHistory> findByTenantIdAndEnvoyId(String tenantId, String envoyId);
-  Optional<AgentHistory> findByTenantIdAndResourceIdAndDisconnectedAtIsNull(String tenantId, String resourceId);
+  Page<AgentHistory> findByTenantIdAndResourceId(String tenantId, String resourceId, Pageable pageable);
+  Page<AgentHistory> findByTenantId(String tenantId, Pageable pageable);
 }
