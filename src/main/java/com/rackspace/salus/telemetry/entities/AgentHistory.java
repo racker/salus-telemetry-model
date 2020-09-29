@@ -24,6 +24,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -41,21 +42,26 @@ public class AgentHistory {
   @org.hibernate.annotations.Type(type="uuid-char")
   UUID id;
 
+  @NotNull
   @Column(name ="connected_timestamp", nullable = false)
   Instant connectedAt;
 
   @Column(name ="disconnected_timestamp")
   Instant disconnectedAt;
 
+  @NotNull
   @Column(name ="tenant_id", nullable = false)
   String tenantId;
 
+  @NotNull
   @Column(name ="resource_id",nullable = false)
   String resourceId;
 
+  @NotNull
   @Column(name ="envoy_id",nullable = false)
   String envoyId;
 
+  @NotNull
   @Column(name ="remote_ip",nullable = false)
   String remoteIp;
 
