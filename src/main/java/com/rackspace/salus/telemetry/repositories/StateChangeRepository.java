@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.messaging;
+package com.rackspace.salus.telemetry.repositories;
 
-import java.time.Instant;
+import com.rackspace.salus.telemetry.entities.StateChange;
+import java.util.Optional;
 import java.util.UUID;
-import lombok.Data;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-@Data
-@KafkaMessageKey(properties = {"id"})
-public class StateChangeEvent {
-  UUID id;
-  String tenantId;
-  String resourceId;
-  UUID monitorId;
-  UUID taskId;
-  String state;
-  String message;
-  String contributingEvents;
-  String previousState;
-  Instant evaluationTimestamp;
+public interface StateChangeRepository extends PagingAndSortingRepository<StateChange, UUID> {
+
+  // TODO: Add db migrations file
+
+  Optional<StateChange> findFirstByTenantIdAndResourceIdAndMonitorIdAndTaskId(String tenantId, String resourceId, UUID monitorId, UUID taskId);
 }
