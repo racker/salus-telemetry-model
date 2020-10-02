@@ -23,7 +23,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface StateChangeRepository extends PagingAndSortingRepository<StateChange, UUID> {
 
-  // TODO: Add db migrations file
-
   Optional<StateChange> findFirstByTenantIdAndResourceIdAndMonitorIdAndTaskId(String tenantId, String resourceId, UUID monitorId, UUID taskId);
 }
