@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-create table state_change
+create table state_changes
 (
     id                   varchar(255) not null,
     contributing_events  varchar(255),

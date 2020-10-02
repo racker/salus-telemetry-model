@@ -29,7 +29,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table
+@Table(name = "state_changes")
 @Data
 public class StateChange implements Serializable {
 
