@@ -42,5 +42,7 @@ public enum MonitorType {
   oracle_dataguard,
   oracle_rman,
   // powered by https://github.com/racker/salus-packages-agent
-  packages
+  packages,
+  // reserved for metrics coming from https://github.com/racker/salus-telemetry-presence-monitor
+  presence
 }
