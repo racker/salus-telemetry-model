@@ -17,6 +17,7 @@
 package com.rackspace.salus.telemetry.repositories;
 
 import com.rackspace.salus.telemetry.entities.BoundMonitor;
+import com.rackspace.salus.telemetry.entities.BoundMonitorProjection;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -94,7 +95,7 @@ public interface BoundMonitorRepository extends CrudRepository<BoundMonitor, Bou
   List<BoundMonitor> findAllByTenantIdAndMonitor_TenantId(String tenantId, String policyTenant);
   Page<BoundMonitor> findAllByTenantIdAndMonitor_TenantId(String tenantId, String policyTenant, Pageable page);
 
-  List<BoundMonitor> findAllByTenantIdAndMonitor_IdIn(String tenantId, Collection<UUID> monitorIds);
+  List<BoundMonitorProjection> findAllByTenantIdAndMonitor_IdIn(String tenantId, Collection<UUID> monitorIds);
   Page<BoundMonitor> findAllByTenantIdAndMonitor_IdIn(String tenantId, Collection<UUID> monitorIds, Pageable page);
 
   List<BoundMonitor> findAllByMonitor_TenantIdAndMonitor_IdIn(String tenantId, Collection<UUID> monitorIds);
