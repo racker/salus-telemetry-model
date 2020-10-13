@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 
-alter table monitor_translation_operators
-    alter column monitor_type
-    varchar(255) not null;
+ CREATE INDEX by_tenant_resource_monitor_task ON state_changes (tenant_id, resource_id, monitor_id, task_id);
