@@ -30,9 +30,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotBlank;
@@ -98,8 +96,6 @@ indexes = {
 public class BoundMonitor implements Serializable {
 
   @Data
-  @AllArgsConstructor
-  @NoArgsConstructor
   public static class PrimaryKey implements Serializable {
 
     /**
