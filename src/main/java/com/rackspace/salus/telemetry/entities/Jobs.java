@@ -16,7 +16,6 @@
 
 package com.rackspace.salus.telemetry.entities;
 
-import com.rackspace.salus.telemetry.model.JobName;
 import com.rackspace.salus.telemetry.model.JobStatus;
 import java.io.Serializable;
 import java.time.Instant;
@@ -27,13 +26,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table
+@Table(name = "jobs")
 @Data
 public class Jobs implements Serializable {
 
@@ -45,11 +45,10 @@ public class Jobs implements Serializable {
 
   @Column
   @NotBlank
-  @Enumerated(EnumType.STRING)
-  JobName name;
+  String name;
 
   @Column
-  @NotBlank
+  @NotNull
   @Enumerated(EnumType.STRING)
   JobStatus status;
 
