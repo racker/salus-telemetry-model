@@ -45,7 +45,7 @@ public class Job implements Serializable {
   String tenantId;
 
   @Column
-  @NotBlank
+  @NotNull
   @Enumerated(EnumType.STRING)
   JobType type;
 
