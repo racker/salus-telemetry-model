@@ -55,7 +55,7 @@ public class Job implements Serializable {
   JobStatus status;
 
   /**
-   * This field is used to store the detail of test result or exceptions in case of any failure.
+   * This field is used to store the details of job result or exceptions in case of any failure.
    */
   @Column
   @Type(type = "text")
