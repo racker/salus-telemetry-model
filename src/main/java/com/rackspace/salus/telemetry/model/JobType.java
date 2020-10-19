@@ -17,7 +17,7 @@
 package com.rackspace.salus.telemetry.model;
 
 public enum JobType {
-  DELETE_TENANT("Delete tenant");
+  DELETE_TENANT("Delete Tenant");
 
   private String value;
 
