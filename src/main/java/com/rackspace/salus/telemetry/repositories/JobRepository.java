@@ -15,9 +15,9 @@
  */
 package com.rackspace.salus.telemetry.repositories;
 
-import com.rackspace.salus.telemetry.entities.Jobs;
+import com.rackspace.salus.telemetry.entities.Job;
 import org.springframework.data.repository.CrudRepository;
 
-public interface JobsRepository extends CrudRepository<Jobs, String> {
+public interface JobRepository extends CrudRepository<Job, String> {
 
 }

@@ -17,5 +17,5 @@
 package com.rackspace.salus.telemetry.model;
 
 public enum JobStatus {
-  SUCCESS, FAILURE
+  SUCCESS, FAILURE, IN_PROGRESS
 }

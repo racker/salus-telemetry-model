@@ -16,6 +16,7 @@
 
 package com.rackspace.salus.telemetry.entities;
 
+import com.rackspace.salus.telemetry.model.JobType;
 import com.rackspace.salus.telemetry.model.JobStatus;
 import java.io.Serializable;
 import java.time.Instant;
@@ -35,7 +36,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Table(name = "jobs")
 @Data
-public class Jobs implements Serializable {
+public class Job implements Serializable {
 
   @Id
   String id;
@@ -45,13 +46,17 @@ public class Jobs implements Serializable {
 
   @Column
   @NotBlank
-  String name;
+  @Enumerated(EnumType.STRING)
+  JobType type;
 
   @Column
   @NotNull
   @Enumerated(EnumType.STRING)
   JobStatus status;
 
+  /**
+   * This field is used to store the detail of test result or exceptions in case of any failure.
+   */
   @Column
   @Type(type = "text")
   String description;

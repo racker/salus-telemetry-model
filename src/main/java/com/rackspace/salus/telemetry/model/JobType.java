@@ -16,12 +16,12 @@
 
 package com.rackspace.salus.telemetry.model;
 
-public enum JobName {
+public enum JobType {
   DELETE_TENANT("Delete tenant");
 
   private String value;
 
-  JobName(String value) {
+  JobType(String value) {
     this.value = value;
   }
 
