@@ -17,6 +17,7 @@
 package com.rackspace.salus.telemetry.repositories;
 
 import com.rackspace.salus.telemetry.entities.EventEngineTask;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,8 @@ public interface EventEngineTaskRepository extends
   Page<EventEngineTask> findByTenantId(String tenantId, Pageable pageable);
 
   Optional<EventEngineTask> findByTenantIdAndId(String tenantId, UUID id);
+
+  List<EventEngineTask> findByPartition(Integer partition);
 
   void deleteAllByTenantId(String tenantId);
 }
