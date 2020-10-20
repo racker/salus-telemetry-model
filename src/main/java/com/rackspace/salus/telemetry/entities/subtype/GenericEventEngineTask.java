@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.repositories;
+package com.rackspace.salus.telemetry.entities.subtype;
 
 import com.rackspace.salus.telemetry.entities.EventEngineTask;
-import java.util.Optional;
-import java.util.UUID;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-public interface EventEngineTaskRepository extends
-    PagingAndSortingRepository<EventEngineTask, UUID> {
+@Entity
+@Table(name = "generic_event_engine_tasks")
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class GenericEventEngineTask extends EventEngineTask {
 
-  Page<EventEngineTask> findByTenantId(String tenantId, Pageable pageable);
-
-  Optional<EventEngineTask> findByTenantIdAndId(String tenantId, UUID id);
-
-  void deleteAllByTenantId(String tenantId);
+  @NotNull
+  @Column(name = "measurement", nullable = false)
+  String measurement;
 }
