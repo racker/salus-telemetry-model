@@ -16,22 +16,13 @@
 
 package com.rackspace.salus.telemetry.repositories;
 
-import com.rackspace.salus.telemetry.entities.EventEngineTask;
+import com.rackspace.salus.telemetry.entities.subclass.GenericEventEngineTask;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface EventEngineTaskRepository extends
-    PagingAndSortingRepository<EventEngineTask, UUID> {
+public interface GenericEventEngineTaskRepository extends CrudRepository<GenericEventEngineTask, UUID> {
 
-  Page<EventEngineTask> findByTenantId(String tenantId, Pageable pageable);
-
-  Optional<EventEngineTask> findByTenantIdAndId(String tenantId, UUID id);
-
-  List<EventEngineTask> findByPartition(Integer partition);
-
-  void deleteAllByTenantId(String tenantId);
+  List<GenericEventEngineTask> findByPartition(Integer partition);
+  List<GenericEventEngineTask> findByTenantIdAndMeasurement(String tenantId, String measurement);
 }
