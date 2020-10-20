@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
-CREATE INDEX by_tenant_resource_monitor_task ON state_changes (tenant_id, resource_id, monitor_id, task_id);
+alter table event_engine_task rename to event_engine_tasks;
+
+alter table event_engine_tasks drop column kapacitor_task_id;
