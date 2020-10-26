@@ -68,7 +68,7 @@ public class EventEngineTaskParameters {
   public enum TaskState {
     CRITICAL,
     WARNING,
-    INFO
+    OK
   }
 
   public enum Comparator  {
