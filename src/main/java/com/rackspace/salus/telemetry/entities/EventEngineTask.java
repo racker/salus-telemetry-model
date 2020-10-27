@@ -16,10 +16,13 @@
 
 package com.rackspace.salus.telemetry.entities;
 
+import com.rackspace.salus.telemetry.model.MonitoringSystem;
 import java.time.Instant;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -51,14 +54,9 @@ public abstract class EventEngineTask {
   @Column
   String name;
 
-  /**
-   * Contains the String representation of
-   * com.rackspace.monplat.protocol.UniversalMetricFrame.MonitoringSystem
-   *
-   * The enum is not used directly to avoid adding umb-protocol as a required dependency.
-   */
+  @Enumerated(EnumType.STRING)
   @Column(name = "monitoring_system", nullable = false)
-  String monitoringSystem;
+  MonitoringSystem monitoringSystem;
 
   @NotNull
   @Type(type = "json")
