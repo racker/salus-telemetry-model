@@ -65,6 +65,10 @@ public abstract class EventEngineTask {
   @Column(nullable = false)
   EventEngineTaskParameters taskParameters;
 
+  @NotNull
+  @Column(name = "partition_number", nullable = false)
+  Integer partition;
+
   @CreationTimestamp
   @Column(name="created_timestamp")
   Instant createdTimestamp;

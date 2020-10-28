@@ -16,14 +16,16 @@
 
 package com.rackspace.salus.telemetry.repositories;
 
+import com.rackspace.salus.telemetry.entities.EventEngineTask;
 import com.rackspace.salus.telemetry.entities.subtype.GenericEventEngineTask;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface GenericEventEngineTaskRepository extends
     PagingAndSortingRepository<GenericEventEngineTask, UUID> {
 
   List<GenericEventEngineTask> findByTenantIdAndMeasurement(String tenantId, String measurement);
+
+  List<GenericEventEngineTask> findByPartition(Integer partition);
 }

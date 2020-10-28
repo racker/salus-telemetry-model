@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.repositories;
+alter table event_engine_tasks ADD partition_number int;
 
-import com.rackspace.salus.telemetry.entities.subtype.SalusEventEngineTask;
-import java.util.List;
-import java.util.UUID;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
-public interface SalusEventEngineTaskRepository extends
-    PagingAndSortingRepository<SalusEventEngineTask, UUID> {
-
-  List<SalusEventEngineTask> findByPartition(Integer partition);
-}
+create index by_partition on event_engine_tasks (partition_number);
