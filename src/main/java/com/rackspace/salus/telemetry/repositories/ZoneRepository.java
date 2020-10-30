@@ -37,6 +37,9 @@ public interface ZoneRepository extends PagingAndSortingRepository<Zone, UUID> {
             + ", name ASC")
     Page<Zone> findAllAvailableForTenant(String tenantId, Pageable page);
 
+    @Query("select z.name from Zone z where z.tenantId = :tenantId")
+    Page<String> findAllZoneNameForTenant(String tenantId, Pageable page);
+
     boolean existsByTenantIdAndName(String tenantId, String name);
 
     @Transactional
