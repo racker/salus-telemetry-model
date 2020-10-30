@@ -18,7 +18,11 @@
 
 package com.rackspace.salus.telemetry.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum ConfigSelectorScope {
+    @JsonProperty("local")
     LOCAL,
+    @JsonProperty("remote")
     REMOTE
 }

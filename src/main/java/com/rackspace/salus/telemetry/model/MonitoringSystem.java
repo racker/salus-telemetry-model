@@ -16,6 +16,8 @@
 
 package com.rackspace.salus.telemetry.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A copy of the core values com.rackspace.monplat.protocol.UniversalMetricFrame.MonitoringSystem
  *
@@ -25,10 +27,16 @@ package com.rackspace.salus.telemetry.model;
  * monitoring systems from being automatically included.
  */
 public enum MonitoringSystem {
+  @JsonProperty("maas")
   MAAS,
+  @JsonProperty("uim")
   UIM,
+  @JsonProperty("salus")
   SALUS,
+  @JsonProperty("scom")
   SCOM,
+  @JsonProperty("zenoss")
   ZENOSS,
+  @JsonProperty("unrecognized")
   UNRECOGNIZED
 }
