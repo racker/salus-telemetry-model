@@ -18,6 +18,7 @@ package com.rackspace.salus.telemetry.entities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.sql.Clob;
 import java.sql.SQLException;
@@ -73,7 +74,8 @@ public class JsonClobType
 
     // It's a bummer we can't use Spring Boot's ObjectMapper, but Hibernate's type registry is
     // bootstrapped independently from the Spring app context
-    final ObjectMapper objectMapper = new ObjectMapper();
+    final ObjectMapper objectMapper = new ObjectMapper()
+        .registerModule(new JavaTimeModule());
 
     private Class<?> fieldClass;
 
