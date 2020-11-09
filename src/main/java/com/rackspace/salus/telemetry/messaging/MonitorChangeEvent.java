@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 
 package com.rackspace.salus.telemetry.messaging;
 
+import java.util.UUID;
 import lombok.Data;
 
-/**
- * Indicates that the given envoy has one or more monitors that have changed binding
- */
 @Data
-@KafkaMessageKey(properties = {"envoyId"})
-public class MonitorBoundEvent {
-  String envoyId;
+@KafkaMessageKey(properties = {"tenantId", "monitorId"})
+public class MonitorChangeEvent {
+  String tenantId;
+
+  UUID monitorId;
 }
