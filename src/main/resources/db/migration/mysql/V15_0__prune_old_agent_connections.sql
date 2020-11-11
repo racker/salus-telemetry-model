@@ -17,5 +17,5 @@
 CREATE EVENT IF NOT EXISTS agent_history_cleaning ON SCHEDULE EVERY 1 DAY ENABLE
     DO
     DELETE FROM agent_history
-    WHERE connected_timestamp < CURRENT_TIMESTAMP - INTERVAL 1 MONTH
-      AND disconnected_timestamp IS NOT NULL;
+    WHERE disconnected_timestamp IS NOT NULL
+      AND disconnected_timestamp < CURRENT_TIMESTAMP - INTERVAL 1 MONTH;
