@@ -34,7 +34,7 @@ public class MonitorPolicy extends Policy {
   @Column(name="name")
   String name;
 
-  @Column(name="monitor_id")
+  @Column(name="monitor_template_id")
   @org.hibernate.annotations.Type(type="uuid-char")
-  UUID monitorId;
+  UUID monitorTemplateId;
 }
