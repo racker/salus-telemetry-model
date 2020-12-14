@@ -1,0 +1,13 @@
+{
+  "stateExpressions": [
+    {
+      "expression": {
+        "type": "comparison",
+        "comparator": "=~",
+        "input": "message",
+        "comparisonValue": "success"
+      },
+      "state": "OK"
+    }
+  ]
+}

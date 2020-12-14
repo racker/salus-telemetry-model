@@ -17,20 +17,33 @@
 package com.rackspace.salus.telemetry.messaging;
 
 import java.time.Instant;
-import java.util.UUID;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import lombok.Data;
 
 @Data
-@KafkaMessageKey(properties = {"id"})
-public class StateChangeEvent {
-  UUID id;
+@KafkaMessageKey(properties = "id")
+public class EventNotification {
+  String id;
   String tenantId;
-  String resourceId;
-  UUID monitorId;
-  UUID taskId;
+  Instant timestamp;
+  String taskId;
+
   String state;
-  String message;
-  String contributingEvents;
   String previousState;
-  Instant evaluationTimestamp;
+  List<Observation> observations;
+  String message;
+
+  String metricGroup;
+  Map<String, Object> metrics;
+
+  List<Entry<String, String>> groupingLabels;
+  Map<String,String> labels;
+
+  @Data
+  public static class Observation {
+    String zone;
+    String state;
+  }
 }

@@ -1,0 +1,17 @@
+{
+  "stateExpressions": [
+    {
+      "expression": {
+        "type": "comparison",
+        "comparator": ">",
+        "input": {
+          "type": "percentage",
+          "part": "errors",
+          "whole": "total"
+        },
+        "comparisonValue": 0
+      },
+      "state": "CRITICAL"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "stateExpressions": [
+    {
+      "expression": {
+        "type": "comparison",
+        "comparator": ">",
+        "input": "errors",
+        "comparisonValue": 0
+      },
+      "state": "CRITICAL"
+    }
+  ]
+}
