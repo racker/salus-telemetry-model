@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,6 +47,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -132,6 +134,16 @@ public class Monitor implements Serializable {
     @NonMetadataField
     Set<String> excludedResourceIds;
 
+    /**
+     * General purpose metadata fields.
+     */
+    @NonMetadataField
+    @Type(type = "json")
+    Map<String,String> metadata;
+
+    /**
+     * Policy management field tracking
+     */
     @ElementCollection
     @CollectionTable(name="monitor_metadata_fields", joinColumns = @JoinColumn(name="monitor_id"),
         indexes = @Index(name = "monitors_by_metadata_field", columnList = "monitor_id"))
@@ -167,8 +179,11 @@ public class Monitor implements Serializable {
     public String toString() {
         // This must be overridden otherwise the lazily loaded attributes will lead to exceptions.
         return String.format("id=%s, name=%s, tenantId=%s, monitorType=%s, resourceId=%s, "
-            + "selectorScope=%s, labelSelector=%s, labelSelectorMethod=%s, zones=%s, interval=%s",
-            id, monitorName, tenantId, monitorType, resourceId, selectorScope, labelSelector,
+                + "excludedResourceIds=%s, metadata=%s, "
+                + "selectorScope=%s, labelSelector=%s, labelSelectorMethod=%s, zones=%s, interval=%s",
+            id, monitorName, tenantId, monitorType, resourceId,
+            excludedResourceIds, metadata,
+            selectorScope, labelSelector,
             labelSelectorMethod, zones, interval);
     }
 }
