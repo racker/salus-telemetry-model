@@ -16,6 +16,8 @@
 
 package com.rackspace.salus.telemetry.messaging;
 
+import com.rackspace.salus.telemetry.model.MonitorType;
+import com.rackspace.salus.telemetry.model.TargetClassName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,4 +25,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @KafkaMessageKey(properties = {"policyId", "tenantId"})
 public class MetadataPolicyEvent extends PolicyEvent {
+
+  TargetClassName targetClassName;
+  MonitorType monitorType;
 }

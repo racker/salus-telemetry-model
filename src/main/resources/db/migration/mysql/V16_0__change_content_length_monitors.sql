@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Rackspace US, Inc.
+ * Copyright 2020 Rackspace US, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,4 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.repositories;
-
-import com.rackspace.salus.telemetry.entities.MonitorPolicy;
-import com.rackspace.salus.telemetry.model.PolicyScope;
-import java.util.UUID;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
-public interface MonitorPolicyRepository extends PagingAndSortingRepository<MonitorPolicy, UUID> {
-
-  boolean existsByScopeAndSubscopeAndName(PolicyScope policyScope, String subscope, String name);
-
-  boolean existsByMonitorTemplateId(UUID monitorTemplateId);
-}
+ALTER TABLE monitors MODIFY COLUMN content VARCHAR(2000);
