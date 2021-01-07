@@ -104,7 +104,8 @@ public class EventEngineTaskParameters {
   int zoneQuorumCount = 1;
 
   /**
-   * When zoneQuorumCount is more than 1, then
+   * When zoneQuorumCount is more than 1, then this field indicates the metric label that is
+   * used to identifying the monitoring zone where the metric originated.
    */
   String zoneLabel;
 
