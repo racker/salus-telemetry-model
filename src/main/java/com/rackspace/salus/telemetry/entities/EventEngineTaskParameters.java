@@ -16,6 +16,9 @@
 
 package com.rackspace.salus.telemetry.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -83,6 +86,7 @@ public class EventEngineTaskParameters {
    * These labels are used in addition to the label selectors to identify distinct metric-streams
    * to evaluate.
    */
+  @JsonInclude(Include.NON_EMPTY)
   List<String> groupBy;
 
   String messageTemplate;
@@ -93,6 +97,9 @@ public class EventEngineTaskParameters {
     OK
   }
 
+  /**
+   * Declares an expected consecutive count for each task state.
+   */
   @Min(1)
   int defaultConsecutiveCount = 1;
 
@@ -107,6 +114,7 @@ public class EventEngineTaskParameters {
    * When zoneQuorumCount is more than 1, then this field indicates the metric label that is
    * used to identifying the monitoring zone where the metric originated.
    */
+  @JsonInclude(Include.NON_EMPTY)
   String zoneLabel;
 
   public enum Comparator  {
