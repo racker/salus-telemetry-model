@@ -27,5 +27,4 @@ public class TaskChangeEvent {
 
   UUID taskId;
 
-  Integer partitionId;
 }

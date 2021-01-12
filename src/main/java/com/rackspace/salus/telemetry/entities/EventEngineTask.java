@@ -37,12 +37,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "event_engine_tasks")
-@Inheritance(
-    strategy = InheritanceType.JOINED
-)
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class EventEngineTask {
+public class EventEngineTask {
 
   @EqualsAndHashCode.Include
   @Id
@@ -66,7 +63,6 @@ public abstract class EventEngineTask {
   @Column(nullable = false)
   EventEngineTaskParameters taskParameters;
 
-  @NotNull
   @Column(name = "partition_number", nullable = false)
   Integer partition;
 
