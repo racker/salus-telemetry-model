@@ -18,20 +18,16 @@ package com.rackspace.salus.telemetry.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.rackspace.salus.telemetry.model.MetricExpressionBase;
 import com.rackspace.salus.telemetry.model.ValidLabelKeys;
-import com.rackspace.salus.telemetry.validators.ValidCustomMetricList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -43,41 +39,10 @@ import lombok.EqualsAndHashCode;
 // TODO validate zoneLabel is set when zoneQuorumCount > 1
 public class EventEngineTaskParameters {
 
-  /**
-   * @deprecated will be removed when final TICKscript code is removed
-   */
-  Integer criticalStateDuration;
-
-  /**
-   * @deprecated will be removed when final TICKscript code is removed
-   */
-  Integer warningStateDuration;
-
-  /**
-   * @deprecated will be removed when final TICKscript code is removed
-   */
-  Integer infoStateDuration;
-
   @NotBlank
   String metricGroup;
 
   List<StateExpression> stateExpressions = new ArrayList<>();
-
-  List<MetricExpressionBase> customMetrics;
-
-  /**
-   * @deprecated will be removed when final TICKscript code is removed
-   */
-  Integer windowLength;
-  /**
-   * @deprecated will be removed when final TICKscript code is removed
-   */
-  List<String> windowFields;
-
-  /**
-   * @deprecated will be removed when final TICKscript code is removed
-   */
-  boolean flappingDetection;
 
   @ValidLabelKeys
   Map<String, String> labelSelector;
