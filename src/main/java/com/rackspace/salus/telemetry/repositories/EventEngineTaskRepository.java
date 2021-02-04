@@ -20,12 +20,17 @@ import com.rackspace.salus.telemetry.entities.EventEngineTask;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface EventEngineTaskRepository extends
     PagingAndSortingRepository<EventEngineTask, UUID> {
+
+  @Query("select t from EventEngineTask t")
+  Stream<EventEngineTask> streamAll();
 
   Page<EventEngineTask> findByTenantId(String tenantId, Pageable pageable);
 

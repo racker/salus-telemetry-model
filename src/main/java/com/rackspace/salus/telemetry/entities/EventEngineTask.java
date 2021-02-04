@@ -30,18 +30,18 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "event_engine_tasks")
-@Inheritance(
-    strategy = InheritanceType.JOINED
-)
 @Data
-public abstract class EventEngineTask {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class EventEngineTask {
 
+  @EqualsAndHashCode.Include
   @Id
   @GeneratedValue
   @Type(type="uuid-char")
@@ -63,7 +63,6 @@ public abstract class EventEngineTask {
   @Column(nullable = false)
   EventEngineTaskParameters taskParameters;
 
-  @NotNull
   @Column(name = "partition_number", nullable = false)
   Integer partition;
 

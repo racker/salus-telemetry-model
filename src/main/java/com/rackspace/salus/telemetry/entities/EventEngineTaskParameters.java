@@ -16,52 +16,43 @@
 
 package com.rackspace.salus.telemetry.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.rackspace.salus.telemetry.model.MetricExpressionBase;
 import com.rackspace.salus.telemetry.model.ValidLabelKeys;
-import com.rackspace.salus.telemetry.validators.ValidCustomMetricList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
+// TODO validate zoneLabel is set when zoneQuorumCount > 1
 public class EventEngineTaskParameters {
 
-  @Min(1)
-  @Max(10)
-  Integer criticalStateDuration;
+  @NotBlank
+  String metricGroup;
 
-  @Min(1)
-  @Max(10)
-  Integer warningStateDuration;
-
-  @Min(1)
-  @Max(10)
-  Integer infoStateDuration;
-
-  @NotEmpty
   List<StateExpression> stateExpressions = new ArrayList<>();
-
-  @ValidCustomMetricList
-  List<@Valid MetricExpressionBase> customMetrics;
-
-  Integer windowLength;
-  List<String> windowFields;
-
-  boolean flappingDetection;
 
   @ValidLabelKeys
   Map<String, String> labelSelector;
+
+  /**
+   * These labels are used in addition to the label selectors to identify distinct metric-streams
+   * to evaluate.
+   */
+  @JsonInclude(Include.NON_EMPTY)
+  List<String> groupBy;
 
   String messageTemplate;
 
@@ -70,6 +61,26 @@ public class EventEngineTaskParameters {
     WARNING,
     OK
   }
+
+  /**
+   * Declares an expected consecutive count for each task state.
+   */
+  @Min(1)
+  int defaultConsecutiveCount = 1;
+
+  /**
+   * Events for local monitors would always set this to 1 (the default), but events for
+   * remote monitors should set to the desired quorum count.
+   */
+  @Min(1)
+  int zoneQuorumCount = 1;
+
+  /**
+   * When zoneQuorumCount is more than 1, then this field indicates the metric label that is
+   * used to identifying the monitoring zone where the metric originated.
+   */
+  @JsonInclude(Include.NON_EMPTY)
+  String zoneLabel;
 
   public enum Comparator  {
     EQUAL_TO("=="),
@@ -87,6 +98,28 @@ public class EventEngineTaskParameters {
       this.friendlyName = friendlyName;
     }
 
+    /**
+     * When importing expressions from external sources the comparison might
+     * have the literal, comparison value on the left. This method will flip
+     * the meaning of the operator to normalize to the comparison value on the
+     * right.
+     * @return the commutative version of this operator
+     */
+    public Comparator flip() {
+      switch (this) {
+        case GREATER_THAN:
+          return LESS_THAN;
+        case GREATER_THAN_OR_EQUAL_TO:
+          return LESS_THAN_OR_EQUAL_TO;
+        case LESS_THAN:
+          return GREATER_THAN;
+        case LESS_THAN_OR_EQUAL_TO:
+          return GREATER_THAN_OR_EQUAL_TO;
+        default:
+          return this;
+      }
+    }
+
     @JsonValue
     public String getFriendlyName() {
       return this.friendlyName;
@@ -95,7 +128,9 @@ public class EventEngineTaskParameters {
 
   @Data
   public static class StateExpression {
+    @NotNull @Valid
     Expression expression;
+    @NotNull
     TaskState state;
     String message;
   }
@@ -110,8 +145,10 @@ public class EventEngineTaskParameters {
   @Data
   @EqualsAndHashCode(callSuper = false)
   public static class LogicalExpression extends Expression {
+    @NotNull
     Operator operator;
-    List<Expression> expressions;
+    @NotEmpty
+    List<@Valid Expression> expressions;
 
     public enum Operator {
       AND, OR
@@ -121,8 +158,25 @@ public class EventEngineTaskParameters {
   @Data
   @EqualsAndHashCode(callSuper = false)
   public static class ComparisonExpression extends Expression {
+    @NotNull
     Comparator comparator;
-    String valueName;
+    /**
+     * Can be the string name of a metric or one of the {@link Function} types.
+     */
+    @JsonTypeInfo(use = Id.NAME, property = "type")
+    @JsonSubTypes(
+        {
+            @Type(name = "rate", value=RateFunction.class),
+            @Type(name = "percentage", value=PercentageFunction.class),
+            @Type(name = "previous", value=PreviousFunction.class)
+        }
+    )
+    @Valid
+    Object input;
+    /**
+     * Can be a string or number
+     */
+    @NotNull
     Object comparisonValue;
 
     /**
@@ -133,5 +187,31 @@ public class EventEngineTaskParameters {
     public void podamHelper(String value) {
       this.comparisonValue = value;
     }
+  }
+
+  public static abstract class Function {
+  }
+
+  @EqualsAndHashCode(callSuper = false)
+  @Data
+  public static class RateFunction extends Function {
+    @NotEmpty
+    String of;
+  }
+
+  @EqualsAndHashCode(callSuper = false)
+  @Data
+  public static class PercentageFunction extends Function {
+    @NotEmpty
+    String part;
+    @NotEmpty
+    String whole;
+  }
+
+  @EqualsAndHashCode(callSuper = false)
+  @Data
+  public static class PreviousFunction extends Function {
+    @NotEmpty
+    String of;
   }
 }

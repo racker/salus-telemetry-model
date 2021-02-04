@@ -14,23 +14,36 @@
  * limitations under the License.
  */
 
-package com.rackspace.salus.telemetry.entities.subtype;
+package com.rackspace.salus.telemetry.messaging;
 
-import com.rackspace.salus.telemetry.entities.EventEngineTask;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@Entity
-@Table(name = "generic_event_engine_tasks")
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class GenericEventEngineTask extends EventEngineTask {
+@KafkaMessageKey(properties = "id")
+public class EventNotification {
+  String id;
+  String tenantId;
+  Instant timestamp;
+  String taskId;
 
-  @NotNull
-  @Column(name = "measurement", nullable = false)
-  String measurement;
+  String state;
+  String previousState;
+  List<Observation> observations;
+  String message;
+
+  String metricGroup;
+  Map<String, Object> metrics;
+
+  List<Entry<String, String>> groupingLabels;
+  Map<String,String> labels;
+
+  @Data
+  public static class Observation {
+    String zone;
+    String state;
+  }
 }
